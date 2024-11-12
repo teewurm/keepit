@@ -1,0 +1,20 @@
+{
+    "name": "keepit",
+    "description": "A game for Game Off 2024",
+    "version": "0.0.1",
+    "author": "Philippe Kromer",
+    "scripts": {
+        "dev": "vite --config vite/config.dev.mjs",
+        "devpub": "vite --config vite/config.devpublic.mjs",
+        "build": "vite build --config vite/config.prod.mjs",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "terser": "^5.36.0",
+        "typescript": "^5.6.3",
+        "vite": "^5.4.11"
+    },
+    "dependencies": {
+        "phaser": "^3.86.0"
+    }
+}
