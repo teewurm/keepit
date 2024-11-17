@@ -1,3 +1,4 @@
+import { SceneNames } from "../enums/Constants";
 import IndexUtil from "../utils/IndexUtil";
 import MazeSceneBase from "./bases/MazeSceneBase";
 
@@ -16,4 +17,8 @@ export default class Level1 extends MazeSceneBase {
     ];
 
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
+
+    constructor(){
+        super(SceneNames.Level1);
+    }
 }

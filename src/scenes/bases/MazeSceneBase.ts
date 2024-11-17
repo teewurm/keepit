@@ -1,4 +1,5 @@
-import { ColorPalette, GameLayout } from "../../enums/Constants";
+import Player from "../../components/Player";
+import { ColorPalette, GameLayout, SceneNames } from "../../enums/Constants";
 import { SquareType } from "../../enums/SquareType";
 import GameSquare from "../../utils/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
@@ -6,10 +7,10 @@ import SceneBase from "./SceneBase";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
-        [2, 2, 2, 2, 2, 2,],
+        [1, 1, 2, 2, 2, 2,],
         [2, 1, 1, 1, 1, 2,],
         [2, 1, 1, 1, 1, 2,],
-        [2, 2, 2, 2, 2, 2,],
+        [2, 1, 2, 2, 2, 2,],
     ];
 
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
@@ -17,6 +18,12 @@ export default class MazeSceneBase extends SceneBase {
     protected squareMatrix: GameSquare[][];
 
     protected mainContainer: Phaser.GameObjects.Container;
+
+    protected player: Player;
+
+    constructor(name: string){
+        super(name ? name : SceneNames.Mazebase);
+    }
 
     init(_placeHolder?: Object | undefined): void {
         super.init();
@@ -30,6 +37,7 @@ export default class MazeSceneBase extends SceneBase {
         this.spawnFullScreenButton();
         this.spawnSquares();
         this.spawnPlayer();
+        this.addInputMapping();
     }
 
     protected spawnFullScreenButton(): void {
@@ -91,9 +99,23 @@ export default class MazeSceneBase extends SceneBase {
     protected spawnPlayer() {
         const square = this.squareMatrix[this.playerSpawn.y][this.playerSpawn.x];
 
-        const player = this.add.rectangle(square.xCoordinate, square.yCoordinate, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, ColorPalette.PLAYER);
-        player.setStrokeStyle(2, 0x000000);
+        this.player = new Player(this, square.xCoordinate, square.yCoordinate, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix);
 
-        this.mainContainer.add(player);
+        this.mainContainer.add(this.player);
+    }
+
+    protected addInputMapping() {
+        this.assignListenerToDirectionKeyboardEvents(["W", "UP"], () => { this.player.movePlayerUp(); });
+        this.assignListenerToDirectionKeyboardEvents(["S", "DOWN"], () => { this.player.movePlayerDown(); });
+        this.assignListenerToDirectionKeyboardEvents(["D", "RIGHT"], () => { this.player.movePlayerRight(); });
+        this.assignListenerToDirectionKeyboardEvents(["A", "LEFT"], () => { this.player.movePlayerLeft(); });
+    }
+
+    protected assignListenerToDirectionKeyboardEvents(eventNames: string[], listener: () => void, keyUp = false) {
+        const keyDirection = keyUp ? "keyup-" : "keydown-";
+
+        for (let name of eventNames) {
+            this.input.keyboard?.on(keyDirection + name, listener);
+        }
     }
 }

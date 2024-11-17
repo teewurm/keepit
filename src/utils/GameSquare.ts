@@ -1,4 +1,4 @@
-import { SquareType } from "../enums/SquareType";
+import { blockingTypes, SquareType } from "../enums/SquareType";
 
 export default class GameSquare {
     squareType: SquareType;
@@ -11,5 +11,9 @@ export default class GameSquare {
         this.xCoordinate = x;
         this.yCoordinate = y;
         this.backgroundObject = background;
+    }
+
+    isBlocking(){
+        return blockingTypes.includes(this.squareType);
     }
 }

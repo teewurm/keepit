@@ -5,3 +5,5 @@ export enum SquareType {
     PORTAL = 3,
     BOSS_PORTAL = 4,
 }
+
+export const blockingTypes = [SquareType.WALL];
