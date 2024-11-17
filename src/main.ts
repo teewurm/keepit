@@ -1,5 +1,5 @@
 import { Game, Types } from "phaser";
-import TestScene from "./scenes/TestScene";
+import Level1 from "./scenes/Level1";
 
 
 const config: Types.Core.GameConfig = {
@@ -8,13 +8,13 @@ const config: Types.Core.GameConfig = {
     height: 1080,
     disableContextMenu: true,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#52AD9C',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
     scene: [
-        TestScene
+        Level1
     ]
 };
 
