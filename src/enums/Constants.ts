@@ -28,7 +28,7 @@ export enum AnimationEase {
     WallCollide = "Bounce"
 }
 
-export enum ItemConfig {
+export enum ItemConstants {
     MAX_ITMES_PER_TYPE = 6
 }
 

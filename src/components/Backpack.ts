@@ -1,6 +1,6 @@
-import { ColorPalette } from "../enums/Constants";
+import { ColorPalette, ItemConstants } from "../enums/Constants";
 import { ItemType } from "../enums/ItemType";
-import ItemSlot from "../utils/ItemSlot";
+import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
 import CustomContainerBase from "./bases/CustomContainerBase";
 
 
@@ -34,9 +34,9 @@ export default class Backpack extends CustomContainerBase {
                 itemContainer.add(newRect);
 
                 if (i == 0) {
-                    this.infoCardSlots.push(new ItemSlot(itemContainer, { text: "Info?", type: ItemType.INFO_CARD }));
+                    this.infoCardSlots.push(new ItemSlot(itemContainer));
                 } else {
-                    this.weaponsSlots.push(new ItemSlot(itemContainer, { text: "Weapon", type: ItemType.WEAPON }));
+                    this.weaponsSlots.push(new ItemSlot(itemContainer));
                 }
 
                 this.add(itemContainer);
@@ -50,5 +50,29 @@ export default class Backpack extends CustomContainerBase {
         if (DEBUG) {
             this.add(this.scene.add.rectangle(0, 0, 10, 10, ColorPalette.DEBUG))
         }
+    }
+
+    addItem(item: ItemConfig): boolean {
+        switch (item.type) {
+            case ItemType.INFO_CARD:
+                return this.addItemToList(item, this.infoCardSlots);
+            case ItemType.WEAPON:
+                return this.addItemToList(item, this.weaponsSlots);
+        }
+    }
+
+    protected addItemToList(item: ItemConfig, list: ItemSlot[]): boolean {
+        if (list.filter(slot => !slot.isEmpty()).length == ItemConstants.MAX_ITMES_PER_TYPE)
+            return false;
+
+        for (let i = 0; i < list.length; i++) {
+            if (!list[i].isEmpty())
+                continue;
+
+            list[i].setItem(item);
+            return true;
+        }
+
+        return false;
     }
 }

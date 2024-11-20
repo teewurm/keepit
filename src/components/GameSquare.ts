@@ -1,21 +1,22 @@
-import Player from "./Player";
 import { blockingTypes, SquareType } from "../enums/SquareType";
-import { ItemConfig } from "../utils/ItemSlot";
+import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
 import CustomContainerBase from "./bases/CustomContainerBase";
 import { ColorPalette, ColorSquareMap } from "../enums/Constants";
+import Backpack from "./Backpack";
 
 export default class GameSquare extends CustomContainerBase {
     squareType: SquareType;
 
-    protected backgroundObject: Phaser.GameObjects.Rectangle | undefined;
+    protected backgroundObject?: Phaser.GameObjects.Rectangle;
 
-    protected item?: ItemConfig;
+    protected itemSlot: ItemSlot;
 
     constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, type: SquareType) {
         super(scene, x, y, width, height);
 
         this.squareType = type;
 
+        this.itemSlot = new ItemSlot(this);
 
         if (this.squareType != SquareType.EMPTY) {
             this.backgroundObject = this.scene.add.rectangle(0, 0, this.containerWidth, this.containerHeight, ColorSquareMap.get(this.squareType));
@@ -33,12 +34,17 @@ export default class GameSquare extends CustomContainerBase {
         return blockingTypes.includes(this.squareType);
     }
 
-    collectItem(player: Player) {
-        if (this.item == undefined)
+    addItem(item: ItemConfig) {
+        this.itemSlot.destroy();
+
+        this.itemSlot.setItem(item);
+    }
+
+    collectItem(backpack: Backpack) {
+        if (this.itemSlot.isEmpty())
             return;
 
-
-
-        this.item = undefined;
+        if (backpack.addItem(this.itemSlot.getItem()!))
+            this.itemSlot.destroy();
     }
 }

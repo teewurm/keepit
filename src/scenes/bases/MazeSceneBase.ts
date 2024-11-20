@@ -17,8 +17,8 @@ export default class MazeSceneBase extends SceneBase {
 
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
 
-    protected readonly items: { index: IndexUtil, item: ItemConfig }[] = [
-        { index: { x: 1, y: 0 }, item: { text: "Bra", type: ItemType.WEAPON } }
+    protected readonly startItems: { index: IndexUtil, item: ItemConfig }[] = [
+        { index: { x: 1, y: 0 }, item: { text: "Fire", type: ItemType.WEAPON } }
     ];
 
     protected squareMatrix: GameSquare[][];
@@ -104,7 +104,9 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     protected addItems() {
-
+        this.startItems.forEach((itemAndIndex) => {
+            this.squareMatrix[itemAndIndex.index.y][itemAndIndex.index.x].addItem(itemAndIndex.item);
+        });
     }
 
     protected addInputMapping() {
