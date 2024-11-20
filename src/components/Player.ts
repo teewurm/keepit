@@ -1,21 +1,16 @@
 import { AnimationEase, ColorPalette, PlayerDefaultData } from "../enums/Constants";
-import GameSquare from "../utils/GameSquare";
+import GameSquare from "./GameSquare";
 import IndexUtil from "../utils/IndexUtil";
+import CustomContainerBase from "./bases/CustomContainerBase";
 
-export default class Player extends Phaser.GameObjects.Container {
+export default class Player extends CustomContainerBase {
     squareMatrix: GameSquare[][];
     currentIndex: IndexUtil;
-
-    containerWidth: number;
-    containerHeight: number;
 
     moving = false;
 
     constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, index: IndexUtil, gameMatrix: GameSquare[][]) {
-        super(scene, x, y);
-
-        this.containerWidth = width;
-        this.containerHeight = height;
+        super(scene, x, y, width, height);
 
         this.squareMatrix = gameMatrix;
         this.currentIndex = index;
@@ -58,8 +53,8 @@ export default class Player extends Phaser.GameObjects.Container {
             targets: this,
             ease: AnimationEase.DefaultMove,
             duration: PlayerDefaultData.MoveDuration,
-            x: nextSquare.xCoordinate,
-            y: nextSquare.yCoordinate
+            x: nextSquare.x,
+            y: nextSquare.y
         };
 
         config.onComplete = () => {

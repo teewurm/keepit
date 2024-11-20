@@ -1,8 +1,10 @@
+import Backpack from "../../components/Backpack";
 import Player from "../../components/Player";
-import { ColorPalette, GameLayout, SceneNames } from "../../enums/Constants";
-import { SquareType } from "../../enums/SquareType";
-import GameSquare from "../../utils/GameSquare";
+import { GameLayout, SceneNames } from "../../enums/Constants";
+import { ItemType } from "../../enums/ItemType";
+import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
+import { ItemConfig } from "../../utils/ItemSlot";
 import SceneBase from "./SceneBase";
 
 export default class MazeSceneBase extends SceneBase {
@@ -15,13 +17,17 @@ export default class MazeSceneBase extends SceneBase {
 
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
 
+    protected readonly items: { index: IndexUtil, item: ItemConfig }[] = [
+        { index: { x: 1, y: 0 }, item: { text: "Bra", type: ItemType.WEAPON } }
+    ];
+
     protected squareMatrix: GameSquare[][];
 
     protected mainContainer: Phaser.GameObjects.Container;
 
     protected player: Player;
 
-    constructor(name: string){
+    constructor(name: string) {
         super(name ? name : SceneNames.Mazebase);
     }
 
@@ -37,6 +43,10 @@ export default class MazeSceneBase extends SceneBase {
         this.spawnFullScreenButton();
         this.spawnSquares();
         this.spawnPlayer();
+        this.addItems();
+
+        this.mainContainer.add(new Backpack(this, (this.squareMatrix[0].length / 2 + 1.5) * GameLayout.SquareEdgeLength, 0, 200, 600));
+
         this.addInputMapping();
     }
 
@@ -64,28 +74,17 @@ export default class MazeSceneBase extends SceneBase {
         let y = getWithOffset(this.squareStartingMatrix.length);
         const allSquareObjects: Phaser.GameObjects.GameObject[] = [];
 
-        this.squareStartingMatrix.forEach((row, yIndex) => {
+        this.squareStartingMatrix.forEach((row) => {
             let newRow: GameSquare[] = [];
 
             x = getWithOffset(this.squareStartingMatrix[0].length);
 
-            row.forEach((squareType, xIndex) => {
-                let backgroundObject: Phaser.GameObjects.Rectangle | undefined = undefined;
+            row.forEach((squareType) => {
+                const newGameSquare = new GameSquare(this, x, y, GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, squareType);
 
-                const colorSquareMap = new Map([
-                    [SquareType.EMPTY, 0x000000],
-                    [SquareType.PATH, ColorPalette.Path],
-                    [SquareType.PORTAL, ColorPalette.PORTAL],
-                    [SquareType.BOSS_PORTAL, ColorPalette.BOSS_PORTAL],
-                    [SquareType.WALL, ColorPalette.Wall],
-                ]);
+                allSquareObjects.push(newGameSquare);
 
-                backgroundObject = this.add.rectangle(x, y, GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, colorSquareMap.get(squareType));
-                backgroundObject.setStrokeStyle(2, 0x000000);
-
-                allSquareObjects.push(backgroundObject);
-
-                newRow.push(new GameSquare(squareType, x, y, backgroundObject));
+                newRow.push(newGameSquare);
                 x += GameLayout.SquareEdgeLength;
             });
 
@@ -99,9 +98,13 @@ export default class MazeSceneBase extends SceneBase {
     protected spawnPlayer() {
         const square = this.squareMatrix[this.playerSpawn.y][this.playerSpawn.x];
 
-        this.player = new Player(this, square.xCoordinate, square.yCoordinate, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix);
+        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix);
 
         this.mainContainer.add(this.player);
+    }
+
+    protected addItems() {
+
     }
 
     protected addInputMapping() {

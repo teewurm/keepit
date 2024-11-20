@@ -15,8 +15,7 @@ const config: Types.Core.GameConfig = {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
     scene: [
-        MazeSceneBase,
-        Level1
+        MazeSceneBase
     ]
 };
 
