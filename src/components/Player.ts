@@ -2,18 +2,21 @@ import { AnimationEase, ColorPalette, PlayerDefaultData } from "../enums/Constan
 import GameSquare from "./GameSquare";
 import IndexUtil from "../utils/IndexUtil";
 import CustomContainerBase from "./bases/CustomContainerBase";
+import Backpack from "./Backpack";
 
 export default class Player extends CustomContainerBase {
     squareMatrix: GameSquare[][];
     currentIndex: IndexUtil;
+    backpack: Backpack;
 
     moving = false;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, index: IndexUtil, gameMatrix: GameSquare[][]) {
+    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, index: IndexUtil, gameMatrix: GameSquare[][], backpack: Backpack) {
         super(scene, x, y, width, height);
 
         this.squareMatrix = gameMatrix;
         this.currentIndex = index;
+        this.backpack = backpack;
 
         this.createPlayer();
     }
@@ -60,6 +63,8 @@ export default class Player extends CustomContainerBase {
         config.onComplete = () => {
             this.currentIndex.x = targetXIndex;
             this.currentIndex.y = targetYIndex;
+
+            this.squareMatrix[this.currentIndex.y][this.currentIndex.x].collectItem(this.backpack);
 
             this.moving = false;
         }

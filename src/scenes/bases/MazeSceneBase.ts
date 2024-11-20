@@ -42,10 +42,8 @@ export default class MazeSceneBase extends SceneBase {
 
         this.spawnFullScreenButton();
         this.spawnSquares();
-        this.spawnPlayer();
+        this.spawnPlayerWithBackpack();
         this.addItems();
-
-        this.mainContainer.add(new Backpack(this, (this.squareMatrix[0].length / 2 + 1.5) * GameLayout.SquareEdgeLength, 0, 200, 600));
 
         this.addInputMapping();
     }
@@ -95,12 +93,13 @@ export default class MazeSceneBase extends SceneBase {
         this.mainContainer = this.add.container(this.center_width, this.center_height, allSquareObjects);
     }
 
-    protected spawnPlayer() {
+    protected spawnPlayerWithBackpack() {
+        const backpack = new Backpack(this, (this.squareMatrix[0].length / 2 + 1.5) * GameLayout.SquareEdgeLength, 0, 200, 600);
         const square = this.squareMatrix[this.playerSpawn.y][this.playerSpawn.x];
 
-        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix);
+        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix, backpack);
 
-        this.mainContainer.add(this.player);
+        this.mainContainer.add([this.player, backpack]);
     }
 
     protected addItems() {

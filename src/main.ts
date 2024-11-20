@@ -1,6 +1,5 @@
 import { Game, Types } from "phaser";
 import Level1 from "./scenes/Level1";
-import MazeSceneBase from "./scenes/bases/MazeSceneBase";
 
 
 const config: Types.Core.GameConfig = {
@@ -15,7 +14,7 @@ const config: Types.Core.GameConfig = {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
     scene: [
-        MazeSceneBase
+        Level1
     ]
 };
 
