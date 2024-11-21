@@ -4,6 +4,13 @@ export enum GameLayout {
     SquareEdgeLength = 90
 }
 
+export enum GameplaySettings{
+    FogdisappearDuration = 3000,
+    FogHalfDensity = 0.5,
+    FogFullDensity = 1,
+    FogNoDensity = 0
+}
+
 export enum SceneNames {
     Mazebase = "base",
     Level1 = "Level1"

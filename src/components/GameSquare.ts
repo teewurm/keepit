@@ -1,7 +1,7 @@
 import { blockingTypes, SquareType } from "../enums/SquareType";
 import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
 import CustomContainerBase from "./bases/CustomContainerBase";
-import { Assets, ColorPalette, ColorSquareMap } from "../enums/Constants";
+import { Assets, ColorPalette, ColorSquareMap, GameplaySettings } from "../enums/Constants";
 import Backpack from "./Backpack";
 
 export default class GameSquare extends CustomContainerBase {
@@ -9,7 +9,7 @@ export default class GameSquare extends CustomContainerBase {
 
     protected backgroundObject?: Phaser.GameObjects.Rectangle;
     protected fogObject: Phaser.GameObjects.Rectangle;
-    protected fogDensity = 1;
+    protected fogDensity = GameplaySettings.FogFullDensity;
 
     protected itemSlot: ItemSlot;
 
@@ -39,17 +39,17 @@ export default class GameSquare extends CustomContainerBase {
 
     setFogDensityToHalf() {
         if (this.fogDensity == 1) {
-            this.fogDensity = 0.5;
+            this.fogDensity = GameplaySettings.FogHalfDensity;
             this.fogObject.setAlpha(this.fogDensity);
         }
 
         if (this.fogDensity > 0 && this.squareType == SquareType.WALL) {
-            this.scene.time.delayedCall(3000, this.setFogDensityToZero.bind(this));
+            this.scene.time.delayedCall(GameplaySettings.FogdisappearDuration, this.setFogDensityToZero.bind(this));
         }
     }
 
     setFogDensityToZero() {
-        this.fogDensity = 0;
+        this.fogDensity = GameplaySettings.FogNoDensity;
         this.fogObject.setAlpha(this.fogDensity);
     }
 
