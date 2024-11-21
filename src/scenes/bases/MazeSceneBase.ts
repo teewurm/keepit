@@ -38,6 +38,7 @@ export default class MazeSceneBase extends SceneBase {
         this.load.audio(Assets.Audio.Move3, Assets.AudioFileNames.Move3);
         this.load.audio(Assets.Audio.Move4, Assets.AudioFileNames.Move4);
         this.load.audio(Assets.Audio.Collect1, Assets.AudioFileNames.Collect1);
+        this.load.audio(Assets.Audio.Bird, Assets.AudioFileNames.Bird);
     }
 
     init(_placeHolder?: Object | undefined): void {
@@ -50,14 +51,13 @@ export default class MazeSceneBase extends SceneBase {
 
     create() {
         const defaultVol = 0.15;
-        this.sound.play(Assets.Audio.PianoMusic, { volume: 0.1});
+        this.sound.play(Assets.Audio.PianoMusic, { volume: 0.1, loop: true });
 
-        this.sound.add(Assets.Audio.Move1, { volume: defaultVol});
-        this.sound.add(Assets.Audio.Move2, { volume: defaultVol});
-        this.sound.add(Assets.Audio.Move3, { volume: defaultVol});
-        this.sound.add(Assets.Audio.Move4, { volume: defaultVol});
-        this.sound.add(Assets.Audio.Collect1, { volume: 0.25});
-       
+        this.sound.add(Assets.Audio.Move1, { volume: defaultVol });
+        this.sound.add(Assets.Audio.Move2, { volume: defaultVol });
+        this.sound.add(Assets.Audio.Move3, { volume: defaultVol });
+        this.sound.add(Assets.Audio.Move4, { volume: defaultVol });
+        this.sound.add(Assets.Audio.Collect1, { volume: 0.25 });
 
         this.cameras.main.setBackgroundColor(0x52AD9C);
 
@@ -67,6 +67,19 @@ export default class MazeSceneBase extends SceneBase {
         this.addItems();
 
         this.addInputMapping();
+
+        this.randomBirdSound(true);
+    }
+
+    protected randomBirdSound(playInstant = false) {
+        if (playInstant) {
+            this.sound.play(Assets.Audio.Bird, { volume: 0.5 });
+            this.randomBirdSound();
+        } else {
+            const delay = (10000 * Math.random()) + 15000;
+
+            this.time.delayedCall(delay, () => { this.sound.play(Assets.Audio.Bird, { volume: 0.5 }); this.randomBirdSound(); });
+        }
     }
 
     protected spawnFullScreenButton(): void {

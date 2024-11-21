@@ -42,12 +42,13 @@ export const ColorSquareMap = new Map([
 
 export namespace Assets{
     export enum AudioFileNames {
-        PianoMusic = "MazeMusic1.wav",
+        PianoMusic = "licensed/MazeMusic1.wav",
         Move1 = "Move1.wav",
         Move2 = "Move2.wav",
         Move3 = "Move3.wav",
         Move4 = "Move4.wav",
-        Collect1 = "Collect1.wav"
+        Collect1 = "Collect1.wav",
+        Bird = "licensed/Bird1.wav"
     }
 
     export enum Audio {
@@ -56,6 +57,7 @@ export namespace Assets{
         Move2 = "Move2",
         Move3 = "Move3",
         Move4 = "Move4",
-        Collect1 = "Collect1"
+        Collect1 = "Collect1",
+        Bird = "Bird1"
     }
 }
