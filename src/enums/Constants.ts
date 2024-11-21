@@ -15,6 +15,7 @@ export enum ColorPalette {
     PORTAL = 0x9FFCDF,
     BOSS_PORTAL = 0x47624F,
     PLAYER = 0x440044,
+    FOG = 0x999999,
     DEBUG = 0xFF00FF
 }
 

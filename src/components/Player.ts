@@ -19,6 +19,7 @@ export default class Player extends CustomContainerBase {
         this.backpack = backpack;
 
         this.createPlayer();
+        this.setFogDensityForCurrentLocation();
     }
 
     movePlayerUp() {
@@ -70,6 +71,7 @@ export default class Player extends CustomContainerBase {
             this.currentIndex.y = targetYIndex;
 
             this.squareMatrix[this.currentIndex.y][this.currentIndex.x].collectItem(this.backpack);
+            this.setFogDensityForCurrentLocation();
 
             this.moving = false;
         }
@@ -78,8 +80,28 @@ export default class Player extends CustomContainerBase {
     }
 
     protected isNextMovePossible(nextX: number, nextY: number): boolean {
-        return nextX >= 0 && nextY >= 0
-            && nextX < this.squareMatrix[0].length && nextY < this.squareMatrix.length
+        return this.areIndicesInsideOfMatrix(nextX, nextY)
             && !this.squareMatrix[nextY][nextX].isBlocking()
+    }
+
+    protected areIndicesInsideOfMatrix(xIndex: number, yIndex: number): boolean {
+        return xIndex >= 0 && yIndex >= 0
+            && xIndex < this.squareMatrix[0].length && yIndex < this.squareMatrix.length;
+    }
+
+    protected setFogDensityForCurrentLocation() {
+        this.squareMatrix[this.currentIndex.y][this.currentIndex.x].setFogDensityToZero();
+
+        const setFogToHalfe = (x: number, y: number) => {
+            if (this.areIndicesInsideOfMatrix(x, y)) {
+                this.squareMatrix[y][x].setFogDensityToHalf();
+            }
+        }
+
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                setFogToHalfe(this.currentIndex.x + i, this.currentIndex.y + j);
+            }
+        }
     }
 }

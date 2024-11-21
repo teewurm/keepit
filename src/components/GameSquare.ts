@@ -8,6 +8,8 @@ export default class GameSquare extends CustomContainerBase {
     squareType: SquareType;
 
     protected backgroundObject?: Phaser.GameObjects.Rectangle;
+    protected fogObject: Phaser.GameObjects.Rectangle;
+    protected fogDensity = 1;
 
     protected itemSlot: ItemSlot;
 
@@ -25,9 +27,30 @@ export default class GameSquare extends CustomContainerBase {
             this.add(this.backgroundObject);
         }
 
+
+
+        this.fogObject = this.scene.add.rectangle(0, 0, this.containerWidth, this.containerHeight, ColorPalette.FOG, this.fogDensity);
+        this.add(this.fogObject);
+
         if (DEBUG) {
             this.add(this.scene.add.rectangle(0, 0, 10, 10, ColorPalette.DEBUG))
         }
+    }
+
+    setFogDensityToHalf() {
+        if (this.fogDensity == 1) {
+            this.fogDensity = 0.5;
+            this.fogObject.setAlpha(this.fogDensity);
+        }
+
+        if (this.fogDensity > 0 && this.squareType == SquareType.WALL) {
+            this.scene.time.delayedCall(3000, this.setFogDensityToZero.bind(this));
+        }
+    }
+
+    setFogDensityToZero() {
+        this.fogDensity = 0;
+        this.fogObject.setAlpha(this.fogDensity);
     }
 
     isBlocking() {
@@ -38,13 +61,15 @@ export default class GameSquare extends CustomContainerBase {
         this.itemSlot.destroy();
 
         this.itemSlot.setItem(item);
+
+        this.bringToTop(this.fogObject);
     }
 
     collectItem(backpack: Backpack) {
         if (this.itemSlot.isEmpty())
             return;
 
-        if (backpack.addItem(this.itemSlot.getItem()!)){
+        if (backpack.addItem(this.itemSlot.getItem()!)) {
             this.itemSlot.destroy();
             this.scene.sound.get(Assets.Audio.Collect1).play();
         }
