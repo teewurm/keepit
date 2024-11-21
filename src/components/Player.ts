@@ -1,4 +1,4 @@
-import { AnimationEase, ColorPalette, PlayerDefaultData } from "../enums/Constants";
+import { AnimationEase, Assets, ColorPalette, PlayerDefaultData } from "../enums/Constants";
 import GameSquare from "./GameSquare";
 import IndexUtil from "../utils/IndexUtil";
 import CustomContainerBase from "./bases/CustomContainerBase";
@@ -47,6 +47,11 @@ export default class Player extends CustomContainerBase {
     protected moveToNextSquare(targetXIndex: number, targetYIndex: number) {
         if (this.moving || !this.isNextMovePossible(targetXIndex, targetYIndex))
             return;
+
+        //Plays a random movement audio clip
+        const moveAudioSamples = [Assets.Audio.Move1, Assets.Audio.Move2, Assets.Audio.Move3, Assets.Audio.Move4];
+        const randomSoundIndex = Math.floor(Math.random() * moveAudioSamples.length);
+        this.scene.sound.get(moveAudioSamples[randomSoundIndex]).play();
 
         this.moving = true;
 

@@ -1,7 +1,7 @@
 import { blockingTypes, SquareType } from "../enums/SquareType";
 import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
 import CustomContainerBase from "./bases/CustomContainerBase";
-import { ColorPalette, ColorSquareMap } from "../enums/Constants";
+import { Assets, ColorPalette, ColorSquareMap } from "../enums/Constants";
 import Backpack from "./Backpack";
 
 export default class GameSquare extends CustomContainerBase {
@@ -44,7 +44,9 @@ export default class GameSquare extends CustomContainerBase {
         if (this.itemSlot.isEmpty())
             return;
 
-        if (backpack.addItem(this.itemSlot.getItem()!))
+        if (backpack.addItem(this.itemSlot.getItem()!)){
             this.itemSlot.destroy();
+            this.scene.sound.get(Assets.Audio.Collect1).play();
+        }
     }
 }

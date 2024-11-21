@@ -1,6 +1,6 @@
 import Backpack from "../../components/Backpack";
 import Player from "../../components/Player";
-import { GameLayout, SceneNames } from "../../enums/Constants";
+import { Assets, GameLayout, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
 import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
@@ -31,13 +31,34 @@ export default class MazeSceneBase extends SceneBase {
         super(name ? name : SceneNames.Mazebase);
     }
 
+    preload() {
+        this.load.audio(Assets.Audio.PianoMusic, Assets.AudioFileNames.PianoMusic);
+        this.load.audio(Assets.Audio.Move1, Assets.AudioFileNames.Move1);
+        this.load.audio(Assets.Audio.Move2, Assets.AudioFileNames.Move2);
+        this.load.audio(Assets.Audio.Move3, Assets.AudioFileNames.Move3);
+        this.load.audio(Assets.Audio.Move4, Assets.AudioFileNames.Move4);
+        this.load.audio(Assets.Audio.Collect1, Assets.AudioFileNames.Collect1);
+    }
+
     init(_placeHolder?: Object | undefined): void {
         super.init();
+
+        this.sound.pauseOnBlur = false;
 
         this.squareMatrix = [];
     }
 
     create() {
+        const defaultVol = 0.15;
+        this.sound.play(Assets.Audio.PianoMusic, { volume: 0.1});
+
+        this.sound.add(Assets.Audio.Move1, { volume: defaultVol});
+        this.sound.add(Assets.Audio.Move2, { volume: defaultVol});
+        this.sound.add(Assets.Audio.Move3, { volume: defaultVol});
+        this.sound.add(Assets.Audio.Move4, { volume: defaultVol});
+        this.sound.add(Assets.Audio.Collect1, { volume: 0.25});
+       
+
         this.cameras.main.setBackgroundColor(0x52AD9C);
 
         this.spawnFullScreenButton();
