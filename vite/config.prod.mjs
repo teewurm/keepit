@@ -32,7 +32,8 @@ export default defineConfig({
             compress: {
                 passes: 2,
                 global_defs: {
-                    DEBUG: false
+                    DEBUG: false,
+                    NO_FOG: false
                 },
                 drop_console: false,
                 drop_debugger: true,

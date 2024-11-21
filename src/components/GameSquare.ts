@@ -27,7 +27,9 @@ export default class GameSquare extends CustomContainerBase {
             this.add(this.backgroundObject);
         }
 
-
+        if (NO_FOG) {
+            this.fogDensity = 0;
+        }
 
         this.fogObject = this.scene.add.rectangle(0, 0, this.containerWidth, this.containerHeight, ColorPalette.FOG, this.fogDensity);
         this.add(this.fogObject);
@@ -38,12 +40,12 @@ export default class GameSquare extends CustomContainerBase {
     }
 
     setFogDensityToHalf() {
-        if (this.fogDensity == 1) {
+        if (this.fogDensity == GameplaySettings.FogFullDensity) {
             this.fogDensity = GameplaySettings.FogHalfDensity;
             this.fogObject.setAlpha(this.fogDensity);
         }
 
-        if (this.fogDensity > 0 && this.squareType == SquareType.WALL) {
+        if (this.fogDensity > GameplaySettings.FogNoDensity && this.squareType == SquareType.WALL) {
             this.scene.time.delayedCall(GameplaySettings.FogdisappearDuration, this.setFogDensityToZero.bind(this));
         }
     }
