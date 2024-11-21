@@ -40,7 +40,14 @@ export const ColorSquareMap = new Map([
     [SquareType.WALL, ColorPalette.Wall],
 ]);
 
-export namespace Assets{
+export enum AudioConig {
+    defaultVolumeSFX = 0.15,
+    defaultVolumeCollect = 0.25,
+    defaultVolumeAnimal = 0.25,
+    defaultVolumeMusic = 0.1,
+}
+
+export namespace Assets {
     export enum AudioFileNames {
         PianoMusic = "licensed/MazeMusic1.wav",
         Move1 = "Move1.wav",

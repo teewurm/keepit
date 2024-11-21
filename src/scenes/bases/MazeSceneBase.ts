@@ -1,6 +1,6 @@
 import Backpack from "../../components/Backpack";
 import Player from "../../components/Player";
-import { Assets, GameLayout, SceneNames } from "../../enums/Constants";
+import { Assets, AudioConig, GameLayout, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
 import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
@@ -50,14 +50,13 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     create() {
-        const defaultVol = 0.15;
-        this.sound.play(Assets.Audio.PianoMusic, { volume: 0.1, loop: true });
+        this.sound.play(Assets.Audio.PianoMusic, { volume: AudioConig.defaultVolumeMusic, loop: true });
 
-        this.sound.add(Assets.Audio.Move1, { volume: defaultVol });
-        this.sound.add(Assets.Audio.Move2, { volume: defaultVol });
-        this.sound.add(Assets.Audio.Move3, { volume: defaultVol });
-        this.sound.add(Assets.Audio.Move4, { volume: defaultVol });
-        this.sound.add(Assets.Audio.Collect1, { volume: 0.25 });
+        this.sound.add(Assets.Audio.Move1, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.Move2, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.Move3, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.Move4, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.Collect1, { volume: AudioConig.defaultVolumeCollect});
 
         this.cameras.main.setBackgroundColor(0x52AD9C);
 
@@ -73,12 +72,12 @@ export default class MazeSceneBase extends SceneBase {
 
     protected randomBirdSound(playInstant = false) {
         if (playInstant) {
-            this.sound.play(Assets.Audio.Bird, { volume: 0.5 });
+            this.sound.play(Assets.Audio.Bird, { volume: AudioConig.defaultVolumeAnimal });
             this.randomBirdSound();
         } else {
             const delay = (10000 * Math.random()) + 15000;
 
-            this.time.delayedCall(delay, () => { this.sound.play(Assets.Audio.Bird, { volume: 0.5 }); this.randomBirdSound(); });
+            this.time.delayedCall(delay, () => { this.sound.play(Assets.Audio.Bird, { volume: AudioConig.defaultVolumeAnimal }); this.randomBirdSound(); });
         }
     }
 
