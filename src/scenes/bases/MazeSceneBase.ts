@@ -61,19 +61,9 @@ export default class MazeSceneBase extends SceneBase {
         this.setDataAfterTransition(newData);
     }
 
-    loadNextScene(nextSceneName: string) {
-        const sceneData = new SceneData();
+    protected setSceneDataBeforeTransition(sceneData: SceneData): void {
         sceneData.backpackItems = this.player.backpack.getAllItems();
         sceneData.fromScene = this.scene.key;
-
-        if (this.scene.isPaused(nextSceneName)) {
-            this.scene.resume(nextSceneName, sceneData)
-            this.scene.moveAbove(this.scene.key, nextSceneName);
-        } else {
-            this.scene.launch(nextSceneName, sceneData);
-        }
-
-        this.scene.pause();
     }
 
     protected randomBirdSound(playInstant = false) {
@@ -141,16 +131,6 @@ export default class MazeSceneBase extends SceneBase {
         this.mainContainer.add([this.player, backpack]);
     }
 
-    protected setBackpackItems(itemsToSet: ItemConfig[]) {
-        if (itemsToSet == undefined)
-            return;
-
-        this.player.backpack.destroyAllItmes();
-        itemsToSet.forEach(itemConfig => {
-            this.player.backpack.addItem(itemConfig);
-        });
-    }
-
     protected addItems() {
         this.startItems.forEach((itemAndIndex) => {
             this.squareMatrix[itemAndIndex.index.y][itemAndIndex.index.x].addItem(itemAndIndex.item);
@@ -179,7 +159,7 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     protected setDataAfterTransition(newData: SceneData) {
-        this.setBackpackItems(newData.backpackItems);
+        this.player.backpack.setBackpackItems(newData.backpackItems);
         this.setPlayerPosition(newData.fromScene);
     }
 

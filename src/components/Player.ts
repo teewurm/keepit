@@ -3,7 +3,7 @@ import GameSquare from "./GameSquare";
 import IndexUtil from "../utils/IndexUtil";
 import CustomContainerBase from "./bases/CustomContainerBase";
 import Backpack from "./Backpack";
-import MazeSceneBase from "../scenes/bases/MazeSceneBase";
+import SceneBase from "../scenes/bases/SceneBase";
 
 export default class Player extends CustomContainerBase {
     squareMatrix: GameSquare[][];
@@ -12,9 +12,7 @@ export default class Player extends CustomContainerBase {
 
     moving = false;
 
-    declare scene: MazeSceneBase;
-
-    constructor(scene: MazeSceneBase, x: number, y: number, width: number, height: number, gameMatrix: GameSquare[][], backpack: Backpack) {
+    constructor(scene: SceneBase, x: number, y: number, width: number, height: number, gameMatrix: GameSquare[][], backpack: Backpack) {
         super(scene, x, y, width, height);
 
         this.squareMatrix = gameMatrix;
@@ -49,7 +47,7 @@ export default class Player extends CustomContainerBase {
     }
 
     protected createPlayer() {
-        const player = this.scene.add.rectangle(0, 0, this.containerWidth, this.containerWidth, ColorPalette.PLAYER);
+        const player = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetWidth, ColorPalette.PLAYER);
         player.setStrokeStyle(2, 0x000000);
 
         this.add(player);

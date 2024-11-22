@@ -3,6 +3,7 @@ import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
 import CustomContainerBase from "./bases/CustomContainerBase";
 import { Assets, ColorPalette, ColorSquareMap, GameplaySettings } from "../enums/Constants";
 import Backpack from "./Backpack";
+import SceneBase from "../scenes/bases/SceneBase";
 
 export default class GameSquare extends CustomContainerBase {
     squareType: SquareType;
@@ -15,7 +16,7 @@ export default class GameSquare extends CustomContainerBase {
 
     protected itemSlot: ItemSlot;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, type: SquareType) {
+    constructor(scene: SceneBase, x: number, y: number, width: number, height: number, type: SquareType) {
         super(scene, x, y, width, height);
 
         this.squareType = type;
@@ -23,7 +24,7 @@ export default class GameSquare extends CustomContainerBase {
         this.itemSlot = new ItemSlot(this);
 
         if (this.squareType != SquareType.EMPTY) {
-            this.backgroundObject = this.scene.add.rectangle(0, 0, this.containerWidth, this.containerHeight, ColorSquareMap.get(this.squareType));
+            this.backgroundObject = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorSquareMap.get(this.squareType));
             this.backgroundObject.setStrokeStyle(2, 0x000000);
 
             this.add(this.backgroundObject);
@@ -33,7 +34,7 @@ export default class GameSquare extends CustomContainerBase {
             this.fogDensity = 0;
         }
 
-        this.fogObject = this.scene.add.rectangle(0, 0, this.containerWidth, this.containerHeight, ColorPalette.FOG, this.fogDensity);
+        this.fogObject = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorPalette.FOG, this.fogDensity);
         this.add(this.fogObject);
 
         if (DEBUG) {

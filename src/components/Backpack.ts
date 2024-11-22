@@ -1,5 +1,6 @@
 import { ColorPalette, ItemConstants } from "../enums/Constants";
 import { ItemType } from "../enums/ItemType";
+import SceneBase from "../scenes/bases/SceneBase";
 import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
 import CustomContainerBase from "./bases/CustomContainerBase";
 
@@ -8,18 +9,18 @@ export default class Backpack extends CustomContainerBase {
     protected infoCardSlots: ItemSlot[] = [];
     protected weaponsSlots: ItemSlot[] = [];
 
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number) {
+    constructor(scene: SceneBase, x: number, y: number, width: number, height: number) {
         super(scene, x, y, width, height);
 
         this.createVisuals();
     }
 
     protected createVisuals() {
-        if (this.containerHeight % 6 != 0 || this.containerWidth % 2 != 0)
+        if (this.targetHeight % 6 != 0 || this.targetWidth % 2 != 0)
             throw "The height mus be divisible by 6 and the widht by 2";
 
-        const height = this.containerHeight / 6;
-        const width = this.containerWidth / 2;
+        const height = this.targetHeight / 6;
+        const width = this.targetWidth / 2;
 
         let nextX = width * -0.5;
         for (let i = 0; i < 2; i++) {
@@ -61,7 +62,7 @@ export default class Backpack extends CustomContainerBase {
         }
     }
 
-    destroyAllItmes(){
+    destroyAllItmes() {
         this.infoCardSlots.forEach(it => it.destroyItem());
         this.weaponsSlots.forEach(it => it.destroyItem());
     }
@@ -71,6 +72,16 @@ export default class Backpack extends CustomContainerBase {
         allItems = allItems.concat(this.infoCardSlots.map(it => it.getItem()).filter(it => it != undefined));
         allItems = allItems.concat(this.weaponsSlots.map(it => it.getItem()).filter(it => it != undefined));
         return allItems;
+    }
+
+    setBackpackItems(itemsToSet: ItemConfig[]) {
+        if (itemsToSet == undefined)
+            return;
+
+        this.destroyAllItmes();
+        itemsToSet.forEach(itemConfig => {
+            this.addItem(itemConfig);
+        });
     }
 
     protected addItemToList(item: ItemConfig, list: ItemSlot[]): boolean {

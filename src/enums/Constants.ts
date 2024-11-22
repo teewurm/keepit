@@ -1,7 +1,9 @@
 import { SquareType } from "./SquareType";
 
 export enum GameLayout {
-    SquareEdgeLength = 90
+    SquareEdgeLength = 90,
+    BossSquareCountWidth = 15,
+    BossSquareCountHeight = 10
 }
 
 export enum GameplaySettings{
@@ -13,7 +15,8 @@ export enum GameplaySettings{
 
 export enum SceneNames {
     Preloader = "preloader",
-    Mazebase = "base",
+    Mazebase = "Base",
+    BossBase = "BossBase",
     Level1 = "Level1",
     Level2 = "Level2",
 }

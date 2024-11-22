@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
+import SceneData from "../../utils/SceneData";
 
-export default class SceneBase extends Scene {
+export default abstract class SceneBase extends Scene {
     width: number;
     height: number;
     center_width: number;
@@ -35,4 +36,20 @@ export default class SceneBase extends Scene {
             this.fpsText.setText('FPS: ' + Math.round(this.game.loop.actualFps));
         }
     }
+
+    loadNextScene(nextSceneName: string) {
+        const sceneData = new SceneData();
+        this.setSceneDataBeforeTransition(sceneData);
+
+        if (this.scene.isPaused(nextSceneName)) {
+            this.scene.resume(nextSceneName, sceneData)
+            this.scene.moveAbove(this.scene.key, nextSceneName);
+        } else {
+            this.scene.launch(nextSceneName, sceneData);
+        }
+
+        this.scene.pause();
+    }
+
+    protected setSceneDataBeforeTransition(_sceneData: SceneData): void { }
 }

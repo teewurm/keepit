@@ -1,12 +1,16 @@
-export default class CustomContainerBase extends Phaser.GameObjects.Container {
-    protected containerWidth: number;
-    protected containerHeight: number;
+import SceneBase from "../../scenes/bases/SceneBase";
 
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number) {
+export default class CustomContainerBase extends Phaser.GameObjects.Container {
+    protected targetWidth: number;
+    protected targetHeight: number;
+
+    declare scene: SceneBase;
+
+    constructor(scene: SceneBase, x: number, y: number, width: number, height: number) {
         super(scene, x, y);
 
-        this.containerWidth = width;
-        this.containerHeight = height;
+        this.targetWidth = width;
+        this.targetHeight = height;
     }
 
 }
