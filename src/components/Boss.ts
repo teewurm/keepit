@@ -11,8 +11,18 @@ export default class Boss extends CustomContainerBase {
     }
 
     protected createBoss() {
-        const mainBody = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorPalette.BOSS_PORTAL);
+        const body = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorPalette.BOSS_PORTAL);
 
-        this.add(mainBody);
+        const eyeWidth = this.targetWidth * 0.2;
+        const eyeHeight = this.targetHeight * 0.1;
+        const eyeX = this.targetWidth / 4;
+        const eyey = -this.targetHeight / 4;
+
+        const leftEye = this.scene.add.rectangle(-eyeX, eyey, eyeWidth, eyeHeight, 0x000000);
+        const rightEye = this.scene.add.rectangle(eyeX, eyey, eyeWidth, eyeHeight, 0x000000);
+
+        const nose = this.scene.add.rectangle(0, this.targetHeight / 5, this.targetWidth * 0.1, this.targetHeight * 0.1, 0x000000);
+
+        this.add([body, leftEye, rightEye, nose]);
     }
 }

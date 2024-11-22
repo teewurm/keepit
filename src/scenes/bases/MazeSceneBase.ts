@@ -6,7 +6,6 @@ import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
 import SceneBase from "./SceneBase";
 import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData";
-import { ItemConfig } from "../../utils/ItemSlot";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
