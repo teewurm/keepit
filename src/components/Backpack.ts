@@ -61,6 +61,11 @@ export default class Backpack extends CustomContainerBase {
         }
     }
 
+    destroyAllItmes(){
+        this.infoCardSlots.forEach(it => it.destroyItem());
+        this.weaponsSlots.forEach(it => it.destroyItem());
+    }
+
     getAllItems() {
         let allItems: ItemConfig[] = [];
         allItems = allItems.concat(this.infoCardSlots.map(it => it.getItem()).filter(it => it != undefined));

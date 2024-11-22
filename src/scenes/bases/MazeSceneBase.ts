@@ -23,11 +23,8 @@ export default class MazeSceneBase extends SceneBase {
     ];
 
     protected readonly startPortals: PortalWithIndex[] = [
-        { index: { x: 5, y: 1 }, portalName: SceneNames.Mazebase }
+        { index: { x: 5, y: 1 }, toPortalName: SceneNames.Mazebase }
     ]
-
-    protected sceneItemsToSetAtStart?: ItemWithIndex[];
-    protected dataToSetAtStart?: SceneData;
 
     protected squareMatrix: GameSquare[][];
     protected mainContainer: Phaser.GameObjects.Container;
@@ -37,18 +34,12 @@ export default class MazeSceneBase extends SceneBase {
         super(name ? name : SceneNames.Mazebase);
     }
 
-    init(sceneData?: SceneData): void {
+    init(): void {
         super.init();
         this.squareMatrix = [];
-
-        if (this.sceneItemsToSetAtStart == undefined) {
-            this.sceneItemsToSetAtStart = this.startItems;
-        }
-
-        this.dataToSetAtStart = sceneData;
     }
 
-    create() {
+    create(newData: SceneData) {
         const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
         if (!backgroundMusic.isPlaying) {
             backgroundMusic.play();
@@ -65,6 +56,24 @@ export default class MazeSceneBase extends SceneBase {
         this.addInputMapping();
 
         this.randomBirdSound(true);
+
+        this.events.on("resume", (_scene: Phaser.Scene, data: SceneData) => this.setDataAfterTransition(data))
+        this.setDataAfterTransition(newData);
+    }
+
+    loadNextScene(nextSceneName: string) {
+        const sceneData = new SceneData();
+        sceneData.backpackItems = this.player.backpack.getAllItems();
+        sceneData.fromScene = this.scene.key;
+
+        if (this.scene.isPaused(nextSceneName)) {
+            this.scene.resume(nextSceneName, sceneData)
+            this.scene.moveAbove(this.scene.key, nextSceneName);
+        } else {
+            this.scene.launch(nextSceneName, sceneData);
+        }
+
+        this.scene.pause();
     }
 
     protected randomBirdSound(playInstant = false) {
@@ -127,25 +136,30 @@ export default class MazeSceneBase extends SceneBase {
         const backpack = new Backpack(this, (this.squareMatrix[0].length / 2 + 1.5) * GameLayout.SquareEdgeLength, 0, 200, 600);
         const square = this.squareMatrix[this.playerSpawn.y][this.playerSpawn.x];
 
-        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix, backpack);
-
-        this.dataToSetAtStart?.backpackItems?.forEach(itemConfig => {
-            backpack.addItem(itemConfig);
-        });
-
+        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.squareMatrix, backpack);
 
         this.mainContainer.add([this.player, backpack]);
     }
 
+    protected setBackpackItems(itemsToSet: ItemConfig[]) {
+        if (itemsToSet == undefined)
+            return;
+
+        this.player.backpack.destroyAllItmes();
+        itemsToSet.forEach(itemConfig => {
+            this.player.backpack.addItem(itemConfig);
+        });
+    }
+
     protected addItems() {
-        this.sceneItemsToSetAtStart!.forEach((itemAndIndex) => {
+        this.startItems.forEach((itemAndIndex) => {
             this.squareMatrix[itemAndIndex.index.y][itemAndIndex.index.x].addItem(itemAndIndex.item);
         });
     }
 
     protected setPortals() {
         this.startPortals.forEach((portalAndIndex) => {
-            this.squareMatrix[portalAndIndex.index.y][portalAndIndex.index.x].setPortalToName(portalAndIndex.portalName);
+            this.squareMatrix[portalAndIndex.index.y][portalAndIndex.index.x].setPortalToName(portalAndIndex.toPortalName);
         });
     }
 
@@ -164,27 +178,21 @@ export default class MazeSceneBase extends SceneBase {
         }
     }
 
-    loadNextScene(nextSceneName: string) {
-        this.scale.removeAllListeners();
-        this.updateCurrentSceneItems();
-
-        const sceneData = new SceneData();
-        sceneData.backpackItems = this.player.backpack.getAllItems();
-
-        this.scene.start(nextSceneName, sceneData);
+    protected setDataAfterTransition(newData: SceneData) {
+        this.setBackpackItems(newData.backpackItems);
+        this.setPlayerPosition(newData.fromScene);
     }
 
-    protected updateCurrentSceneItems() {
-        this.sceneItemsToSetAtStart = [];
-        let itemconfig: ItemConfig | undefined;
-        for (let y = 0; y < this.squareMatrix.length; y++) {
-            for (let x = 0; x < this.squareStartingMatrix[y].length; x++) {
-                itemconfig = this.squareMatrix[y][x].getItemConfig();
-
-                if (itemconfig != undefined) {
-                    this.sceneItemsToSetAtStart.push({ index: { x: x, y: y }, item: { text: itemconfig.text, type: itemconfig.type } });
+    protected setPlayerPosition(fromScene: string | undefined) {
+        if (fromScene != undefined) {
+            for (let portalWithIndex of this.startPortals) {
+                if (portalWithIndex.toPortalName == fromScene) {
+                    this.player.setPlayerPosition(portalWithIndex.index);
+                    return;
                 }
             }
         }
+
+        this.player.setPlayerPosition(this.playerSpawn);
     }
 }

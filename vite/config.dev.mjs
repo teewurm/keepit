@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     define:{
         DEBUG: false,
-        NO_FOG: true
+        NO_FOG: false
     },
     base: './',
     build: {

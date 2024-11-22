@@ -14,15 +14,13 @@ export default class Player extends CustomContainerBase {
 
     declare scene: MazeSceneBase;
 
-    constructor(scene: MazeSceneBase, x: number, y: number, width: number, height: number, index: IndexUtil, gameMatrix: GameSquare[][], backpack: Backpack) {
+    constructor(scene: MazeSceneBase, x: number, y: number, width: number, height: number, gameMatrix: GameSquare[][], backpack: Backpack) {
         super(scene, x, y, width, height);
 
         this.squareMatrix = gameMatrix;
-        this.currentIndex = { x: index.x, y: index.y };
         this.backpack = backpack;
 
         this.createPlayer();
-        this.setFogDensityForCurrentLocation();
     }
 
     movePlayerUp() {
@@ -39,6 +37,15 @@ export default class Player extends CustomContainerBase {
 
     movePlayerLeft() {
         this.moveToNextSquare(this.currentIndex.x - 1, this.currentIndex.y);
+    }
+
+    setPlayerPosition(newIndex: IndexUtil){
+        const newSquare = this.squareMatrix[newIndex.y][newIndex.x];
+
+        this.setPosition(newSquare.x, newSquare.y);
+        this.currentIndex = { x: newIndex.x, y: newIndex.y };
+
+        this.setFogDensityForCurrentLocation();
     }
 
     protected createPlayer() {

@@ -3,6 +3,7 @@ import { ItemConfig } from "./ItemSlot";
 
 export default class SceneData{
     backpackItems: ItemConfig[] = [];
+    fromScene: string
 }
 
 export class ItemWithIndex{
@@ -12,5 +13,5 @@ export class ItemWithIndex{
 
 export class PortalWithIndex{
     index: IndexUtil;
-    portalName: string;
+    toPortalName: string;
 }

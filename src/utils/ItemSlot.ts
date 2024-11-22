@@ -18,7 +18,7 @@ export default class ItemSlot {
         return this.item == undefined;
     }
 
-    destroy() {
+    destroyItem() {
         if (this.itemText) {
             this.container.remove(this.itemText);
             this.itemText.destroy();

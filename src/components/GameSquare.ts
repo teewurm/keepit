@@ -62,7 +62,7 @@ export default class GameSquare extends CustomContainerBase {
     }
 
     addItem(item: ItemConfig) {
-        this.itemSlot.destroy();
+        this.itemSlot.destroyItem();
 
         this.itemSlot.setItem(item);
 
@@ -74,7 +74,7 @@ export default class GameSquare extends CustomContainerBase {
             return;
 
         if (backpack.addItem(this.itemSlot.getItem()!)) {
-            this.itemSlot.destroy();
+            this.itemSlot.destroyItem();
             this.scene.sound.get(Assets.Audio.Collect1).play();
         }
     }
