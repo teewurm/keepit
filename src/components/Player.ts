@@ -3,6 +3,7 @@ import GameSquare from "./GameSquare";
 import IndexUtil from "../utils/IndexUtil";
 import CustomContainerBase from "./bases/CustomContainerBase";
 import Backpack from "./Backpack";
+import MazeSceneBase from "../scenes/bases/MazeSceneBase";
 
 export default class Player extends CustomContainerBase {
     squareMatrix: GameSquare[][];
@@ -11,11 +12,13 @@ export default class Player extends CustomContainerBase {
 
     moving = false;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, index: IndexUtil, gameMatrix: GameSquare[][], backpack: Backpack) {
+    declare scene: MazeSceneBase;
+
+    constructor(scene: MazeSceneBase, x: number, y: number, width: number, height: number, index: IndexUtil, gameMatrix: GameSquare[][], backpack: Backpack) {
         super(scene, x, y, width, height);
 
         this.squareMatrix = gameMatrix;
-        this.currentIndex = index;
+        this.currentIndex = { x: index.x, y: index.y };
         this.backpack = backpack;
 
         this.createPlayer();
@@ -70,8 +73,15 @@ export default class Player extends CustomContainerBase {
             this.currentIndex.x = targetXIndex;
             this.currentIndex.y = targetYIndex;
 
-            this.squareMatrix[this.currentIndex.y][this.currentIndex.x].collectItem(this.backpack);
+            const reachedSquare = this.squareMatrix[this.currentIndex.y][this.currentIndex.x];
+
+            reachedSquare.collectItem(this.backpack);
+
             this.setFogDensityForCurrentLocation();
+
+            if (reachedSquare.isPortal()) {
+                this.scene.loadNextScene(reachedSquare.getPortalToName()!);
+            }
 
             this.moving = false;
         }

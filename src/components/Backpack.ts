@@ -61,6 +61,13 @@ export default class Backpack extends CustomContainerBase {
         }
     }
 
+    getAllItems() {
+        let allItems: ItemConfig[] = [];
+        allItems = allItems.concat(this.infoCardSlots.map(it => it.getItem()).filter(it => it != undefined));
+        allItems = allItems.concat(this.weaponsSlots.map(it => it.getItem()).filter(it => it != undefined));
+        return allItems;
+    }
+
     protected addItemToList(item: ItemConfig, list: ItemSlot[]): boolean {
         if (list.filter(slot => !slot.isEmpty()).length == ItemConstants.MAX_ITMES_PER_TYPE)
             return false;

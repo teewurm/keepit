@@ -1,8 +1,8 @@
-import { SceneNames } from "../enums/Constants";
-import { ItemType } from "../enums/ItemType";
-import IndexUtil from "../utils/IndexUtil";
-import { ItemConfig } from "../utils/ItemSlot";
-import MazeSceneBase from "./bases/MazeSceneBase";
+import { SceneNames } from "../../enums/Constants";
+import { ItemType } from "../../enums/ItemType";
+import IndexUtil from "../../utils/IndexUtil";
+import { ItemConfig } from "../../utils/ItemSlot";
+import MazeSceneBase from "../bases/MazeSceneBase";
 
 export default class Level1 extends MazeSceneBase {
     protected readonly squareStartingMatrix = [
@@ -19,6 +19,10 @@ export default class Level1 extends MazeSceneBase {
     ];
 
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
+
+    protected readonly startPortals: { index: IndexUtil, portalName: string }[] = [
+        { index: { x: 12, y: 1 }, portalName: SceneNames.Level2}
+    ]
 
     protected readonly startItems: { index: IndexUtil, item: ItemConfig }[] = [
         { index: { x: 5, y: 1 }, item: { text: "Fire", type: ItemType.WEAPON } },

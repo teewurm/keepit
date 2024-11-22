@@ -4,8 +4,9 @@ import { Assets, AudioConig, GameLayout, SceneNames } from "../../enums/Constant
 import { ItemType } from "../../enums/ItemType";
 import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
-import { ItemConfig } from "../../utils/ItemSlot";
 import SceneBase from "./SceneBase";
+import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData";
+import { ItemConfig } from "../../utils/ItemSlot";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
@@ -17,46 +18,41 @@ export default class MazeSceneBase extends SceneBase {
 
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
 
-    protected readonly startItems: { index: IndexUtil, item: ItemConfig }[] = [
+    protected readonly startItems: ItemWithIndex[] = [
         { index: { x: 1, y: 0 }, item: { text: "Fire", type: ItemType.WEAPON } }
     ];
 
+    protected readonly startPortals: PortalWithIndex[] = [
+        { index: { x: 5, y: 1 }, portalName: SceneNames.Mazebase }
+    ]
+
+    protected sceneItemsToSetAtStart?: ItemWithIndex[];
+    protected dataToSetAtStart?: SceneData;
+
     protected squareMatrix: GameSquare[][];
-
     protected mainContainer: Phaser.GameObjects.Container;
-
     protected player: Player;
 
     constructor(name: string) {
         super(name ? name : SceneNames.Mazebase);
     }
 
-    preload() {
-        this.load.audio(Assets.Audio.PianoMusic, Assets.AudioFileNames.PianoMusic);
-        this.load.audio(Assets.Audio.Move1, Assets.AudioFileNames.Move1);
-        this.load.audio(Assets.Audio.Move2, Assets.AudioFileNames.Move2);
-        this.load.audio(Assets.Audio.Move3, Assets.AudioFileNames.Move3);
-        this.load.audio(Assets.Audio.Move4, Assets.AudioFileNames.Move4);
-        this.load.audio(Assets.Audio.Collect1, Assets.AudioFileNames.Collect1);
-        this.load.audio(Assets.Audio.Bird, Assets.AudioFileNames.Bird);
-    }
-
-    init(_placeHolder?: Object | undefined): void {
+    init(sceneData?: SceneData): void {
         super.init();
-
-        this.sound.pauseOnBlur = false;
-
         this.squareMatrix = [];
+
+        if (this.sceneItemsToSetAtStart == undefined) {
+            this.sceneItemsToSetAtStart = this.startItems;
+        }
+
+        this.dataToSetAtStart = sceneData;
     }
 
     create() {
-        this.sound.play(Assets.Audio.PianoMusic, { volume: AudioConig.defaultVolumeMusic, loop: true });
-
-        this.sound.add(Assets.Audio.Move1, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Move2, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Move3, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Move4, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Collect1, { volume: AudioConig.defaultVolumeCollect});
+        const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
+        if (!backgroundMusic.isPlaying) {
+            backgroundMusic.play();
+        }
 
         this.cameras.main.setBackgroundColor(0x52AD9C);
 
@@ -64,6 +60,7 @@ export default class MazeSceneBase extends SceneBase {
         this.spawnSquares();
         this.spawnPlayerWithBackpack();
         this.addItems();
+        this.setPortals();
 
         this.addInputMapping();
 
@@ -132,12 +129,23 @@ export default class MazeSceneBase extends SceneBase {
 
         this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.playerSpawn, this.squareMatrix, backpack);
 
+        this.dataToSetAtStart?.backpackItems?.forEach(itemConfig => {
+            backpack.addItem(itemConfig);
+        });
+
+
         this.mainContainer.add([this.player, backpack]);
     }
 
     protected addItems() {
-        this.startItems.forEach((itemAndIndex) => {
+        this.sceneItemsToSetAtStart!.forEach((itemAndIndex) => {
             this.squareMatrix[itemAndIndex.index.y][itemAndIndex.index.x].addItem(itemAndIndex.item);
+        });
+    }
+
+    protected setPortals() {
+        this.startPortals.forEach((portalAndIndex) => {
+            this.squareMatrix[portalAndIndex.index.y][portalAndIndex.index.x].setPortalToName(portalAndIndex.portalName);
         });
     }
 
@@ -153,6 +161,30 @@ export default class MazeSceneBase extends SceneBase {
 
         for (let name of eventNames) {
             this.input.keyboard?.on(keyDirection + name, listener);
+        }
+    }
+
+    loadNextScene(nextSceneName: string) {
+        this.scale.removeAllListeners();
+        this.updateCurrentSceneItems();
+
+        const sceneData = new SceneData();
+        sceneData.backpackItems = this.player.backpack.getAllItems();
+
+        this.scene.start(nextSceneName, sceneData);
+    }
+
+    protected updateCurrentSceneItems() {
+        this.sceneItemsToSetAtStart = [];
+        let itemconfig: ItemConfig | undefined;
+        for (let y = 0; y < this.squareMatrix.length; y++) {
+            for (let x = 0; x < this.squareStartingMatrix[y].length; x++) {
+                itemconfig = this.squareMatrix[y][x].getItemConfig();
+
+                if (itemconfig != undefined) {
+                    this.sceneItemsToSetAtStart.push({ index: { x: x, y: y }, item: { text: itemconfig.text, type: itemconfig.type } });
+                }
+            }
         }
     }
 }

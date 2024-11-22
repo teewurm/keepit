@@ -11,6 +11,8 @@ export default class GameSquare extends CustomContainerBase {
     protected fogObject: Phaser.GameObjects.Rectangle;
     protected fogDensity = GameplaySettings.FogFullDensity;
 
+    protected portalToName?: string;
+
     protected itemSlot: ItemSlot;
 
     constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, type: SquareType) {
@@ -75,5 +77,21 @@ export default class GameSquare extends CustomContainerBase {
             this.itemSlot.destroy();
             this.scene.sound.get(Assets.Audio.Collect1).play();
         }
+    }
+
+    getItemConfig(){
+        return this.itemSlot.getItem();
+    }
+
+    setPortalToName(name: string){
+        this.portalToName = name;
+    }
+
+    getPortalToName(){
+        return this.portalToName;
+    }
+
+    isPortal(){
+        return [SquareType.BOSS_PORTAL, SquareType.PORTAL].includes(this.squareType) && this.portalToName != undefined;
     }
 }

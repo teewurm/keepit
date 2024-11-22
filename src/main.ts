@@ -1,6 +1,7 @@
 import { Game, Types } from "phaser";
-import Level1 from "./scenes/Level1";
-import Level2 from "./scenes/Level2";
+import Level1 from "./scenes/Levels/Level1";
+import Level2 from "./scenes/Levels/Level2";
+import { Preloader } from "./scenes/Preloader";
 
 
 const config: Types.Core.GameConfig = {
@@ -14,8 +15,9 @@ const config: Types.Core.GameConfig = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [
-        // Level1,
+    scene: [  
+        Preloader,      
+        Level1,
         Level2
     ]
 };
