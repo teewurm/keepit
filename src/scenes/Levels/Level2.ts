@@ -27,7 +27,8 @@ export default class Level2 extends MazeSceneBase {
     ];
 
     protected readonly startPortals: PortalWithIndex[] = [
-        { index: { x: 12, y: 1 }, toPortalName: SceneNames.Level1 }
+        { index: { x: 12, y: 1 }, toPortalName: SceneNames.Level1 },
+        { index: { x: 11, y: 4 }, toPortalName: SceneNames.BossBase },
     ]
 
     constructor() {

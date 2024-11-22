@@ -43,7 +43,7 @@ export class Preloader extends SceneBase {
         this.sound.add(Assets.Audio.Collect1, { volume: AudioConig.defaultVolumeCollect });
 
         this.scene.transition({
-            target: SceneNames.BossBase,
+            target: SceneNames.Level1,
             duration: 500,
             moveBelow: true,
             onUpdate: (progress: number) => {

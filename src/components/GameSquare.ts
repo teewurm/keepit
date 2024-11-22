@@ -48,8 +48,13 @@ export default class GameSquare extends CustomContainerBase {
             this.fogObject.setAlpha(this.fogDensity);
         }
 
-        if (this.fogDensity > GameplaySettings.FogNoDensity && this.squareType == SquareType.WALL) {
-            this.scene.time.delayedCall(GameplaySettings.FogdisappearDuration, this.setFogDensityToZero.bind(this));
+        if (this.fogDensity > GameplaySettings.FogNoDensity) {
+            if (this.squareType == SquareType.BOSS_PORTAL || this.squareType == SquareType.PORTAL) {
+                this.setFogDensityToZero();
+            } else if (this.squareType == SquareType.WALL) {
+                this.scene.time.delayedCall(GameplaySettings.FogdisappearDuration, this.setFogDensityToZero.bind(this));
+            }
+
         }
     }
 
@@ -80,19 +85,19 @@ export default class GameSquare extends CustomContainerBase {
         }
     }
 
-    getItemConfig(){
+    getItemConfig() {
         return this.itemSlot.getItem();
     }
 
-    setPortalToName(name: string){
+    setPortalToName(name: string) {
         this.portalToName = name;
     }
 
-    getPortalToName(){
+    getPortalToName() {
         return this.portalToName;
     }
 
-    isPortal(){
+    isPortal() {
         return [SquareType.BOSS_PORTAL, SquareType.PORTAL].includes(this.squareType) && this.portalToName != undefined;
     }
 }
