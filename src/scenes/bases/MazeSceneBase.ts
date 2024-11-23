@@ -6,6 +6,7 @@ import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
 import SceneBase from "./SceneBase";
 import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData";
+import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
@@ -28,6 +29,8 @@ export default class MazeSceneBase extends SceneBase {
     protected squareMatrix: GameSquare[][];
     protected mainContainer: Phaser.GameObjects.Container;
     protected player: Player;
+    protected lifeBar: Lifebar;
+    protected gameTimer: GameStopWatch;
 
     constructor(name: string) {
         super(name ? name : SceneNames.Mazebase);
@@ -51,6 +54,7 @@ export default class MazeSceneBase extends SceneBase {
         this.spawnPlayerWithBackpack();
         this.addItems();
         this.setPortals();
+        this.createLifeBarAndStopwatch();
 
         this.addInputMapping();
 
@@ -58,11 +62,13 @@ export default class MazeSceneBase extends SceneBase {
 
         this.events.on("resume", (_scene: Phaser.Scene, data: SceneData) => this.setDataAfterTransition(data))
         this.setDataAfterTransition(newData);
+
+        GameStopWatch.startStopWatch();
     }
 
-    protected setSceneDataBeforeTransition(sceneData: SceneData): void {
-        sceneData.backpackItems = this.player.backpack.getAllItems();
-        sceneData.fromScene = this.scene.key;
+    update(): void {
+        super.update();
+        this.gameTimer.updateTime();
     }
 
     protected randomBirdSound(playInstant = false) {
@@ -142,6 +148,16 @@ export default class MazeSceneBase extends SceneBase {
         });
     }
 
+    protected createLifeBarAndStopwatch() {
+        const lifebarWidth = 400;
+        this.lifeBar = new Lifebar(this, lifebarWidth / 2 - (GameLayout.SquareEdgeLength * this.squareMatrix[0].length) / 2, 0, lifebarWidth, 40, 100);
+
+        this.gameTimer = new GameStopWatch(this, 0, 0, 42);
+
+        this.add.container(this.center_width, + GameLayout.SquareEdgeLength / -2 + this.center_height + (GameLayout.SquareEdgeLength * this.squareMatrix.length) / -2,
+            [this.lifeBar, this.gameTimer]);
+    }
+
     protected addInputMapping() {
         this.assignListenerToDirectionKeyboardEvents(["W", "UP"], () => { this.player.movePlayerUp(); });
         this.assignListenerToDirectionKeyboardEvents(["S", "DOWN"], () => { this.player.movePlayerDown(); });
@@ -155,6 +171,11 @@ export default class MazeSceneBase extends SceneBase {
         for (let name of eventNames) {
             this.input.keyboard?.on(keyDirection + name, listener);
         }
+    }
+
+    protected setSceneDataBeforeTransition(sceneData: SceneData): void {
+        sceneData.backpackItems = this.player.backpack.getAllItems();
+        sceneData.fromScene = this.scene.key;
     }
 
     protected setDataAfterTransition(newData: SceneData) {

@@ -3,7 +3,7 @@ import { ItemConfig } from "./ItemSlot";
 
 export default class SceneData{
     backpackItems: ItemConfig[] = [];
-    fromScene: string
+    fromScene: string;
 }
 
 export class ItemWithIndex{

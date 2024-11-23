@@ -1,5 +1,6 @@
 import Backpack from "../../components/Backpack";
 import Boss from "../../components/Boss";
+import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
 import { ColorPalette, GameLayout, SceneNames } from "../../enums/Constants";
 import SceneData from "../../utils/SceneData";
@@ -14,6 +15,9 @@ export default class BossSceneBase extends SceneBase {
     protected fieldWidth: number;
     protected fieldHeight: number;
 
+    protected lifeBar: Lifebar;
+    protected gameTimer: GameStopWatch;
+
     constructor(name: string) {
         super(name ? name : SceneNames.BossBase);
     }
@@ -26,6 +30,8 @@ export default class BossSceneBase extends SceneBase {
 
         this.createBaseField();
         this.createPlayerWithBackpack();
+        this.createBaseField();
+        this.createLifeBarAndStopwatch();
 
         this.createBoss();
 
@@ -60,5 +66,20 @@ export default class BossSceneBase extends SceneBase {
         this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4);
 
         this.mainContainer.add(this.boss);
+    }
+
+    protected createLifeBarAndStopwatch() {
+        const lifebarWidth = 400;
+        this.lifeBar = new Lifebar(this, lifebarWidth / 2 - this.fieldWidth / 2, 0, lifebarWidth, 40, 100);
+
+        this.gameTimer = new GameStopWatch(this, 0, 0, 42);
+
+        this.add.container(this.center_width, + GameLayout.SquareEdgeLength / -2 + this.center_height + this.fieldHeight / -2,
+            [this.lifeBar, this.gameTimer]);
+    }
+
+    update(): void {
+        super.update();
+        this.gameTimer.updateTime();
     }
 }

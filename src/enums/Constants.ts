@@ -1,7 +1,7 @@
 import { SquareType } from "./SquareType";
 
 export enum GameLayout {
-    SquareEdgeLength = 90,
+    SquareEdgeLength = 80,
     BossSquareCountWidth = 15,
     BossSquareCountHeight = 10
 }
@@ -28,7 +28,8 @@ export enum ColorPalette {
     BOSS_PORTAL = 0x47624F,
     PLAYER = 0x440044,
     FOG = 0x999999,
-    DEBUG = 0xFF00FF
+    DEBUG = 0xFF00FF,
+    LIFEBAR = 0xFF0000
 }
 
 export enum PlayerDefaultData {
