@@ -38,6 +38,8 @@ export default abstract class SceneBase extends Scene {
     }
 
     loadNextScene(nextSceneName: string) {
+        this.scene.pause();
+
         const sceneData = new SceneData();
         this.setSceneDataBeforeTransition(sceneData);
 
@@ -47,8 +49,6 @@ export default abstract class SceneBase extends Scene {
         } else {
             this.scene.launch(nextSceneName, sceneData);
         }
-
-        this.scene.pause();
     }
 
     protected setSceneDataBeforeTransition(_sceneData: SceneData): void { }

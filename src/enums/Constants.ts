@@ -10,7 +10,10 @@ export enum GameplaySettings{
     FogdisappearDuration = 1000,
     FogHalfDensity = 0.5,
     FogFullDensity = 1,
-    FogNoDensity = 0
+    FogNoDensity = 0,
+    MaxLife = 100,
+    MazeDamageIntervalInMillis = 5000,
+    MazeDamage = 10
 }
 
 export enum SceneNames {

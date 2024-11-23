@@ -1,6 +1,6 @@
 import Backpack from "../../components/Backpack";
 import Player from "../../components/Player";
-import { Assets, AudioConig, GameLayout, SceneNames } from "../../enums/Constants";
+import { Assets, AudioConig, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
 import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
@@ -150,9 +150,13 @@ export default class MazeSceneBase extends SceneBase {
 
     protected createLifeBarAndStopwatch() {
         const lifebarWidth = 400;
-        this.lifeBar = new Lifebar(this, lifebarWidth / 2 - (GameLayout.SquareEdgeLength * this.squareMatrix[0].length) / 2, 0, lifebarWidth, 40, 100);
+        this.lifeBar = new Lifebar(this, lifebarWidth / 2 - (GameLayout.SquareEdgeLength * this.squareMatrix[0].length) / 2, 0, lifebarWidth, 40, GameplaySettings.MaxLife);
 
         this.gameTimer = new GameStopWatch(this, 0, 0, 42);
+
+        this.lifeBar.setStopWatch(this.gameTimer);
+
+        this.lifeBar.onDeath.push(() => { console.log("dead"); GameStopWatch.stopStopWatch(); });
 
         this.add.container(this.center_width, + GameLayout.SquareEdgeLength / -2 + this.center_height + (GameLayout.SquareEdgeLength * this.squareMatrix.length) / -2,
             [this.lifeBar, this.gameTimer]);
@@ -176,11 +180,19 @@ export default class MazeSceneBase extends SceneBase {
     protected setSceneDataBeforeTransition(sceneData: SceneData): void {
         sceneData.backpackItems = this.player.backpack.getAllItems();
         sceneData.fromScene = this.scene.key;
+        sceneData.currentLife = this.lifeBar.getCurrentLife();
     }
 
     protected setDataAfterTransition(newData: SceneData) {
-        this.player.backpack.setBackpackItems(newData.backpackItems);
+        if (newData.backpackItems != undefined)
+            this.player.backpack.setBackpackItems(newData.backpackItems);
+        
         this.setPlayerPosition(newData.fromScene);
+
+        if (newData.currentLife != undefined)
+            this.lifeBar.setCurrentLife(newData.currentLife);
+
+        this.gameTimer.updateTimeVisuals();
     }
 
     protected setPlayerPosition(fromScene: string | undefined) {

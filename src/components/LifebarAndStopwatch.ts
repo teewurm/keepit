@@ -1,28 +1,79 @@
-import { ColorPalette } from "../enums/Constants";
+import { ColorPalette, GameplaySettings } from "../enums/Constants";
 import SceneBase from "../scenes/bases/SceneBase";
 import CustomContainerBase from "./bases/CustomContainerBase";
 
 export default class Lifebar extends CustomContainerBase {
     protected maxLife: number;
+    protected currentLife: number;
+
     protected redLifeBar: Phaser.GameObjects.Rectangle;
+    protected static lastTimeWatchTookLife: number = 0;
+
+    // :(
+    readonly onDeath: (() => void)[] = [];
 
     constructor(scene: SceneBase, x: number, y: number, width: number, height: number, maxLife: number) {
         super(scene, x, y, width, height);
 
         this.maxLife = maxLife;
+        this.currentLife = maxLife;
 
         this.createBar();
+        this.updateLifeBar();
     }
 
+    getCurrentLife() {
+        return this.currentLife;
+    }
+
+    setCurrentLife(newLife: number) {
+        let flooredLife = Math.floor(newLife);
+
+        if (flooredLife < 0)
+            flooredLife = 0;
+
+        //Only if the player wasn't dead before it can die ( ﾟoﾟ)
+        if (this.currentLife != 0 && flooredLife == 0) {
+            this.onDeath.forEach(func => func());
+        }
+
+
+        this.currentLife = flooredLife;
+
+        this.updateLifeBar();
+    }
+
+    //This will determine if the life will be reduced based on the time
+    setStopWatch(stopWatch: GameStopWatch) {
+        stopWatch.onTimeUpdated.push(this.onTimeUpated.bind(this));
+    }
 
     protected createBar() {
         const outline = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight);
         outline.setStrokeStyle(2, 0x000000);
 
-        this.redLifeBar = this.scene.add.rectangle(this.targetWidth / 2, 0, this.targetWidth, this.targetHeight, ColorPalette.LIFEBAR);
-        this.redLifeBar.setOrigin(1, 0.5);
+        this.redLifeBar = this.scene.add.rectangle(this.targetWidth / -2, 0, this.targetWidth, this.targetHeight, ColorPalette.LIFEBAR);
+        this.redLifeBar.setOrigin(0, 0.5);
 
         this.add([this.redLifeBar, outline]);
+    }
+
+    protected updateLifeBar() {
+        this.redLifeBar.setScale(this.currentLife / this.maxLife, 1);
+    }
+
+    protected onTimeUpated(currentTime: number) {
+        const timePassedSinceLastDamage = currentTime - Lifebar.lastTimeWatchTookLife;
+
+        const timesDamageToTake = Math.floor(timePassedSinceLastDamage / GameplaySettings.MazeDamageIntervalInMillis);
+
+        if (timesDamageToTake > 0) {
+            const damageToTake = timesDamageToTake * GameplaySettings.MazeDamage;
+
+            this.setCurrentLife(this.currentLife - damageToTake);
+
+            Lifebar.lastTimeWatchTookLife = currentTime;
+        }
     }
 }
 
@@ -33,10 +84,14 @@ export class GameStopWatch extends CustomContainerBase {
     protected static startDateInMillis: number;
     protected static currentTimeInMillis: number = 0;
 
+    readonly onTimeUpdated: ((currentTime: number) => void)[] = [];
+
     constructor(scene: SceneBase, x: number, y: number, fontSize: number) {
         super(scene, x, y, 0, 0);
 
         this.createTimer(fontSize);
+
+        this.timerText.setText(this.formatMilliseconds(GameStopWatch.currentTimeInMillis));
     }
 
     protected createTimer(fontSize: number) {
@@ -53,16 +108,26 @@ export class GameStopWatch extends CustomContainerBase {
         }
     }
 
+    static stopStopWatch() {
+        GameStopWatch.timeIsRunning = false;
+    }
+
     updateTime() {
-        if (!GameStopWatch.timeIsRunning) {
-            this.timerText.setText(this.formatMilliseconds(GameStopWatch.currentTimeInMillis));
-            return;
-        }
+        if (GameStopWatch.timeIsRunning)
+            this.setTime(Date.now() - GameStopWatch.startDateInMillis);
+    }
 
-        const millis = Date.now() - GameStopWatch.startDateInMillis;
+    updateTimeVisuals() {
+        this.timerText.setText(this.formatMilliseconds(GameStopWatch.currentTimeInMillis));
+    }
 
+    protected setTime(millis: number) {
         this.timerText.setText(this.formatMilliseconds(millis));
         GameStopWatch.currentTimeInMillis = millis;
+
+        this.onTimeUpdated.forEach(func => {
+            func(millis);
+        });
     }
 
     protected formatMilliseconds(millis: number) {

@@ -33,9 +33,13 @@ export default class BossSceneBase extends SceneBase {
         this.createBaseField();
         this.createLifeBarAndStopwatch();
 
+        if (newData.currentLife != undefined)
+            this.lifeBar.setCurrentLife(newData.currentLife);
+
         this.createBoss();
 
-        this.player.backpack.setBackpackItems(newData.backpackItems);
+        if (newData.backpackItems != undefined)
+            this.player.backpack.setBackpackItems(newData.backpackItems);
     }
 
     protected createBaseField() {
