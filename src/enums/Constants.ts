@@ -6,7 +6,7 @@ export enum GameLayout {
     BossSquareCountHeight = 10
 }
 
-export enum GameplaySettings{
+export enum GameplaySettings {
     FogdisappearDuration = 1000,
     FogHalfDensity = 0.5,
     FogFullDensity = 1,
@@ -65,6 +65,25 @@ export enum AudioConig {
 }
 
 export namespace Assets {
+    export const AudioDirectory = "assets/sound";
+    export const SpriteDirectory = "assets/sprites";
+
+    export enum SpriteFileNames {
+        MainCharacter = "player/MainCharacter.png"
+    }
+
+    export enum JsonFileNames {
+        MainCharacter = "player/MainCharacter.json"
+    }
+
+    export enum Sprite {
+        MainCharacter = "MainCharacter"
+    }
+
+    export enum TextureKey{
+        MainCharacter = "a-MainCharacter"
+    }
+
     export enum AudioFileNames {
         PianoMusic = "licensed/MazeMusic1.wav",
         Move1 = "Move1.wav",

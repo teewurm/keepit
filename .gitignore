@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 #Licensed sounds and music
-public/licensed/
+**/licensed

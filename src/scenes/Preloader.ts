@@ -23,6 +23,8 @@ export class Preloader extends SceneBase {
     }
 
     preload() {
+        this.load.setPath(Assets.AudioDirectory);
+
         this.load.audio(Assets.Audio.PianoMusic, Assets.AudioFileNames.PianoMusic);
         this.load.audio(Assets.Audio.Move1, Assets.AudioFileNames.Move1);
         this.load.audio(Assets.Audio.Move2, Assets.AudioFileNames.Move2);
@@ -30,9 +32,14 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Move4, Assets.AudioFileNames.Move4);
         this.load.audio(Assets.Audio.Collect1, Assets.AudioFileNames.Collect1);
         this.load.audio(Assets.Audio.Bird, Assets.AudioFileNames.Bird);
+
+        this.load.setPath(Assets.SpriteDirectory);
+
+        this.load.aseprite(Assets.Sprite.MainCharacter, Assets.SpriteFileNames.MainCharacter, Assets.JsonFileNames.MainCharacter);
     }
 
     create() {
+        //#region sound config
         this.sound.pauseOnBlur = false;
 
         this.sound.add(Assets.Audio.PianoMusic, { volume: AudioConig.defaultVolumeMusic, loop: true });
@@ -41,6 +48,11 @@ export class Preloader extends SceneBase {
         this.sound.add(Assets.Audio.Move3, { volume: AudioConig.defaultVolumeSFX });
         this.sound.add(Assets.Audio.Move4, { volume: AudioConig.defaultVolumeSFX });
         this.sound.add(Assets.Audio.Collect1, { volume: AudioConig.defaultVolumeCollect });
+        //#endregion
+
+        //#region animation config
+        this.anims.createFromAseprite(Assets.Sprite.MainCharacter);
+        //#endregion
 
         this.scene.transition({
             target: SceneNames.Level1,

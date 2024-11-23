@@ -37,7 +37,7 @@ export default class Player extends CustomContainerBase {
         this.moveToNextSquare(this.currentIndex.x - 1, this.currentIndex.y);
     }
 
-    setPlayerPosition(newIndex: IndexUtil){
+    setPlayerPosition(newIndex: IndexUtil) {
         const newSquare = this.squareMatrix[newIndex.y][newIndex.x];
 
         this.setPosition(newSquare.x, newSquare.y);
@@ -47,8 +47,8 @@ export default class Player extends CustomContainerBase {
     }
 
     protected createPlayer() {
-        const player = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetWidth, ColorPalette.PLAYER);
-        player.setStrokeStyle(2, 0x000000);
+        const player = this.scene.add.sprite(0, 0, Assets.Sprite.MainCharacter);
+        player.play({ key: "Idle", repeat: -1 });
 
         this.add(player);
     }
