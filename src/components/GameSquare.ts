@@ -31,11 +31,11 @@ export default class GameSquare extends CustomContainerBase {
 
                 myImage.setScale(this.targetWidth / myImage.width, this.targetHeight / myImage.height);
 
-                const outline = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness).setStrokeStyle(outlineThickness, 0x000000);
+                const outline = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness);
 
                 this.backgroundObject = this.scene.add.container(0, 0, [myImage, outline]);
             } else {
-                this.backgroundObject = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness, ColorSquareMap.get(this.squareType)).setStrokeStyle(outlineThickness, 0x000000);
+                this.backgroundObject = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness, ColorSquareMap.get(this.squareType));
             }
 
             this.add(this.backgroundObject);
@@ -45,8 +45,11 @@ export default class GameSquare extends CustomContainerBase {
             this.fogDensity = 0;
         }
 
+
         this.fogObject = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorPalette.FOG, this.fogDensity);
         this.add(this.fogObject);
+
+        this.fogObject.setDepth(30);
 
         if (DEBUG) {
             this.add(this.scene.add.rectangle(0, 0, 10, 10, ColorPalette.DEBUG))

@@ -52,6 +52,7 @@ export default class MazeSceneBase extends SceneBase {
 
         this.spawnFullScreenButton();
         this.spawnSquares();
+        this.createGrid();
         this.spawnPlayerWithBackpack();
         this.addItems();
         this.setPortals();
@@ -61,7 +62,8 @@ export default class MazeSceneBase extends SceneBase {
 
         this.randomBirdSound(true);
 
-        this.events.on("resume", (_scene: Phaser.Scene, data: SceneData) => this.setDataAfterTransition(data))
+        this.events.on("resume", (_scene: Phaser.Scene, data: SceneData) => this.setDataAfterTransition(data));
+
         this.setDataAfterTransition(newData);
 
         GameStopWatch.startStopWatch();
@@ -126,6 +128,12 @@ export default class MazeSceneBase extends SceneBase {
         });
 
         this.mainContainer = this.add.container(this.center_width, this.center_height, allSquareObjects);
+    }
+
+    protected createGrid() {
+        const grid = this.add.grid(0, 0, this.squareMatrix[0].length * GameLayout.SquareEdgeLength, this.squareMatrix.length * GameLayout.SquareEdgeLength,
+            GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, undefined, undefined, 0x000000, 1)
+        this.mainContainer.add(grid);
     }
 
     protected spawnPlayerWithBackpack() {
