@@ -50,7 +50,7 @@ export default class Player extends CustomContainerBase {
         const player = this.scene.add.sprite(0, 0, Assets.Sprite.MainCharacter);
         player.play({ key: Assets.Animation.MainCharacterIdle, repeat: -1 });
 
-        player.setScale((this.targetWidth / player.width), (this.targetHeight / player.height));
+        player.setDisplaySize(this.targetWidth , this.targetHeight);
 
         this.add(player);
     }

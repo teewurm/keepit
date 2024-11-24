@@ -29,7 +29,7 @@ export default class GameSquare extends CustomContainerBase {
             if (SquareType.PATH == this.squareType || this.squareType == SquareType.WALL) {
                 const myImage = this.scene.add.sprite(0, 0, SquareType.WALL == this.squareType ? Assets.Sprite.Wall1 : Assets.Sprite.Path1)
 
-                myImage.setScale(this.targetWidth / myImage.width, this.targetHeight / myImage.height);
+                myImage.setDisplaySize(this.targetWidth, this.targetHeight);
 
                 const outline = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness);
 
