@@ -131,9 +131,14 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     protected createGrid() {
-        const grid = this.add.grid(0, 0, this.squareMatrix[0].length * GameLayout.SquareEdgeLength, this.squareMatrix.length * GameLayout.SquareEdgeLength,
-            GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, undefined, undefined, 0x000000, 1)
-        this.mainContainer.add(grid);
+        const fieldWidth = this.squareMatrix[0].length * GameLayout.SquareEdgeLength
+        const fieldHeight = this.squareMatrix.length * GameLayout.SquareEdgeLength;
+
+        const grid = this.add.grid(0, 0, fieldWidth, fieldHeight,
+            GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, undefined, undefined, 0x000000);
+
+        const outline = this.add.rectangle(0, 0, fieldWidth, fieldHeight).setStrokeStyle(1, 0x000000);
+        this.mainContainer.add([grid, outline]);
     }
 
     protected spawnPlayerWithBackpack() {
