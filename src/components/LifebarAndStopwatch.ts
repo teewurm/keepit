@@ -67,7 +67,7 @@ export default class Lifebar extends CustomContainerBase {
     }
 
     protected onTimeUpated(currentTime: number) {
-        if(this.currentLife == 0)
+        if (this.currentLife == 0)
             return;
 
         const timePassedSinceLastDamage = currentTime - Lifebar.lastTimeWatchTookLife;
@@ -81,8 +81,8 @@ export default class Lifebar extends CustomContainerBase {
 
             Lifebar.lastTimeWatchTookLife = currentTime;
 
-            if(this.currentLife == 0){
-                this.stopWatch?.setTime(GameplaySettings.MaxLife / GameplaySettings.MazeDamage * GameplaySettings.MazeDamageIntervalInMillis);
+            if (this.currentLife == 0) {
+                this.stopWatch?.setTime(Math.ceil(GameplaySettings.MaxLife / GameplaySettings.MazeDamage) * GameplaySettings.MazeDamageIntervalInMillis);
             }
         }
     }
