@@ -6,6 +6,8 @@ export default class Lifebar extends CustomContainerBase {
     protected maxLife: number;
     protected currentLife: number;
 
+
+    protected stopWatch?: GameStopWatch;
     protected redLifeBar: Phaser.GameObjects.Rectangle;
     protected static lastTimeWatchTookLife: number = 0;
 
@@ -45,6 +47,8 @@ export default class Lifebar extends CustomContainerBase {
 
     //This will determine if the life will be reduced based on the time
     setStopWatch(stopWatch: GameStopWatch) {
+        this.stopWatch = stopWatch;
+
         stopWatch.onTimeUpdated.push(this.onTimeUpated.bind(this));
     }
 
@@ -63,6 +67,9 @@ export default class Lifebar extends CustomContainerBase {
     }
 
     protected onTimeUpated(currentTime: number) {
+        if(this.currentLife == 0)
+            return;
+
         const timePassedSinceLastDamage = currentTime - Lifebar.lastTimeWatchTookLife;
 
         const timesDamageToTake = Math.floor(timePassedSinceLastDamage / GameplaySettings.MazeDamageIntervalInMillis);
@@ -73,6 +80,10 @@ export default class Lifebar extends CustomContainerBase {
             this.setCurrentLife(this.currentLife - damageToTake);
 
             Lifebar.lastTimeWatchTookLife = currentTime;
+
+            if(this.currentLife == 0){
+                this.stopWatch?.setTime(GameplaySettings.MaxLife / GameplaySettings.MazeDamage * GameplaySettings.MazeDamageIntervalInMillis);
+            }
         }
     }
 }
@@ -95,7 +106,7 @@ export class GameStopWatch extends CustomContainerBase {
     }
 
     protected createTimer(fontSize: number) {
-        this.timerText = this.scene.add.text(0, 0, "00:00:000", { fontSize: fontSize, color: "#000000", fontStyle: "bold" });
+        this.timerText = this.scene.add.text(0, 0, "00:00:000", { fontSize: fontSize, color: "#FFFFFF", fontStyle: "bold" });
         this.timerText.setOrigin(0.5, 0.5);
 
         this.add(this.timerText);
@@ -121,7 +132,7 @@ export class GameStopWatch extends CustomContainerBase {
         this.timerText.setText(this.formatMilliseconds(GameStopWatch.currentTimeInMillis));
     }
 
-    protected setTime(millis: number) {
+    setTime(millis: number) {
         this.timerText.setText(this.formatMilliseconds(millis));
         GameStopWatch.currentTimeInMillis = millis;
 
