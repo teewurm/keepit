@@ -36,6 +36,9 @@ export class Preloader extends SceneBase {
         this.load.setPath(Assets.SpriteDirectory);
 
         this.load.aseprite(Assets.Sprite.MainCharacter, Assets.SpriteFileNames.MainCharacter, Assets.JsonFileNames.MainCharacter);
+        this.load.image(Assets.Sprite.Path1, Assets.SpriteFileNames.Path1);
+        this.load.image(Assets.Sprite.Wall1, Assets.SpriteFileNames.Wall1);
+        this.load.image(Assets.Sprite.DefaultBackground, Assets.SpriteFileNames.DefaultBackground);
     }
 
     create() {
@@ -52,7 +55,7 @@ export class Preloader extends SceneBase {
 
         //#region animation config
         this.anims.createFromAseprite(Assets.Sprite.MainCharacter);
-        //#endregion
+        //#endregions
 
         this.scene.transition({
             target: SceneNames.Level1,

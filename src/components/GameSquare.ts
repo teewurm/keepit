@@ -8,7 +8,7 @@ import SceneBase from "../scenes/bases/SceneBase";
 export default class GameSquare extends CustomContainerBase {
     squareType: SquareType;
 
-    protected backgroundObject?: Phaser.GameObjects.Rectangle;
+    protected backgroundObject?: Phaser.GameObjects.GameObject;
     protected fogObject: Phaser.GameObjects.Rectangle;
     protected fogDensity = GameplaySettings.FogFullDensity;
 
@@ -21,11 +21,22 @@ export default class GameSquare extends CustomContainerBase {
 
         this.squareType = type;
 
-        this.itemSlot = new ItemSlot(this);
+        this.itemSlot = new ItemSlot(this, undefined, 24);
 
         if (this.squareType != SquareType.EMPTY) {
-            this.backgroundObject = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorSquareMap.get(this.squareType));
-            this.backgroundObject.setStrokeStyle(2, 0x000000);
+            const outlineThickness = 2;
+
+            if (SquareType.PATH == this.squareType || this.squareType == SquareType.WALL) {
+                const myImage = this.scene.add.sprite(0, 0, SquareType.WALL == this.squareType ? Assets.Sprite.Wall1 : Assets.Sprite.Path1)
+
+                myImage.setScale(this.targetWidth / myImage.width, this.targetHeight / myImage.height);
+
+                const outline = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness).setStrokeStyle(outlineThickness, 0x000000);
+
+                this.backgroundObject = this.scene.add.container(0, 0, [myImage, outline]);
+            } else {
+                this.backgroundObject = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness, ColorSquareMap.get(this.squareType)).setStrokeStyle(outlineThickness, 0x000000);
+            }
 
             this.add(this.backgroundObject);
         }

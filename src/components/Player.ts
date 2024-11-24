@@ -1,4 +1,4 @@
-import { AnimationEase, Assets, ColorPalette, PlayerDefaultData } from "../enums/Constants";
+import { AnimationEase, Assets, PlayerDefaultData } from "../enums/Constants";
 import GameSquare from "./GameSquare";
 import IndexUtil from "../utils/IndexUtil";
 import CustomContainerBase from "./bases/CustomContainerBase";
@@ -48,7 +48,9 @@ export default class Player extends CustomContainerBase {
 
     protected createPlayer() {
         const player = this.scene.add.sprite(0, 0, Assets.Sprite.MainCharacter);
-        player.play({ key: "Idle", repeat: -1 });
+        player.play({ key: Assets.Animation.MainCharacterIdle, repeat: -1 });
+
+        player.setScale((this.targetWidth / player.width), (this.targetHeight / player.height));
 
         this.add(player);
     }

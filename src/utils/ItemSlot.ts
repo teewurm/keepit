@@ -5,9 +5,11 @@ export default class ItemSlot {
     protected item?: ItemConfig = undefined;
 
     protected itemText?: Phaser.GameObjects.Text
+    protected targetFontSize: number
 
-    constructor(container: Phaser.GameObjects.Container, item?: ItemConfig) {
+    constructor(container: Phaser.GameObjects.Container, item: ItemConfig | undefined, fontSize: number) {
         this.container = container;
+        this.targetFontSize = fontSize
 
         if (item) {
             this.setItem(item);
@@ -32,7 +34,7 @@ export default class ItemSlot {
     setItem(item: ItemConfig) {
         this.item = item;
         const scene = this.container.scene;
-        this.itemText = scene.add.text(0, 0, this.item.text, { fontSize: 26, color: '#000000', fontStyle: "bold" });
+        this.itemText = scene.add.text(0, 0, this.item.text, { fontSize: this.targetFontSize, color: '#000000', fontStyle: "bold" });
         this.itemText.setOrigin(0.5, 0.5)
         this.container.add(this.itemText);
     }

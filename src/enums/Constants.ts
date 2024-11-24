@@ -3,7 +3,8 @@ import { SquareType } from "./SquareType";
 export enum GameLayout {
     SquareEdgeLength = 80,
     BossSquareCountWidth = 15,
-    BossSquareCountHeight = 10
+    BossSquareCountHeight = 10,
+    BackpackElementSize = 150
 }
 
 export enum GameplaySettings {
@@ -69,19 +70,25 @@ export namespace Assets {
     export const SpriteDirectory = "assets/sprites";
 
     export enum SpriteFileNames {
-        MainCharacter = "player/MainCharacter.png"
+        DefaultBackground = "Background.png",
+        MainCharacter = "player/MainCharacter.png",
+        Path1 = "maze/Path1.png",
+        Wall1 = "maze/Wall1.png"
+    }
+
+    export enum Sprite {
+        DefaultBackground = "DefaultBackground",
+        MainCharacter = "MainCharacter",
+        Path1 = "Path1",
+        Wall1 = "Wall1"
     }
 
     export enum JsonFileNames {
         MainCharacter = "player/MainCharacter.json"
     }
 
-    export enum Sprite {
-        MainCharacter = "MainCharacter"
-    }
-
-    export enum TextureKey{
-        MainCharacter = "a-MainCharacter"
+    export enum Animation {
+        MainCharacterIdle = "Idle"
     }
 
     export enum AudioFileNames {

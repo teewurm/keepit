@@ -9,8 +9,8 @@ export default class Backpack extends CustomContainerBase {
     protected infoCardSlots: ItemSlot[] = [];
     protected weaponsSlots: ItemSlot[] = [];
 
-    constructor(scene: SceneBase, x: number, y: number, width: number, height: number) {
-        super(scene, x, y, width, height);
+    constructor(scene: SceneBase, x: number, y: number, elementWidth: number, elementHeight: number) {
+        super(scene, x, y, elementWidth * 2, elementHeight * 6);
 
         this.createVisuals();
     }
@@ -35,9 +35,9 @@ export default class Backpack extends CustomContainerBase {
                 itemContainer.add(newRect);
 
                 if (i == 0) {
-                    this.infoCardSlots.push(new ItemSlot(itemContainer));
+                    this.infoCardSlots.push(new ItemSlot(itemContainer, undefined, 46));
                 } else {
-                    this.weaponsSlots.push(new ItemSlot(itemContainer));
+                    this.weaponsSlots.push(new ItemSlot(itemContainer, undefined, 46));
                 }
 
                 this.add(itemContainer);

@@ -42,12 +42,13 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     create(newData: SceneData) {
+        const background = this.add.sprite(this.center_width, this.center_height, Assets.Sprite.DefaultBackground);
+        background.setScale(this.width / background.width, this.height / background.height);
+
         const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
         if (!backgroundMusic.isPlaying) {
             backgroundMusic.play();
         }
-
-        this.cameras.main.setBackgroundColor(0x52AD9C);
 
         this.spawnFullScreenButton();
         this.spawnSquares();
@@ -128,10 +129,10 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     protected spawnPlayerWithBackpack() {
-        const backpack = new Backpack(this, (this.squareMatrix[0].length / 2 + 1.5) * GameLayout.SquareEdgeLength, 0, 200, 600);
+        const backpack = new Backpack(this, ((this.squareMatrix[0].length + 1) / 2) * GameLayout.SquareEdgeLength + GameLayout.BackpackElementSize, 0, GameLayout.BackpackElementSize, GameLayout.BackpackElementSize);
         const square = this.squareMatrix[this.playerSpawn.y][this.playerSpawn.x];
 
-        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, this.squareMatrix, backpack);
+        this.player = new Player(this, square.x, square.y, GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, this.squareMatrix, backpack);
 
         this.mainContainer.add([this.player, backpack]);
     }
@@ -186,7 +187,7 @@ export default class MazeSceneBase extends SceneBase {
     protected setDataAfterTransition(newData: SceneData) {
         if (newData.backpackItems != undefined)
             this.player.backpack.setBackpackItems(newData.backpackItems);
-        
+
         this.setPlayerPosition(newData.fromScene);
 
         if (newData.currentLife != undefined)

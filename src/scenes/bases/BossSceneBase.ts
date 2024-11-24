@@ -60,7 +60,7 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected createPlayerWithBackpack() {
-        const backpack = new Backpack(this, (this.fieldWidth / 2) + GameLayout.SquareEdgeLength * 1.5, 0, 200, 600);
+        const backpack = new Backpack(this, ((GameLayout.SquareEdgeLength + this.fieldWidth) / 2) + GameLayout.BackpackElementSize, 0, GameLayout.BackpackElementSize, GameLayout.BackpackElementSize);
         this.player = new Player(this, 0, this.fieldHeight / 4, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, [], backpack);
 
         this.mainContainer.add([backpack, this.player]);
