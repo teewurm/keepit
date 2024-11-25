@@ -1,4 +1,5 @@
 import { SceneNames } from "../../enums/Constants";
+import { DamageType } from "../../enums/DamageType";
 import { ItemType } from "../../enums/ItemType";
 import IndexUtil from "../../utils/IndexUtil";
 import { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData";
@@ -21,9 +22,9 @@ export default class Level2 extends MazeSceneBase {
     protected readonly playerSpawn: IndexUtil = new IndexUtil(2, 1);
 
     protected readonly startItems: ItemWithIndex[] = [
-        { index: { x: 5, y: 1 }, item: { text: "Fire", type: ItemType.WEAPON } },
-        { index: { x: 12, y: 2 }, item: { text: "?", type: ItemType.INFO_CARD } },
-        { index: { x: 9, y: 3 }, item: { text: "?", type: ItemType.INFO_CARD } },
+        { index: { x: 5, y: 1 }, item: { damageType: DamageType.Fire, type: ItemType.WEAPON } },
+        { index: { x: 12, y: 2 }, item: { damageType: DamageType.Void, type: ItemType.INFO_CARD } },
+        { index: { x: 9, y: 3 }, item: { damageType: DamageType.Void, type: ItemType.INFO_CARD } },
     ];
 
     protected readonly startPortals: PortalWithIndex[] = [

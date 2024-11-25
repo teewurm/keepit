@@ -7,6 +7,7 @@ import IndexUtil from "../../utils/IndexUtil";
 import SceneBase from "./SceneBase";
 import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
+import { DamageType } from "../../enums/DamageType";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
@@ -19,7 +20,7 @@ export default class MazeSceneBase extends SceneBase {
     protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
 
     protected readonly startItems: ItemWithIndex[] = [
-        { index: { x: 1, y: 0 }, item: { text: "Fire", type: ItemType.WEAPON } }
+        { index: { x: 1, y: 0 }, item: { damageType: DamageType.Fire, type: ItemType.WEAPON } }
     ];
 
     protected readonly startPortals: PortalWithIndex[] = [

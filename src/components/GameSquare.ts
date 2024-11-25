@@ -21,7 +21,7 @@ export default class GameSquare extends CustomContainerBase {
 
         this.squareType = type;
 
-        this.itemSlot = new ItemSlot(this, undefined, 24);
+        this.itemSlot = new ItemSlot(this, undefined);
 
         if (this.squareType != SquareType.EMPTY) {
             const outlineThickness = 2;

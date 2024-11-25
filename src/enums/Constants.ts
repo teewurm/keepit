@@ -73,18 +73,21 @@ export namespace Assets {
         DefaultBackground = "Background.png",
         MainCharacter = "player/MainCharacter.png",
         Path1 = "maze/Path1.png",
-        Wall1 = "maze/Wall1.png"
+        Wall1 = "maze/Wall1.png",
+        Weapons = "weapons/BaseWeapon.png"
     }
 
     export enum Sprite {
         DefaultBackground = "DefaultBackground",
         MainCharacter = "MainCharacter",
         Path1 = "Path1",
-        Wall1 = "Wall1"
+        Wall1 = "Wall1",
+        Weapons = "Weapons"
     }
 
     export enum JsonFileNames {
-        MainCharacter = "player/MainCharacter.json"
+        MainCharacter = "player/MainCharacter.json",
+        Weapons = "weapons/BaseWeapon.json"
     }
 
     export enum Animation {
