@@ -34,7 +34,7 @@ export default class Backpack extends CustomContainerBase {
 
                 itemContainer.add(newRect);
 
-                if (i == 0) {
+                if (i == 1) {
                     this.infoCardSlots.push(new ItemSlot(itemContainer, undefined));
                 } else {
                     this.weaponsSlots.push(new ItemSlot(itemContainer, undefined));

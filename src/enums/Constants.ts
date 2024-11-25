@@ -14,7 +14,10 @@ export enum GameplaySettings {
     FogNoDensity = 0,
     MaxLife = 100,
     MazeDamageIntervalInMillis = 5000,
-    MazeDamage = 10
+    MazeDamage = 10,
+    WeaponDamage = 10,
+    WeaknessMultiplier = 4,
+    BossWeaknessCount = 4
 }
 
 export enum SceneNames {

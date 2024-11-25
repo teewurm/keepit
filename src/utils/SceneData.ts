@@ -5,7 +5,7 @@ export default class SceneData{
     backpackItems?: ItemConfig[] = [];
     fromScene?: string;
     currentLife?: number;
-    startStopWatch = false;
+    firstSceneOfLevel = false;
 }
 
 export class ItemWithIndex{

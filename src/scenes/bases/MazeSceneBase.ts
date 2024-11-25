@@ -8,6 +8,7 @@ import SceneBase from "./SceneBase";
 import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import { DamageType } from "../../enums/DamageType";
+import Boss from "../../components/Boss";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
@@ -51,6 +52,11 @@ export default class MazeSceneBase extends SceneBase {
             backgroundMusic.play();
         }
 
+
+        if (newData.firstSceneOfLevel) {
+            Boss.generateRandomWeaknesses(GameplaySettings.BossWeaknessCount);
+        }
+
         this.spawnFullScreenButton();
         this.spawnSquares();
         this.createGrid();
@@ -67,8 +73,9 @@ export default class MazeSceneBase extends SceneBase {
 
         this.setDataAfterTransition(newData);
 
-        if (newData.startStopWatch)
+        if (newData.firstSceneOfLevel) {
             GameStopWatch.startStopWatch();
+        }
     }
 
     update(): void {
@@ -154,6 +161,10 @@ export default class MazeSceneBase extends SceneBase {
 
     protected addItems() {
         this.startItems.forEach((itemAndIndex) => {
+            if (itemAndIndex.item.type == ItemType.INFO_CARD) {
+                itemAndIndex.item.damageType = Boss.getNextWeakness();
+            }
+
             this.squareMatrix[itemAndIndex.index.y][itemAndIndex.index.x].addItem(itemAndIndex.item);
         });
     }

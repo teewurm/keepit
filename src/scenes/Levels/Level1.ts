@@ -30,10 +30,6 @@ export default class Level1 extends MazeSceneBase {
         { index: { x: 9, y: 7 }, item: { damageType: DamageType.Water, type: ItemType.WEAPON } },
         { index: { x: 12, y: 2 }, item: { damageType: DamageType.Water, type: ItemType.INFO_CARD } },
         { index: { x: 12, y: 3 }, item: { damageType: DamageType.Fire, type: ItemType.INFO_CARD } },
-        { index: { x: 11, y: 3 }, item: { damageType: DamageType.Poison, type: ItemType.INFO_CARD } },
-        { index: { x: 10, y: 3 }, item: { damageType: DamageType.Yellow, type: ItemType.INFO_CARD } },
-        { index: { x: 9, y: 3 }, item: { damageType: DamageType.Electricity, type: ItemType.INFO_CARD } },
-        { index: { x: 9, y: 2 }, item: { damageType: DamageType.Void, type: ItemType.INFO_CARD } },
     ];
 
     constructor() {
