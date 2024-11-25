@@ -52,6 +52,10 @@ export default class Lifebar extends CustomContainerBase {
         stopWatch.onTimeUpdated.push(this.onTimeUpated.bind(this));
     }
 
+    reduceLife(damageToTake: number) {
+        this.setCurrentLife(this.currentLife - damageToTake);
+    }
+
     protected createBar() {
         const outline = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight);
         outline.setStrokeStyle(2, 0x000000);
@@ -77,7 +81,7 @@ export default class Lifebar extends CustomContainerBase {
         if (timesDamageToTake > 0) {
             const damageToTake = timesDamageToTake * GameplaySettings.MazeDamage;
 
-            this.setCurrentLife(this.currentLife - damageToTake);
+            this.reduceLife(damageToTake);
 
             Lifebar.lastTimeWatchTookLife = currentTime;
 

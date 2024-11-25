@@ -15,8 +15,13 @@ export default class BossSceneBase extends SceneBase {
     protected fieldWidth: number;
     protected fieldHeight: number;
 
-    protected lifeBar: Lifebar;
+    protected playerLifeBar: Lifebar;
     protected gameTimer: GameStopWatch;
+
+    protected attackButton: Phaser.GameObjects.Rectangle;
+
+    protected isPlayerTurn = false;
+
 
     constructor(name: string) {
         super(name ? name : SceneNames.BossBase);
@@ -32,14 +37,22 @@ export default class BossSceneBase extends SceneBase {
         this.createPlayerWithBackpack();
         this.createBaseField();
         this.createLifeBarAndStopwatch();
+        this.spawnAttackButton();
+        this.addAttackListener();
 
         if (newData.currentLife != undefined)
-            this.lifeBar.setCurrentLife(newData.currentLife);
+            this.playerLifeBar.setCurrentLife(newData.currentLife);
 
         this.createBoss();
 
         if (newData.backpackItems != undefined)
             this.player.backpack.setBackpackItems(newData.backpackItems);
+
+        this.boss.getLifeBar().onDeath.push(() => console.log("Boss dead"));
+        this.playerLifeBar.onDeath.push(() => console.log("Player dead"));
+
+        this.player.backpack.activateFirstItem();
+        this.isPlayerTurn = true;
     }
 
     protected createBaseField() {
@@ -74,12 +87,38 @@ export default class BossSceneBase extends SceneBase {
 
     protected createLifeBarAndStopwatch() {
         const lifebarWidth = 400;
-        this.lifeBar = new Lifebar(this, lifebarWidth / 2 - this.fieldWidth / 2, 0, lifebarWidth, 40, 100);
+        this.playerLifeBar = new Lifebar(this, lifebarWidth / 2 - this.fieldWidth / 2, 0, lifebarWidth, 40, 100);
 
         this.gameTimer = new GameStopWatch(this, 0, 0, 42);
 
         this.add.container(this.center_width, + GameLayout.SquareEdgeLength / -2 + this.center_height + this.fieldHeight / -2,
-            [this.lifeBar, this.gameTimer]);
+            [this.playerLifeBar, this.gameTimer]);
+    }
+
+    protected spawnAttackButton() {
+        this.attackButton = this.add.rectangle(0, 0, 200, 50, 0xffffff).setStrokeStyle(2, 0x000000);
+        const btnText = this.add.text(0, 0, "Attack !!!", { fontSize: 28, fontStyle: "bold", color: "#000000" }).setOrigin(0.5, 0.5);
+
+        const btnCont = this.add.container(0, 0, [this.attackButton, btnText]);
+
+        this.mainContainer.add(btnCont)
+    }
+
+    protected addAttackListener() {
+        this.attackButton.setInteractive();
+
+        this.attackButton.on("pointerup", this.attackBoss.bind(this))
+    }
+
+    protected attackBoss() {
+        if (!this.isPlayerTurn)
+            return;
+
+        const activeWeaponType = this.player.backpack.getActiveWeapon();
+        if (activeWeaponType != undefined)
+            this.boss.attackBoss(activeWeaponType);
+
+        this.isPlayerTurn = false;
     }
 
     update(): void {

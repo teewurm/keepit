@@ -9,6 +9,8 @@ export default class Backpack extends CustomContainerBase {
     protected infoCardSlots: ItemSlot[] = [];
     protected weaponsSlots: ItemSlot[] = [];
 
+    protected activeWeaponSlot?: ItemSlot;
+
     constructor(scene: SceneBase, x: number, y: number, elementWidth: number, elementHeight: number) {
         super(scene, x, y, elementWidth * 2, elementHeight * 6);
 
@@ -31,13 +33,16 @@ export default class Backpack extends CustomContainerBase {
                 const newRect = this.scene.add.rectangle(0, 0, width, height, ColorPalette.PORTAL);
                 newRect.setStrokeStyle(2, 0x000000);
 
+                const highlightRec = this.scene.add.rectangle(0, 0, width, height, ColorPalette.HIGHLIGHT)
 
-                itemContainer.add(newRect);
+                itemContainer.add([newRect, highlightRec]);
 
                 if (i == 1) {
-                    this.infoCardSlots.push(new ItemSlot(itemContainer, undefined));
+                    this.infoCardSlots.push(new ItemSlot(itemContainer, undefined, highlightRec));
                 } else {
-                    this.weaponsSlots.push(new ItemSlot(itemContainer, undefined));
+                    const newSlot = new ItemSlot(itemContainer, undefined, highlightRec)
+                    newSlot.onClick.push(this.newWeaponClicked.bind(this));
+                    this.weaponsSlots.push(newSlot);
                 }
 
                 this.add(itemContainer);
@@ -82,6 +87,26 @@ export default class Backpack extends CustomContainerBase {
         itemsToSet.forEach(itemConfig => {
             this.addItem(itemConfig);
         });
+    }
+
+    activateFirstItem() {
+        const firstItem = this.weaponsSlots[0];
+        if (firstItem.getItem() != undefined) {
+            this.activeWeaponSlot = firstItem;
+            this.activeWeaponSlot.select();
+        }
+    }
+
+    getActiveWeapon() {
+        return this.activeWeaponSlot?.getItem()?.damageType;
+    }
+
+    newWeaponClicked(slot: ItemSlot) {
+        if(this.activeWeaponSlot)
+            this.activeWeaponSlot.deselect();
+
+        slot.select();
+        this.activeWeaponSlot = slot;
     }
 
     protected addItemToList(item: ItemConfig, list: ItemSlot[]): boolean {

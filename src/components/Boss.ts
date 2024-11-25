@@ -1,4 +1,4 @@
-import { ColorPalette } from "../enums/Constants";
+import { ColorPalette, GameplaySettings } from "../enums/Constants";
 import { DamageType } from "../enums/DamageType";
 import SceneBase from "../scenes/bases/SceneBase";
 import CustomContainerBase from "./bases/CustomContainerBase";
@@ -29,6 +29,8 @@ export default class Boss extends CustomContainerBase {
         }
 
         Boss.currentWeaknesses = allTypes.slice(0, count) as DamageType[];
+
+        console.log(Boss.currentWeaknesses)
     }
 
     static getNextWeakness() {
@@ -37,6 +39,16 @@ export default class Boss extends CustomContainerBase {
         Boss.currentWeaknessIndex = (Boss.currentWeaknessIndex + 1) % Boss.currentWeaknesses.length;
 
         return nextWeakness;
+    }
+
+    getLifeBar() {
+        return this.lifeBar;
+    }
+
+    attackBoss(damageType: DamageType) {
+        const damageFactor = Boss.currentWeaknesses.includes(damageType) ? GameplaySettings.WeaknessMultiplier : 1;
+
+        this.lifeBar.reduceLife(GameplaySettings.WeaponDamage * damageFactor);
     }
 
     protected createBoss() {

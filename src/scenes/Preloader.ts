@@ -62,16 +62,17 @@ export class Preloader extends SceneBase {
 
         //#region animation config
         this.anims.createFromAseprite(Assets.Sprite.MainCharacter);
-        this.anims.createFromAseprite(Assets.Sprite.Weapons);        
-        this.anims.createFromAseprite(Assets.Sprite.InfoCards);    
+        this.anims.createFromAseprite(Assets.Sprite.Weapons);
+        this.anims.createFromAseprite(Assets.Sprite.InfoCards);
         //#endregions
 
         const data: SceneData = new SceneData();
         data.firstSceneOfLevel = true;
-        data.backpackItems = [{ damageType: DamageType.Electricity, type: ItemType.WEAPON }]
+        data.backpackItems = [{ damageType: DamageType.Electricity, type: ItemType.WEAPON }, { damageType: DamageType.Void, type: ItemType.WEAPON }]
 
 
         Boss.generateRandomWeaknesses(3);
+        
         this.scene.transition({
             target: SceneNames.BossBase,
             duration: 500,

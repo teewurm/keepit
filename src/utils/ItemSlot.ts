@@ -8,12 +8,30 @@ export default class ItemSlot {
 
     protected sprite?: Phaser.GameObjects.Sprite;
 
-    constructor(container: Phaser.GameObjects.Container, item: ItemConfig | undefined) {
+    protected highlightRec?: Phaser.GameObjects.Rectangle;
+
+    readonly onClick: ((slot: ItemSlot) => void)[] = [];
+
+    constructor(container: Phaser.GameObjects.Container, item: ItemConfig | undefined, highlightRec?: Phaser.GameObjects.Rectangle) {
         this.container = container;
+
+        this.highlightRec = highlightRec
+
+        this.deselect();
 
         if (item) {
             this.setItem(item);
         }
+    }
+
+    select() {
+        if (this.highlightRec)
+            this.highlightRec.visible = true;
+    }
+
+    deselect() {
+        if (this.highlightRec)
+            this.highlightRec.visible = false;
     }
 
     isEmpty(): boolean {
@@ -37,8 +55,14 @@ export default class ItemSlot {
 
         const suffix = item.type == ItemType.WEAPON ? "" : "_I"
 
+        if (this.sprite)
+            this.sprite.removeAllListeners();
+
         this.sprite = scene.add.sprite(0, 0, item.type == ItemType.WEAPON ? Assets.Sprite.InfoCards : Assets.Sprite.InfoCards);
         this.sprite.play({ key: item.damageType + suffix });
+
+        this.sprite.setInteractive();
+        this.sprite.on("pointerup", () => { this.onClick.forEach(func => func(this)) });
 
         this.container.add(this.sprite);
     }

@@ -17,7 +17,8 @@ export enum GameplaySettings {
     MazeDamage = 10,
     WeaponDamage = 10,
     WeaknessMultiplier = 4,
-    BossWeaknessCount = 4
+    BossWeaknessCount = 2,
+    BossDamage = 10
 }
 
 export enum SceneNames {
@@ -36,7 +37,8 @@ export enum ColorPalette {
     PLAYER = 0x440044,
     FOG = 0x999999,
     DEBUG = 0xFF00FF,
-    LIFEBAR = 0xFF0000
+    LIFEBAR = 0xFF0000,
+    HIGHLIGHT = 0xb8bf55
 }
 
 export enum PlayerDefaultData {
