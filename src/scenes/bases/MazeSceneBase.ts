@@ -66,7 +66,8 @@ export default class MazeSceneBase extends SceneBase {
 
         this.setDataAfterTransition(newData);
 
-        GameStopWatch.startStopWatch();
+        if (newData.startStopWatch)
+            GameStopWatch.startStopWatch();
     }
 
     update(): void {

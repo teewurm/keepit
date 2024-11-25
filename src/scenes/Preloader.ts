@@ -1,4 +1,5 @@
 import { Assets, AudioConig, SceneNames } from "../enums/Constants";
+import SceneData from "../utils/SceneData";
 import SceneBase from "./bases/SceneBase";
 
 export class Preloader extends SceneBase {
@@ -57,6 +58,10 @@ export class Preloader extends SceneBase {
         this.anims.createFromAseprite(Assets.Sprite.MainCharacter);
         //#endregions
 
+        const data: SceneData = new SceneData();
+        data.startStopWatch = true;
+
+
         this.scene.transition({
             target: SceneNames.Level1,
             duration: 500,
@@ -64,7 +69,7 @@ export class Preloader extends SceneBase {
             onUpdate: (progress: number) => {
                 this.cameras.main.setAlpha(1 - progress);
             },
-            data: {}
+            data: data
         });
     }
 }
