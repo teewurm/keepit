@@ -38,6 +38,7 @@ export class Preloader extends SceneBase {
 
         this.load.aseprite(Assets.Sprite.MainCharacter, Assets.SpriteFileNames.MainCharacter, Assets.JsonFileNames.MainCharacter);
         this.load.aseprite(Assets.Sprite.Weapons, Assets.SpriteFileNames.Weapons, Assets.JsonFileNames.Weapons);
+        this.load.aseprite(Assets.Sprite.InfoCards, Assets.SpriteFileNames.InfoCards, Assets.JsonFileNames.InfoCards);
 
         this.load.image(Assets.Sprite.Path1, Assets.SpriteFileNames.Path1);
         this.load.image(Assets.Sprite.Wall1, Assets.SpriteFileNames.Wall1);
@@ -59,6 +60,7 @@ export class Preloader extends SceneBase {
         //#region animation config
         this.anims.createFromAseprite(Assets.Sprite.MainCharacter);
         this.anims.createFromAseprite(Assets.Sprite.Weapons);        
+        this.anims.createFromAseprite(Assets.Sprite.InfoCards);    
         //#endregions
 
         const data: SceneData = new SceneData();

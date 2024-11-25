@@ -35,8 +35,10 @@ export default class ItemSlot {
         this.item = item;
         const scene = this.container.scene;
 
-        this.sprite = scene.add.sprite(0, 0, Assets.Sprite.Weapons);
-        this.sprite.play({ key: item.damageType });
+        const suffix = item.type == ItemType.WEAPON ? "" : "_I"
+
+        this.sprite = scene.add.sprite(0, 0, item.type == ItemType.WEAPON ? Assets.Sprite.InfoCards : Assets.Sprite.InfoCards);
+        this.sprite.play({ key: item.damageType + suffix });
 
         this.container.add(this.sprite);
     }

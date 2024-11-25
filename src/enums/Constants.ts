@@ -74,7 +74,8 @@ export namespace Assets {
         MainCharacter = "player/MainCharacter.png",
         Path1 = "maze/Path1.png",
         Wall1 = "maze/Wall1.png",
-        Weapons = "weapons/BaseWeapon.png"
+        Weapons = "weapons/BaseWeapon.png",
+        InfoCards = "infoCards/BaseInfoCard.png"
     }
 
     export enum Sprite {
@@ -82,12 +83,14 @@ export namespace Assets {
         MainCharacter = "MainCharacter",
         Path1 = "Path1",
         Wall1 = "Wall1",
-        Weapons = "Weapons"
+        Weapons = "Weapons",
+        InfoCards = "InfoCards"
     }
 
     export enum JsonFileNames {
         MainCharacter = "player/MainCharacter.json",
-        Weapons = "weapons/BaseWeapon.json"
+        Weapons = "weapons/BaseWeapon.json",
+        InfoCards = "infoCards/BaseInfoCard.json"
     }
 
     export enum Animation {
