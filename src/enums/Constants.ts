@@ -18,7 +18,8 @@ export enum GameplaySettings {
     WeaponDamage = 10,
     WeaknessMultiplier = 4,
     BossWeaknessCount = 2,
-    BossDamage = 10
+    BossDamage = 10,
+    BossAttackDelayMillis = 800
 }
 
 export enum SceneNames {

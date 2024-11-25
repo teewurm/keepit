@@ -2,7 +2,7 @@ import Backpack from "../../components/Backpack";
 import Boss from "../../components/Boss";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
-import { ColorPalette, GameLayout, SceneNames } from "../../enums/Constants";
+import { ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
 
@@ -119,6 +119,16 @@ export default class BossSceneBase extends SceneBase {
             this.boss.attackBoss(activeWeaponType);
 
         this.isPlayerTurn = false;
+
+        this.attackPlayer();
+    }
+
+    protected attackPlayer() {
+        this.time.delayedCall(GameplaySettings.BossAttackDelayMillis, () => {
+            this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
+            if (this.playerLifeBar.getCurrentLife() > 0)
+                this.isPlayerTurn = true;
+        });
     }
 
     update(): void {
