@@ -11,6 +11,10 @@ export default class Backpack extends CustomContainerBase {
 
     protected activeWeaponSlot?: ItemSlot;
 
+    isSwapWeaponBlocked = true;
+
+    readonly onWeaponSwap: (() => void)[] = [];
+
     constructor(scene: SceneBase, x: number, y: number, elementWidth: number, elementHeight: number) {
         super(scene, x, y, elementWidth * 2, elementHeight * 6);
 
@@ -102,11 +106,16 @@ export default class Backpack extends CustomContainerBase {
     }
 
     newWeaponClicked(slot: ItemSlot) {
-        if(this.activeWeaponSlot)
+        if (this.isSwapWeaponBlocked)
+            return;
+
+        if (this.activeWeaponSlot)
             this.activeWeaponSlot.deselect();
 
         slot.select();
         this.activeWeaponSlot = slot;
+
+        this.onWeaponSwap.forEach(func => func());
     }
 
     protected addItemToList(item: ItemConfig, list: ItemSlot[]): boolean {

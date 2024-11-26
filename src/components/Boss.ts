@@ -29,8 +29,6 @@ export default class Boss extends CustomContainerBase {
         }
 
         Boss.currentWeaknesses = allTypes.slice(0, count) as DamageType[];
-
-        console.log(Boss.currentWeaknesses)
     }
 
     static getNextWeakness() {

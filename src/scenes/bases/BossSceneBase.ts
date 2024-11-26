@@ -2,6 +2,7 @@ import Backpack from "../../components/Backpack";
 import Boss from "../../components/Boss";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
+import RedArrow from "../../components/RedArrow";
 import { ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
@@ -22,6 +23,7 @@ export default class BossSceneBase extends SceneBase {
 
     protected isPlayerTurn = false;
 
+    protected redArrow: RedArrow;
 
     constructor(name: string) {
         super(name ? name : SceneNames.BossBase);
@@ -39,12 +41,11 @@ export default class BossSceneBase extends SceneBase {
         this.createLifeBarAndStopwatch();
         this.spawnAttackButton();
         this.addAttackListener();
+        this.createBoss();
+        this.spawnRedArrow();
 
         if (newData.currentLife != undefined)
             this.playerLifeBar.setCurrentLife(newData.currentLife);
-
-        this.createBoss();
-
         if (newData.backpackItems != undefined)
             this.player.backpack.setBackpackItems(newData.backpackItems);
 
@@ -52,7 +53,8 @@ export default class BossSceneBase extends SceneBase {
         this.playerLifeBar.onDeath.push(() => console.log("Player dead"));
 
         this.player.backpack.activateFirstItem();
-        this.isPlayerTurn = true;
+        this.player.backpack.onWeaponSwap.push(this.setIsPlayerTurn.bind(this, false));
+        this.setIsPlayerTurn(true);
     }
 
     protected createBaseField() {
@@ -85,6 +87,13 @@ export default class BossSceneBase extends SceneBase {
         this.mainContainer.add(this.boss);
     }
 
+    protected spawnRedArrow() {
+        const arrowWidth = this.fieldWidth * 0.2;
+        this.redArrow = new RedArrow(this, this.fieldWidth / -2 + arrowWidth / 2, 0, arrowWidth, this.fieldHeight * 0.05);
+
+        this.mainContainer.add(this.redArrow);
+    }
+
     protected createLifeBarAndStopwatch() {
         const lifebarWidth = 400;
         this.playerLifeBar = new Lifebar(this, lifebarWidth / 2 - this.fieldWidth / 2, 0, lifebarWidth, 40, 100);
@@ -110,6 +119,20 @@ export default class BossSceneBase extends SceneBase {
         this.attackButton.on("pointerup", this.attackBoss.bind(this))
     }
 
+    protected setIsPlayerTurn(val: boolean) {
+        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0)
+            return;
+
+        this.isPlayerTurn = val;
+        this.player.backpack.isSwapWeaponBlocked = !val;
+        if (!this.isPlayerTurn) {
+            this.redArrow.setAngle(-30)
+            this.attackPlayer();
+        } else {
+            this.redArrow.setAngle(30)
+        }
+    }
+
     protected attackBoss() {
         if (!this.isPlayerTurn)
             return;
@@ -118,16 +141,13 @@ export default class BossSceneBase extends SceneBase {
         if (activeWeaponType != undefined)
             this.boss.attackBoss(activeWeaponType);
 
-        this.isPlayerTurn = false;
-
-        this.attackPlayer();
+        this.setIsPlayerTurn(false);
     }
 
     protected attackPlayer() {
         this.time.delayedCall(GameplaySettings.BossAttackDelayMillis, () => {
             this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
-            if (this.playerLifeBar.getCurrentLife() > 0)
-                this.isPlayerTurn = true;
+            this.setIsPlayerTurn(true);
         });
     }
 
