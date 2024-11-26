@@ -1,3 +1,4 @@
+import Lifebar, { GameStopWatch } from "../components/LifebarAndStopwatch";
 import { Assets, AudioConig, SceneNames } from "../enums/Constants";
 import SceneData from "../utils/SceneData";
 import SceneBase from "./bases/SceneBase";
@@ -10,6 +11,8 @@ export class Preloader extends SceneBase {
 
     init() {
         super.init();
+
+        this.cameras.main.setBackgroundColor({ a: 0 });
 
         // this.add.image(this.center_width, this.center_height, Assets.Images.DefaulBackground).setScale(2, 2);
         this.add.rectangle(this.center_width, this.center_height, this.width, this.height, 0x000000)
@@ -72,6 +75,10 @@ export class Preloader extends SceneBase {
         this.anims.createFromAseprite(Assets.Sprite.InfoCards);
         this.anims.createFromAseprite(Assets.Sprite.Boss);
         //#endregions
+
+
+        GameStopWatch.currentTimeInMillis = 0;
+        Lifebar.lastTimeWatchTookLife = 0;
 
         const data: SceneData = new SceneData();
         data.firstSceneOfLevel = true;

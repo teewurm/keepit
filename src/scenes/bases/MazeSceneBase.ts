@@ -183,7 +183,7 @@ export default class MazeSceneBase extends SceneBase {
 
         this.lifeBar.setStopWatch(this.gameTimer);
 
-        this.lifeBar.onDeath.push(() => { console.log("dead"); GameStopWatch.stopStopWatch(); });
+        this.lifeBar.onDeath.push(() => { GameStopWatch.stopStopWatch(); this.scene.start(SceneNames.GameOver, { won: false }) });
 
         this.add.container(this.center_width, + GameLayout.SquareEdgeLength / -2 + this.center_height + (GameLayout.SquareEdgeLength * this.squareMatrix.length) / -2,
             [this.lifeBar, this.gameTimer]);

@@ -9,7 +9,7 @@ export default class Lifebar extends CustomContainerBase {
 
     protected stopWatch?: GameStopWatch;
     protected redLifeBar: Phaser.GameObjects.Rectangle;
-    protected static lastTimeWatchTookLife: number = 0;
+    static lastTimeWatchTookLife: number = 0;
 
     // :(
     readonly onDeath: (() => void)[] = [];
@@ -97,7 +97,7 @@ export class GameStopWatch extends CustomContainerBase {
 
     protected static timeIsRunning = false;
     protected static startDateInMillis: number;
-    protected static currentTimeInMillis: number = 0;
+    static currentTimeInMillis: number = 0;
 
     readonly onTimeUpdated: ((currentTime: number) => void)[] = [];
 

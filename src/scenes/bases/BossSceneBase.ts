@@ -50,8 +50,8 @@ export default class BossSceneBase extends SceneBase {
         if (newData.backpackItems != undefined)
             this.player.backpack.setBackpackItems(newData.backpackItems);
 
-        this.boss.getLifeBar().onDeath.push(() => console.log("Boss dead"));
-        this.playerLifeBar.onDeath.push(() => console.log("Player dead"));
+        this.boss.getLifeBar().onDeath.push(() => this.scene.start(SceneNames.GameOver, { won: true }));
+        this.playerLifeBar.onDeath.push(() => this.scene.start(SceneNames.GameOver, { won: false }));
 
         this.player.backpack.activateFirstItem();
         this.player.backpack.onWeaponSwap.push(this.setIsPlayerTurn.bind(this, false));
@@ -124,7 +124,7 @@ export default class BossSceneBase extends SceneBase {
         this.isPlayerTurn = val;
         this.player.backpack.isSwapWeaponBlocked = !val;
 
-        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0){
+        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0) {
             GameStopWatch.stopStopWatch();
             return;
         }

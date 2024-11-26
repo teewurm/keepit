@@ -5,6 +5,7 @@ import { Preloader } from "./scenes/Preloader";
 import BossSceneBase from "./scenes/bases/BossSceneBase";
 import MainMenu from "./scenes/MainMenu";
 import { Boot } from "./scenes/Boot";
+import GameOverScene from "./scenes/GameOverScene";
 
 
 const config: Types.Core.GameConfig = {
@@ -22,6 +23,7 @@ const config: Types.Core.GameConfig = {
     scene: [
         Boot,
         MainMenu,
+        GameOverScene,
         Preloader,
         Level1,
         Level2,

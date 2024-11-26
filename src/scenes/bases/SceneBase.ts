@@ -13,6 +13,8 @@ export default abstract class SceneBase extends Scene {
     }
 
     init(_placeHolder: Object | undefined = undefined) {
+        this.cameras.main.setBackgroundColor('#47624F');
+
         this.width = Number(this.sys.game.config.width);
         this.height = Number(this.sys.game.config.height);
         this.center_width = this.width / 2;

@@ -14,7 +14,7 @@ export enum GameplaySettings {
     FogNoDensity = 0,
     MaxLife = 100,
     MazeDamageIntervalInMillis = 5000,
-    MazeDamage = 10,
+    MazeDamage = 100,
     WeaponDamage = 10,
     WeaknessMultiplier = 4,
     BossWeaknessCount = 2,
@@ -25,6 +25,7 @@ export enum GameplaySettings {
 export enum SceneNames {
     Boot = "Boot",
     MainMenu = "MainMenu",
+    GameOver = "GameOver",
     Preloader = "preloader",
     Mazebase = "Base",
     BossBase = "BossBase",
