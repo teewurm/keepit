@@ -23,6 +23,8 @@ export enum GameplaySettings {
 }
 
 export enum SceneNames {
+    Boot = "Boot",
+    MainMenu = "MainMenu",
     Preloader = "preloader",
     Mazebase = "Base",
     BossBase = "BossBase",

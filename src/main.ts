@@ -3,6 +3,8 @@ import Level1 from "./scenes/Levels/Level1";
 import Level2 from "./scenes/Levels/Level2";
 import { Preloader } from "./scenes/Preloader";
 import BossSceneBase from "./scenes/bases/BossSceneBase";
+import MainMenu from "./scenes/MainMenu";
+import { Boot } from "./scenes/Boot";
 
 
 const config: Types.Core.GameConfig = {
@@ -18,6 +20,8 @@ const config: Types.Core.GameConfig = {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
     scene: [
+        Boot,
+        MainMenu,
         Preloader,
         Level1,
         Level2,

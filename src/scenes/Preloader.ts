@@ -50,7 +50,7 @@ export class Preloader extends SceneBase {
         this.load.image(Assets.Sprite.DefaultBackground, Assets.SpriteFileNames.DefaultBackground);
     }
 
-    create() {
+    create(nextScene: { name: string }) {
         //#region sound config
         this.sound.pauseOnBlur = false;
 
@@ -75,9 +75,9 @@ export class Preloader extends SceneBase {
 
         const data: SceneData = new SceneData();
         data.firstSceneOfLevel = true;
-        
+
         this.scene.transition({
-            target: SceneNames.Level1,
+            target: nextScene.name,
             duration: 500,
             moveBelow: true,
             onUpdate: (progress: number) => {
