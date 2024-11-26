@@ -113,7 +113,10 @@ export namespace Assets {
         Move3 = "Move3.wav",
         Move4 = "Move4.wav",
         Collect1 = "Collect1.wav",
-        Bird = "licensed/Bird1.wav"
+        Bird = "licensed/Bird1.wav",
+        Weapon1 = "weapon/Weapon1.wav",
+        Weapon2 = "weapon/Weapon2.wav",
+        Weapon3 = "weapon/Weapon3.wav",
     }
 
     export enum Audio {
@@ -123,6 +126,9 @@ export namespace Assets {
         Move3 = "Move3",
         Move4 = "Move4",
         Collect1 = "Collect1",
-        Bird = "Bird1"
+        Bird = "Bird1",
+        Weapon1 = "Weapon1",
+        Weapon2 = "Weapon2",
+        Weapon3 = "Weapon3",
     }
 }

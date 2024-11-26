@@ -4,7 +4,7 @@ import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
 import RedArrow from "../../components/RedArrow";
 import { BossType } from "../../enums/BossType";
-import { ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
+import { Assets, ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
 
@@ -83,7 +83,7 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected createBoss() {
-        this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4, BossType.Blue);
+        this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4, BossType.Red);
 
         this.mainContainer.add(this.boss);
     }
@@ -121,11 +121,12 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected setIsPlayerTurn(val: boolean) {
-        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0)
-            return;
-
         this.isPlayerTurn = val;
         this.player.backpack.isSwapWeaponBlocked = !val;
+
+        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0)
+            return;
+        
         if (!this.isPlayerTurn) {
             this.redArrow.setAngle(-30)
             this.attackPlayer();
@@ -139,8 +140,13 @@ export default class BossSceneBase extends SceneBase {
             return;
 
         const activeWeaponType = this.player.backpack.getActiveWeapon();
-        if (activeWeaponType != undefined)
+        if (activeWeaponType != undefined) {
             this.boss.attackBoss(activeWeaponType);
+            //Plays a random movement audio clip
+            const weaponAudioSamples = [Assets.Audio.Weapon1, Assets.Audio.Weapon2, Assets.Audio.Weapon3];
+            const randomSoundIndex = Math.floor(Math.random() * weaponAudioSamples.length);
+            this.sound.get(weaponAudioSamples[randomSoundIndex]).play();
+        }
 
         this.setIsPlayerTurn(false);
     }

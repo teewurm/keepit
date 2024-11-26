@@ -36,6 +36,9 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Move4, Assets.AudioFileNames.Move4);
         this.load.audio(Assets.Audio.Collect1, Assets.AudioFileNames.Collect1);
         this.load.audio(Assets.Audio.Bird, Assets.AudioFileNames.Bird);
+        this.load.audio(Assets.Audio.Weapon1, Assets.AudioFileNames.Weapon1);
+        this.load.audio(Assets.Audio.Weapon2, Assets.AudioFileNames.Weapon2);
+        this.load.audio(Assets.Audio.Weapon3, Assets.AudioFileNames.Weapon3);
 
         this.load.setPath(Assets.SpriteDirectory);
 
@@ -59,6 +62,9 @@ export class Preloader extends SceneBase {
         this.sound.add(Assets.Audio.Move3, { volume: AudioConig.defaultVolumeSFX });
         this.sound.add(Assets.Audio.Move4, { volume: AudioConig.defaultVolumeSFX });
         this.sound.add(Assets.Audio.Collect1, { volume: AudioConig.defaultVolumeCollect });
+        this.sound.add(Assets.Audio.Weapon1, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.Weapon2, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.Weapon3, { volume: AudioConig.defaultVolumeSFX });
         //#endregion
 
         //#region animation config
