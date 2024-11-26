@@ -39,6 +39,7 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Weapon1, Assets.AudioFileNames.Weapon1);
         this.load.audio(Assets.Audio.Weapon2, Assets.AudioFileNames.Weapon2);
         this.load.audio(Assets.Audio.Weapon3, Assets.AudioFileNames.Weapon3);
+        this.load.audio(Assets.Audio.MonsterAttack, Assets.AudioFileNames.MonsterAttack);
 
         this.load.setPath(Assets.SpriteDirectory);
 
@@ -65,6 +66,7 @@ export class Preloader extends SceneBase {
         this.sound.add(Assets.Audio.Weapon1, { volume: AudioConig.defaultVolumeSFX });
         this.sound.add(Assets.Audio.Weapon2, { volume: AudioConig.defaultVolumeSFX });
         this.sound.add(Assets.Audio.Weapon3, { volume: AudioConig.defaultVolumeSFX });
+        this.sound.add(Assets.Audio.MonsterAttack, { volume: AudioConig.defaultVolumeSFX });
         //#endregion
 
         //#region animation config

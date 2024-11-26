@@ -126,7 +126,7 @@ export default class BossSceneBase extends SceneBase {
 
         if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0)
             return;
-        
+
         if (!this.isPlayerTurn) {
             this.redArrow.setAngle(-30)
             this.attackPlayer();
@@ -155,6 +155,7 @@ export default class BossSceneBase extends SceneBase {
         this.time.delayedCall(GameplaySettings.BossAttackDelayMillis, () => {
             this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
             this.setIsPlayerTurn(true);
+            this.sound.get(Assets.Audio.MonsterAttack).play();
         });
     }
 
