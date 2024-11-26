@@ -124,8 +124,10 @@ export default class BossSceneBase extends SceneBase {
         this.isPlayerTurn = val;
         this.player.backpack.isSwapWeaponBlocked = !val;
 
-        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0)
+        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0){
+            GameStopWatch.stopStopWatch();
             return;
+        }
 
         if (!this.isPlayerTurn) {
             this.redArrow.setAngle(-30)
@@ -154,8 +156,8 @@ export default class BossSceneBase extends SceneBase {
     protected attackPlayer() {
         this.time.delayedCall(GameplaySettings.BossAttackDelayMillis, () => {
             this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
-            this.setIsPlayerTurn(true);
             this.sound.get(Assets.Audio.MonsterAttack).play();
+            this.setIsPlayerTurn(true);
         });
     }
 

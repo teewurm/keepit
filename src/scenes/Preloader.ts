@@ -1,7 +1,4 @@
-import Boss from "../components/Boss";
 import { Assets, AudioConig, SceneNames } from "../enums/Constants";
-import { DamageType } from "../enums/DamageType";
-import { ItemType } from "../enums/ItemType";
 import SceneData from "../utils/SceneData";
 import SceneBase from "./bases/SceneBase";
 
@@ -78,13 +75,9 @@ export class Preloader extends SceneBase {
 
         const data: SceneData = new SceneData();
         data.firstSceneOfLevel = true;
-
-        //Todo remove after testing and set next scene to level1
-        data.backpackItems = [{ damageType: DamageType.Electricity, type: ItemType.WEAPON }, { damageType: DamageType.Void, type: ItemType.WEAPON }]
-        Boss.generateRandomWeaknesses(3);
         
         this.scene.transition({
-            target: SceneNames.BossBase,
+            target: SceneNames.Level1,
             duration: 500,
             moveBelow: true,
             onUpdate: (progress: number) => {
