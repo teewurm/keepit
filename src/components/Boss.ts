@@ -1,4 +1,5 @@
-import { ColorPalette, GameplaySettings } from "../enums/Constants";
+import { BossType } from "../enums/BossType";
+import { Assets, GameplaySettings } from "../enums/Constants";
 import { DamageType } from "../enums/DamageType";
 import SceneBase from "../scenes/bases/SceneBase";
 import CustomContainerBase from "./bases/CustomContainerBase";
@@ -8,10 +9,12 @@ export default class Boss extends CustomContainerBase {
     protected static currentWeaknesses: DamageType[] = [];
     protected static currentWeaknessIndex = 0;
 
+    protected bossType: BossType;
     protected lifeBar: Lifebar;
 
-    constructor(scene: SceneBase, x: number, y: number, width: number, height: number) {
+    constructor(scene: SceneBase, x: number, y: number, width: number, height: number, bossType: BossType) {
         super(scene, x, y, width, height);
+        this.bossType = bossType;
 
         this.createBoss();
     }
@@ -50,20 +53,13 @@ export default class Boss extends CustomContainerBase {
     }
 
     protected createBoss() {
-        const body = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorPalette.BOSS_PORTAL);
+        this.lifeBar = new Lifebar(this.scene, 0, -this.targetHeight / 2, this.targetWidth * 0.8, this.targetHeight * 0.1, 100)
 
-        const eyeWidth = this.targetWidth * 0.2;
-        const eyeHeight = this.targetHeight * 0.1;
-        const eyeX = this.targetWidth / 4;
-        const eyey = -this.targetHeight / 4;
+        const sprite = this.scene.add.sprite(0, 0, Assets.Sprite.Boss);
+        sprite.setDisplaySize(this.targetWidth, this.targetHeight);
 
-        const leftEye = this.scene.add.rectangle(-eyeX, eyey, eyeWidth, eyeHeight, 0x000000);
-        const rightEye = this.scene.add.rectangle(eyeX, eyey, eyeWidth, eyeHeight, 0x000000);
+        sprite.play(this.bossType + "_Boss")
 
-        const nose = this.scene.add.rectangle(0, this.targetHeight / 5, this.targetWidth * 0.1, this.targetHeight * 0.1, 0x000000);
-
-        this.lifeBar = new Lifebar(this.scene, 0, -this.targetHeight / 2, this.targetWidth * 0.9, this.targetHeight * 0.1, 100)
-
-        this.add([body, leftEye, rightEye, nose, this.lifeBar]);
+        this.add([sprite, this.lifeBar]);
     }
 }

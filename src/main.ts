@@ -12,11 +12,12 @@ const config: Types.Core.GameConfig = {
     disableContextMenu: true,
     parent: 'game-container',
     backgroundColor: '#47624F',
+    pixelArt: true,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [  
+    scene: [
         Preloader,
         Level1,
         Level2,

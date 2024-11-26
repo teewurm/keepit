@@ -1,0 +1,43 @@
+{ "frames": [
+   {
+    "filename": "0",
+    "frame": { "x": 0, "y": 0, "w": 116, "h": 64 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 0, "w": 116, "h": 64 },
+    "sourceSize": { "w": 128, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "1",
+    "frame": { "x": 116, "y": 0, "w": 116, "h": 64 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 0, "w": 116, "h": 64 },
+    "sourceSize": { "w": 128, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "2",
+    "frame": { "x": 0, "y": 64, "w": 116, "h": 64 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 0, "w": 116, "h": 64 },
+    "sourceSize": { "w": 128, "h": 64 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.9.2-x64",
+  "image": "BaseBoss.png",
+  "format": "RGBA8888",
+  "size": { "w": 232, "h": 128 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Green_Boss", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "Red_Boss", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "Blue_Boss", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" }
+  ]
+ }
+}

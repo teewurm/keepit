@@ -3,6 +3,7 @@ import Boss from "../../components/Boss";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
 import RedArrow from "../../components/RedArrow";
+import { BossType } from "../../enums/BossType";
 import { ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
@@ -76,13 +77,13 @@ export default class BossSceneBase extends SceneBase {
 
     protected createPlayerWithBackpack() {
         const backpack = new Backpack(this, ((GameLayout.SquareEdgeLength + this.fieldWidth) / 2) + GameLayout.BackpackElementSize, 0, GameLayout.BackpackElementSize, GameLayout.BackpackElementSize);
-        this.player = new Player(this, 0, this.fieldHeight / 4, GameLayout.SquareEdgeLength * 0.8, GameLayout.SquareEdgeLength * 0.8, [], backpack);
+        this.player = new Player(this, 0, this.fieldHeight / 4, GameLayout.SquareEdgeLength * 2, GameLayout.SquareEdgeLength * 2, [], backpack);
 
         this.mainContainer.add([backpack, this.player]);
     }
 
     protected createBoss() {
-        this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4);
+        this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4, BossType.Blue);
 
         this.mainContainer.add(this.boss);
     }
