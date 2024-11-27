@@ -3,5 +3,7 @@ export class TextButton extends Phaser.GameObjects.Text {
         super(scene, x, y, text, style);
 
         this.setInteractive({ useHandCursor: true });
+
+        this.scene.add.existing(this);
     }
 }

@@ -1,6 +1,6 @@
 import Backpack from "../../components/Backpack";
 import Player from "../../components/Player";
-import { Assets, AudioConig, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
+import { Assets, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
 import GameSquare from "../../components/GameSquare";
 import IndexUtil from "../../utils/IndexUtil";
@@ -44,6 +44,8 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     create(newData: SceneData) {
+        super.create();
+
         const background = this.add.sprite(this.center_width, this.center_height, Assets.Sprite.DefaultBackground);
         background.setScale(this.width / background.width, this.height / background.height);
 
@@ -85,12 +87,12 @@ export default class MazeSceneBase extends SceneBase {
 
     protected randomBirdSound(playInstant = false) {
         if (playInstant) {
-            this.sound.play(Assets.Audio.Bird, { volume: AudioConig.defaultVolumeAnimal });
+            this.sound.get(Assets.Audio.Bird).play();
             this.randomBirdSound();
         } else {
             const delay = (10000 * Math.random()) + 15000;
 
-            this.time.delayedCall(delay, () => { this.sound.play(Assets.Audio.Bird, { volume: AudioConig.defaultVolumeAnimal }); this.randomBirdSound(); });
+            this.time.delayedCall(delay, () => { this.sound.get(Assets.Audio.Bird).play(); this.randomBirdSound(); });
         }
     }
 

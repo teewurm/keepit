@@ -1,6 +1,6 @@
 import Lifebar, { GameStopWatch } from "../components/LifebarAndStopwatch";
-import { Assets, AudioConig, SceneNames } from "../enums/Constants";
-import SceneData from "../utils/SceneData";
+import { Assets, AudioConfig, SceneNames } from "../enums/Constants";
+import Soundmanager, { SoundGroupKey } from "../utils/Soundmanager";
 import SceneBase from "./bases/SceneBase";
 
 export class Preloader extends SceneBase {
@@ -53,20 +53,26 @@ export class Preloader extends SceneBase {
         this.load.image(Assets.Sprite.DefaultBackground, Assets.SpriteFileNames.DefaultBackground);
     }
 
-    create(nextScene: { name: string }) {
+    create() {
         //#region sound config
         this.sound.pauseOnBlur = false;
+        this.sound.volume = AudioConfig.defaulMain;
 
-        this.sound.add(Assets.Audio.PianoMusic, { volume: AudioConig.defaultVolumeMusic, loop: true });
-        this.sound.add(Assets.Audio.Move1, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Move2, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Move3, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Move4, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Collect1, { volume: AudioConig.defaultVolumeCollect });
-        this.sound.add(Assets.Audio.Weapon1, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Weapon2, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.Weapon3, { volume: AudioConig.defaultVolumeSFX });
-        this.sound.add(Assets.Audio.MonsterAttack, { volume: AudioConig.defaultVolumeSFX });
+        Soundmanager.addSound(this.sound.add(Assets.Audio.PianoMusic, { loop: true }), SoundGroupKey.Music);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Move1), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Move2), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Move3), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Move4), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Bird), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Collect1), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon1), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon2), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon3), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.MonsterAttack), SoundGroupKey.SFX);
+
+        Soundmanager.adjustVolume(SoundGroupKey.SFX, AudioConfig.defaultVolumeSFX);
+        Soundmanager.adjustVolume(SoundGroupKey.Music, AudioConfig.defaultVolumeMusic);
+
         //#endregion
 
         //#region animation config
@@ -80,17 +86,13 @@ export class Preloader extends SceneBase {
         GameStopWatch.currentTimeInMillis = 0;
         Lifebar.lastTimeWatchTookLife = 0;
 
-        const data: SceneData = new SceneData();
-        data.firstSceneOfLevel = true;
-
         this.scene.transition({
-            target: nextScene.name,
+            target: SceneNames.MainMenu,
             duration: 500,
             moveBelow: true,
             onUpdate: (progress: number) => {
                 this.cameras.main.setAlpha(1 - progress);
-            },
-            data: data
+            }
         });
     }
 }

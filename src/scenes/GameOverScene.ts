@@ -26,7 +26,7 @@ export default class GameOverScene extends SceneBase {
             color: "#c83726"
         });
 
-        this.add.existing(gameOverBtn)
+        gameOverBtn
             .setOrigin(0.5, 0.5)
             .setInteractive()
             .addListener("pointerup", () => {

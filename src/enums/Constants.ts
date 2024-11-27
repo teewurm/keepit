@@ -14,7 +14,7 @@ export enum GameplaySettings {
     FogNoDensity = 0,
     MaxLife = 100,
     MazeDamageIntervalInMillis = 5000,
-    MazeDamage = 100,
+    MazeDamage = 10,
     WeaponDamage = 10,
     WeaknessMultiplier = 4,
     BossWeaknessCount = 2,
@@ -67,11 +67,10 @@ export const ColorSquareMap = new Map([
     [SquareType.WALL, ColorPalette.Wall],
 ]);
 
-export enum AudioConig {
+export enum AudioConfig {
+    defaulMain = 0.5,
     defaultVolumeSFX = 0.15,
-    defaultVolumeCollect = 0.25,
-    defaultVolumeAnimal = 0.25,
-    defaultVolumeMusic = 0.1,
+    defaultVolumeMusic = 0.3,
 }
 
 export namespace Assets {

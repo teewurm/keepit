@@ -31,6 +31,8 @@ export default class BossSceneBase extends SceneBase {
     }
 
     create(newData: SceneData) {
+        super.create();
+
         this.cameras.main.setBackgroundColor(ColorPalette.FOG);
 
         this.fieldWidth = GameLayout.BossSquareCountWidth * GameLayout.SquareEdgeLength;
