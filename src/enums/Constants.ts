@@ -26,11 +26,17 @@ export enum SceneNames {
     Boot = "Boot",
     MainMenu = "MainMenu",
     GameOver = "GameOver",
-    Preloader = "preloader",
-    Mazebase = "Base",
+    Preloader = "Preloader",
+    Mazebase = "MazeBase",
     BossBase = "BossBase",
-    Level1 = "Level1",
-    Level2 = "Level2",
+    Level1Boss = "Level1Boss",
+    Level1Maze1 = "Level1Maze1",
+    Level1Maze2 = "Level1Maze2",
+    Level1Maze3 = "Level1Maze3",
+    Level2Boss = "Level2Boss",
+    Level2Maze1 = "Level2Maze1",
+    Level2Maze2 = "Level2Maze2",
+    Level2Maze3 = "Level2Maze3",
 }
 
 export enum ColorPalette {

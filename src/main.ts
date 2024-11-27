@@ -1,11 +1,16 @@
 import { Game, Types } from "phaser";
-import Level1 from "./scenes/Levels/Level1";
-import Level2 from "./scenes/Levels/Level2";
 import { Preloader } from "./scenes/Preloader";
-import BossSceneBase from "./scenes/bases/BossSceneBase";
 import MainMenu from "./scenes/MainMenu";
 import { Boot } from "./scenes/Boot";
 import GameOverScene from "./scenes/GameOverScene";
+import Level1Maze1 from "./scenes/Levels/Level1/Level1_Maze1";
+import Level1Maze2 from "./scenes/Levels/Level1/Level1_Maze2";
+import Level1Boss from "./scenes/Levels/Level1/Level1_Boss";
+import Level1Maze3 from "./scenes/Levels/Level1/Level1_Maze3";
+import Level2Boss from "./scenes/Levels/Level2/Level2_Boss";
+import Level2Maze1 from "./scenes/Levels/Level2/Level2_Maze1";
+import Level2Maze2 from "./scenes/Levels/Level2/Level2_Maze2";
+import Level2Maze3 from "./scenes/Levels/Level2/Level2_Maze3";
 
 
 const config: Types.Core.GameConfig = {
@@ -22,12 +27,17 @@ const config: Types.Core.GameConfig = {
     },
     scene: [
         Boot,
+        Preloader,
         MainMenu,
         GameOverScene,
-        Preloader,
-        Level1,
-        Level2,
-        BossSceneBase
+        Level1Boss,
+        Level1Maze1,
+        Level1Maze2,
+        Level1Maze3,
+        Level2Boss,
+        Level2Maze1,
+        Level2Maze2,
+        Level2Maze3,
     ]
 };
 

@@ -74,5 +74,5 @@ export default class ItemSlot {
 
 export class ItemConfig {
     type: ItemType
-    damageType: DamageType
+    damageType?: DamageType
 }

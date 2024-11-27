@@ -9,6 +9,8 @@ import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
 
 export default class BossSceneBase extends SceneBase {
+    protected readonly bossType: BossType = BossType.Blue;
+
     protected mainContainer: Phaser.GameObjects.Container;
 
     protected player: Player;
@@ -85,7 +87,7 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected createBoss() {
-        this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4, BossType.Red);
+        this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4, this.bossType);
 
         this.mainContainer.add(this.boss);
     }

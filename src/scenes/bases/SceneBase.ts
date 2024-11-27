@@ -138,6 +138,9 @@ export default abstract class SceneBase extends Scene {
         } else {
             this.scene.launch(nextSceneName, sceneData);
         }
+
+        this.scene.get(nextSceneName).scene.bringToTop();
+        console.log(nextSceneName)
     }
 
     protected setSceneDataBeforeTransition(_sceneData: SceneData): void { }
