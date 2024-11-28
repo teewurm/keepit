@@ -47,7 +47,7 @@ export default class MainMenu extends SceneBase {
         const menuBackground = this.add.rectangle(0, 0, menuWidth, menuHeight, ColorPalette.PORTAL);
         menuBackground.setStrokeStyle(8, 0x000000);
 
-        const headline = this.add.text(0, menuHeight / -2 + 20, "Keep It", { fontSize: 48, color: "#000000", fontStyle: "bold" });
+        const headline = this.add.text(0, menuHeight / -2 + 20, "Secret Weakspot", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);
 
         const btnContainerMaxHeight = menuHeight * 0.4;
