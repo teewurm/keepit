@@ -52,7 +52,14 @@ export enum ColorPalette {
     FOG = 0x999999,
     DEBUG = 0xFF00FF,
     LIFEBAR = 0xFF0000,
-    HIGHLIGHT = 0xb8bf55
+    HIGHLIGHT = 0xb8bf55,
+
+    FIRE = 0xe11010,
+    WATER = 0x0000ff,
+    VOID = 0xff00ff,
+    ELEC = 0x00ffff,
+    POISON = 0x00fd00,
+    YELLOW = 0xfffd00
 }
 
 export enum PlayerDefaultData {

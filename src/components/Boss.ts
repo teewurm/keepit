@@ -4,6 +4,7 @@ import { DamageType } from "../enums/DamageType";
 import SceneBase from "../scenes/bases/SceneBase";
 import CustomContainerBase from "./bases/CustomContainerBase";
 import Lifebar from "./LifebarAndStopwatch";
+import Weakspot from "./Weakspot";
 
 export default class Boss extends CustomContainerBase {
     protected static currentWeaknesses: DamageType[] = [];
@@ -11,6 +12,8 @@ export default class Boss extends CustomContainerBase {
 
     protected bossType: BossType;
     protected lifeBar: Lifebar;
+
+    readonly weakSpots: Weakspot[] = [];
 
     constructor(scene: SceneBase, x: number, y: number, width: number, height: number, bossType: BossType) {
         super(scene, x, y, width, height);
@@ -56,10 +59,34 @@ export default class Boss extends CustomContainerBase {
         this.lifeBar = new Lifebar(this.scene, 0, -this.targetHeight / 2, this.targetWidth * 0.8, this.targetHeight * 0.1, 100)
 
         const sprite = this.scene.add.sprite(0, 0, Assets.Sprite.Boss);
-        sprite.setDisplaySize(this.targetWidth, this.targetHeight);
+
+        sprite.setDisplaySize(this.targetWidth + 100, this.targetHeight);
 
         sprite.play(this.bossType + "_Boss")
 
-        this.add([sprite, this.lifeBar]);
+
+        const containerWidth = this.targetWidth * 0.8
+        const containerHeight = this.targetHeight * 0.8
+
+        const weakContainer = this.scene.add.container(0, 0);
+
+        let xCor = containerWidth / -2;
+        for (let x = 0; x < 3; x++) {
+            let yCor = containerHeight / -2;
+            for (let y = 0; y < 2; y++) {
+                const newWeakspot = new Weakspot(this.scene, xCor, yCor, 50, 50, Boss.getNextWeakness());
+                weakContainer.add(newWeakspot);
+                this.weakSpots.push(newWeakspot);
+                yCor += containerHeight;
+            }
+
+            xCor += containerWidth / 2;
+        }
+
+        const outline = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight);
+        outline.setStrokeStyle(3, 0x000000);
+
+        this.add([sprite, this.lifeBar, outline]);
+        this.add(weakContainer);
     }
 }

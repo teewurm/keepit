@@ -6,6 +6,7 @@ import RedArrow from "../../components/RedArrow";
 import { TextButton } from "../../components/TextButton";
 import { BossType } from "../../enums/BossType";
 import { Assets, ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
+import { ItemType } from "../../enums/ItemType";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
 
@@ -116,7 +117,7 @@ export default class BossSceneBase extends SceneBase {
 
         const btnCont = this.add.container(0, 0, [btnBackground, this.attackButton]);
 
-        this.mainContainer.add(btnCont)
+        this.mainContainer.add(btnCont);
     }
 
     protected addAttackListener() {
@@ -126,6 +127,8 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected setIsPlayerTurn(val: boolean) {
+        this.checkWeakspot();
+
         this.isPlayerTurn = val;
         this.player.backpack.isSwapWeaponBlocked = !val;
 
@@ -163,6 +166,27 @@ export default class BossSceneBase extends SceneBase {
             this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
             this.sound.get(Assets.Audio.MonsterAttack).play();
             this.setIsPlayerTurn(true);
+        });
+    }
+
+    protected checkWeakspot() {
+        const activeWeapon = this.player.backpack.getActiveWeapon();
+        const infoCardsOfActiveWeaponDamageType = this.player.backpack
+            .getCardSlots()
+            .filter(element => element.getItem()?.type == ItemType.INFO_CARD && element.getItem()?.damageType == activeWeapon);
+
+        if (infoCardsOfActiveWeaponDamageType.length == 0)
+            return;
+
+        this.boss.weakSpots.forEach(spot => {
+            if (spot.getDamageType() == activeWeapon) {
+                const slot = infoCardsOfActiveWeaponDamageType.find(element => element.getItem()?.damageType == activeWeapon);
+
+                if (slot != undefined) {
+                    spot.removeCover();
+                    slot.destroyItem();
+                }
+            }
         });
     }
 

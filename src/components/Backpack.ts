@@ -83,6 +83,10 @@ export default class Backpack extends CustomContainerBase {
         return allItems;
     }
 
+    getCardSlots(){
+        return this.infoCardSlots;
+    }
+
     setBackpackItems(itemsToSet: ItemConfig[]) {
         if (itemsToSet == undefined)
             return;

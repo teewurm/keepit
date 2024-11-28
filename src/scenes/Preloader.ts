@@ -1,4 +1,3 @@
-import Lifebar, { GameStopWatch } from "../components/LifebarAndStopwatch";
 import { Assets, AudioConfig, SceneNames } from "../enums/Constants";
 import Soundmanager, { SoundGroupKey } from "../utils/Soundmanager";
 import SceneBase from "./bases/SceneBase";
