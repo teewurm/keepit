@@ -12,7 +12,7 @@ export default class MainMenu extends SceneBase {
         super.create();
 
         //todo remove
-        // this.scene.start(SceneNames.Level1Maze3);
+        // this.scene.start(SceneNames.Level3Maze3);
 
         const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
         if (!backgroundMusic.isPlaying) {

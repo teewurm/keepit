@@ -8,29 +8,29 @@ import MazeSceneBase from "../../bases/MazeSceneBase";
 export default class Level3Maze1 extends MazeSceneBase {
     protected readonly squareStartingMatrix = [
         [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-        [2, 1, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 3, 2, 2],
-        [2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 2],
-        [2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2],
-        [2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 2, 2, 1, 2],
-        [2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 1, 2],
-        [2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 3, 2],
-        [2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2],
-        [2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2],
+        [2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2],
+        [2, 2, 2, 2, 1, 2, 1, 2, 1, 1, 1, 1, 2, 2, 2],
+        [2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 1, 3, 2, 2],
+        [2, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 1, 2, 2],
+        [2, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+        [2, 1, 2, 3, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2],
+        [2, 1, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 1, 2, 2],
+        [2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2],
         [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     ];
 
-    protected readonly playerSpawn: IndexUtil = new IndexUtil(1, 1);
+    protected readonly playerSpawn: IndexUtil = new IndexUtil(12, 8);
 
     protected readonly startPortals: PortalWithIndex[] = [
-        { index: { x: 12, y: 1 }, toPortalName: SceneNames.Level3Maze2 },
-        { index: { x: 13, y: 6 }, toPortalName: SceneNames.Level3Maze3 },
+        { index: { x: 12, y: 3 }, toPortalName: SceneNames.Level3Maze2 },
+        { index: { x: 3, y: 6 }, toPortalName: SceneNames.Level3Maze3 },
     ]
 
     protected readonly startItems: ItemWithIndex[] = [
-        { index: { x: 5, y: 1 }, item: { damageType: DamageType.Electricity, type: ItemType.WEAPON } },
-        { index: { x: 9, y: 7 }, item: { damageType: DamageType.Water, type: ItemType.WEAPON } },
-        { index: { x: 12, y: 2 }, item: { type: ItemType.INFO_CARD } },
-        { index: { x: 12, y: 3 }, item: { type: ItemType.INFO_CARD } },
+        { index: { x: 3, y: 1 }, item: { damageType: DamageType.Yellow, type: ItemType.WEAPON } },
+        { index: { x: 8, y: 7 }, item: { damageType: DamageType.Poison, type: ItemType.WEAPON } },
+        { index: { x: 11, y: 1 }, item: { type: ItemType.INFO_CARD } },
+        { index: { x: 6, y: 2 }, item: { type: ItemType.INFO_CARD } },
     ];
 
     constructor() {

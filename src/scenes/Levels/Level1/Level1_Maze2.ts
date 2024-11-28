@@ -23,8 +23,9 @@ export default class Level1Maze2 extends MazeSceneBase {
 
     protected readonly startItems: ItemWithIndex[] = [
         { index: { x: 5, y: 1 }, item: { damageType: DamageType.Fire, type: ItemType.WEAPON } },
+        { index: { x: 3, y: 7 }, item: { damageType: DamageType.Void, type: ItemType.WEAPON } },
         { index: { x: 12, y: 2 }, item: { type: ItemType.INFO_CARD } },
-        { index: { x: 9, y: 3 }, item: { type: ItemType.INFO_CARD } },
+        { index: { x: 8, y: 6 }, item: { type: ItemType.INFO_CARD } },
     ];
 
     protected readonly startPortals: PortalWithIndex[] = [

@@ -22,6 +22,10 @@ export default class Level1Maze3 extends MazeSceneBase {
     protected readonly playerSpawn: IndexUtil = new IndexUtil(2, 2);
 
     protected readonly startItems: ItemWithIndex[] = [
+        { index: { x: 6, y: 1 }, item: { damageType: DamageType.Yellow, type: ItemType.WEAPON } },
+        { index: { x: 11, y: 7 }, item: { damageType: DamageType.Poison, type: ItemType.WEAPON } },
+        { index: { x: 7, y: 3 }, item: { type: ItemType.INFO_CARD } },
+        { index: { x: 11, y: 4 }, item: { type: ItemType.INFO_CARD } },
     ];
 
     protected readonly startPortals: PortalWithIndex[] = [
