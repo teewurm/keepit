@@ -49,6 +49,10 @@ export default class ItemSlot {
         this.item = undefined;
     }
 
+    getSprite(){
+        return this.sprite;
+    }
+
     setItem(item: ItemConfig) {
         this.item = item;
         const scene = this.container.scene;

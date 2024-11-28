@@ -19,7 +19,10 @@ export enum GameplaySettings {
     WeaknessMultiplier = 4,
     BossWeaknessCount = 2,
     BossDamage = 10,
-    BossAttackDelayMillis = 800
+    BossAttackDelayMillis = 800,
+    QuestionMarkMovementDuration = 500,
+    QuestionMarkStayDuration = 350,
+    DelayAfterPlayerMove = 200
 }
 
 export enum SceneNames {

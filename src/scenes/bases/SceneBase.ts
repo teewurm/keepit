@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 import SceneData from "../../utils/SceneData";
-import { ColorPalette } from "../../enums/Constants";
+import { ColorPalette, GameplaySettings } from "../../enums/Constants";
 import { TextButton } from "../../components/TextButton";
 import Slider from "../../components/Slider";
 import Soundmanager, { SoundGroupKey } from "../../utils/Soundmanager";
@@ -110,6 +110,7 @@ export default abstract class SceneBase extends Scene {
                 Lifebar.lastTimeWatchTookLife = 0;
                 const data: SceneData = new SceneData();
                 data.firstSceneOfLevel = true;
+                data.currentLife = GameplaySettings.MaxLife;
                 this.scene.start(sceneToLoad, data)
             });
         }

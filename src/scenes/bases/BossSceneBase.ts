@@ -4,9 +4,11 @@ import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
 import RedArrow from "../../components/RedArrow";
 import { TextButton } from "../../components/TextButton";
+import Weakspot from "../../components/Weakspot";
 import { BossType } from "../../enums/BossType";
-import { Assets, ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
+import { AnimationEase, Assets, ColorPalette, GameLayout, GameplaySettings, PlayerDefaultData, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
+import ItemSlot from "../../utils/ItemSlot";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
 
@@ -43,12 +45,12 @@ export default class BossSceneBase extends SceneBase {
         this.fieldHeight = GameLayout.BossSquareCountHeight * GameLayout.SquareEdgeLength;
 
         this.createBaseField();
+        this.createBoss();
         this.createPlayerWithBackpack();
         this.createBaseField();
         this.createLifeBarAndStopwatch();
         this.spawnAttackButton();
         this.addAttackListener();
-        this.createBoss();
         this.spawnRedArrow();
 
         if (newData.currentLife != undefined)
@@ -127,28 +129,29 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected setIsPlayerTurn(val: boolean) {
-        this.checkWeakspot();
+        this.isPlayerTurn = false;
+        this.checkWeakspot(() => {
+            this.isPlayerTurn = val;
+            this.player.backpack.isSwapWeaponBlocked = !val;
 
-        this.isPlayerTurn = val;
-        this.player.backpack.isSwapWeaponBlocked = !val;
+            if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0) {
+                GameStopWatch.stopStopWatch();
+                return;
+            }
 
-        if (this.playerLifeBar.getCurrentLife() <= 0 || this.boss.getLifeBar().getCurrentLife() <= 0) {
-            GameStopWatch.stopStopWatch();
-            return;
-        }
-
-        if (!this.isPlayerTurn) {
-            this.redArrow.setAngle(-30)
-            this.attackPlayer();
-        } else {
-            this.redArrow.setAngle(30)
-        }
+            if (!this.isPlayerTurn) {
+                this.redArrow.setAngle(-30)
+                this.attackPlayer();
+            } else {
+                this.redArrow.setAngle(30)
+            }
+        });
     }
 
     protected attackBoss() {
-        if (!this.isPlayerTurn)
+        if (this.isPlayerTurn == false)
             return;
-
+        
         const activeWeaponType = this.player.backpack.getActiveWeapon();
         if (activeWeaponType != undefined) {
             this.boss.attackBoss(activeWeaponType);
@@ -169,25 +172,79 @@ export default class BossSceneBase extends SceneBase {
         });
     }
 
-    protected checkWeakspot() {
+    protected checkWeakspot(callback: () => void) {
         const activeWeapon = this.player.backpack.getActiveWeapon();
         const infoCardsOfActiveWeaponDamageType = this.player.backpack
             .getCardSlots()
             .filter(element => element.getItem()?.type == ItemType.INFO_CARD && element.getItem()?.damageType == activeWeapon);
 
-        if (infoCardsOfActiveWeaponDamageType.length == 0)
-            return;
+        const slots = infoCardsOfActiveWeaponDamageType.filter(element => element.getItem()?.damageType == activeWeapon);
+
+        const questionMarksToMove: { slot: ItemSlot, spot: Weakspot, done: boolean }[] = [];
 
         this.boss.weakSpots.forEach(spot => {
             if (!spot.isDestroyed && !spot.isActive && spot.getDamageType() == activeWeapon) {
-                const slot = infoCardsOfActiveWeaponDamageType.find(element => element.getItem()?.damageType == activeWeapon);
-
+                const slot = slots.pop();
                 if (slot != undefined) {
-                    spot.removeCover();
-                    slot.destroyItem();
+                    questionMarksToMove.push({ slot: slot, spot: spot, done: false });;
                 }
             }
         });
+
+        if (questionMarksToMove.length == 0) {
+            this.time.delayedCall(GameplaySettings.DelayAfterPlayerMove, callback.bind(this))
+            return;
+        }
+
+        questionMarksToMove.forEach(element => {
+            this.moveItemToWeakspot(element.slot, element.spot, () => {
+                element.done = true;
+                if (questionMarksToMove.find(it => !it.done) == undefined) {
+                    callback();
+                }
+            })
+        })
+    }
+
+    protected moveItemToWeakspot(slot: ItemSlot, spot: Weakspot, callback: () => void) {
+        const spriteToMove = slot.getSprite();
+
+        if (spriteToMove == undefined)
+            return;
+
+        const targetWorldMatrix = spot.getWorldTransformMatrix();
+        const targetWorldX = targetWorldMatrix.tx;
+        const targetWorldY = targetWorldMatrix.ty;
+
+        const parentContainer = spriteToMove.parentContainer;
+
+        if (parentContainer) {
+            const parentWorldMatrix = new Phaser.GameObjects.Components.TransformMatrix();
+            parentContainer.getWorldTransformMatrix(parentWorldMatrix);
+
+            const invMatrix = parentWorldMatrix.invert();
+            const localPosition = invMatrix.transformPoint(targetWorldX, targetWorldY);
+
+            const config: Phaser.Types.Tweens.TweenBuilderConfig = {
+                targets: spriteToMove,
+                ease: "Expo.In",
+                duration: GameplaySettings.QuestionMarkMovementDuration,
+                x: localPosition.x,
+                y: localPosition.y,
+            };
+
+            config.onComplete = () => {
+                this.time.delayedCall(GameplaySettings.QuestionMarkStayDuration, () => {
+                    spot.removeCover();
+                    slot.destroyItem();
+                    this.time.delayedCall(GameplaySettings.DelayAfterPlayerMove, callback.bind(this))
+                });
+            }
+
+            this.tweens.add(config);
+        }
+
+
     }
 
     update(): void {
