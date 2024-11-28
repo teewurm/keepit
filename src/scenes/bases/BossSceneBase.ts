@@ -3,6 +3,7 @@ import Boss from "../../components/Boss";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
 import RedArrow from "../../components/RedArrow";
+import { TextButton } from "../../components/TextButton";
 import { BossType } from "../../enums/BossType";
 import { Assets, ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import SceneData from "../../utils/SceneData";
@@ -22,7 +23,7 @@ export default class BossSceneBase extends SceneBase {
     protected playerLifeBar: Lifebar;
     protected gameTimer: GameStopWatch;
 
-    protected attackButton: Phaser.GameObjects.Rectangle;
+    protected attackButton: TextButton;
 
     protected isPlayerTurn = false;
 
@@ -110,10 +111,10 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected spawnAttackButton() {
-        this.attackButton = this.add.rectangle(0, 0, 200, 50, 0xffffff).setStrokeStyle(2, 0x000000);
-        const btnText = this.add.text(0, 0, "Attack !!!", { fontSize: 28, fontStyle: "bold", color: "#000000" }).setOrigin(0.5, 0.5);
+        const btnBackground = this.add.rectangle(0, 0, 200, 50, 0xffffff).setStrokeStyle(2, 0x000000);
+        this.attackButton = new TextButton(this, 0, 0, "Attack !!!", { fontSize: 28, fontStyle: "bold", color: "#000000" }).setOrigin(0.5, 0.5);
 
-        const btnCont = this.add.container(0, 0, [this.attackButton, btnText]);
+        const btnCont = this.add.container(0, 0, [btnBackground, this.attackButton]);
 
         this.mainContainer.add(btnCont)
     }
