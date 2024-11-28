@@ -4,6 +4,7 @@ import { ColorPalette } from "../../enums/Constants";
 import { TextButton } from "../../components/TextButton";
 import Slider from "../../components/Slider";
 import Soundmanager, { SoundGroupKey } from "../../utils/Soundmanager";
+import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 
 export default abstract class SceneBase extends Scene {
     width: number;
@@ -74,7 +75,7 @@ export default abstract class SceneBase extends Scene {
 
         const btnContainerMaxHeight = menuHeight * 0.6;
         const closeMenuBtn = this.createTextBtn("Close");
-        const btnContainer = this.createBtnContainer(btnContainerMaxHeight, [mainSoundSlider,musicSlider, sfxSlider, closeMenuBtn]);
+        const btnContainer = this.createBtnContainer(btnContainerMaxHeight, [mainSoundSlider, musicSlider, sfxSlider, closeMenuBtn]);
 
         const menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer]);
 
@@ -105,6 +106,8 @@ export default abstract class SceneBase extends Scene {
 
         if (sceneToLoad != undefined) {
             newBtn.on("pointerup", () => {
+                GameStopWatch.currentTimeInMillis = 0;
+                Lifebar.lastTimeWatchTookLife = 0;
                 const data: SceneData = new SceneData();
                 data.firstSceneOfLevel = true;
                 this.scene.start(sceneToLoad, data)

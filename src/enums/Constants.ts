@@ -37,6 +37,10 @@ export enum SceneNames {
     Level2Maze1 = "Level2Maze1",
     Level2Maze2 = "Level2Maze2",
     Level2Maze3 = "Level2Maze3",
+    Level3Boss = "Level3Boss",
+    Level3Maze1 = "Level3Maze1",
+    Level3Maze2 = "Level3Maze2",
+    Level3Maze3 = "Level3Maze3",
 }
 
 export enum ColorPalette {

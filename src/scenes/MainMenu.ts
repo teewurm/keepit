@@ -31,7 +31,7 @@ export default class MainMenu extends SceneBase {
         const btnContainerMaxHeight = menuHeight * 0.4;
         const level1Btn = this.createTextBtn("Level 1", SceneNames.Level1Maze1);
         const level2Btn = this.createTextBtn("Level 2", SceneNames.Level2Maze1);
-        const level3Btn = this.createTextBtn("Level 2", SceneNames.Level2Maze1);
+        const level3Btn = this.createTextBtn("Level 3", SceneNames.Level3Maze1);
         const btnContainer = this.createBtnContainer(btnContainerMaxHeight, [level1Btn, level2Btn, level3Btn]);
 
         this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer]);

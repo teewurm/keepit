@@ -82,10 +82,6 @@ export class Preloader extends SceneBase {
         this.anims.createFromAseprite(Assets.Sprite.Boss);
         //#endregions
 
-
-        GameStopWatch.currentTimeInMillis = 0;
-        Lifebar.lastTimeWatchTookLife = 0;
-
         this.scene.transition({
             target: SceneNames.MainMenu,
             duration: 500,

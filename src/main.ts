@@ -11,6 +11,10 @@ import Level2Boss from "./scenes/Levels/Level2/Level2_Boss";
 import Level2Maze1 from "./scenes/Levels/Level2/Level2_Maze1";
 import Level2Maze2 from "./scenes/Levels/Level2/Level2_Maze2";
 import Level2Maze3 from "./scenes/Levels/Level2/Level2_Maze3";
+import Level3Boss from "./scenes/Levels/Level3/Level3_Boss";
+import Level3Maze1 from "./scenes/Levels/Level3/Level3_Maze1";
+import Level3Maze2 from "./scenes/Levels/Level3/Level3_Maze2";
+import Level3Maze3 from "./scenes/Levels/Level3/Level3_Maze3";
 
 
 const config: Types.Core.GameConfig = {
@@ -38,6 +42,10 @@ const config: Types.Core.GameConfig = {
         Level2Maze1,
         Level2Maze2,
         Level2Maze3,
+        Level3Boss,
+        Level3Maze1,
+        Level3Maze2,
+        Level3Maze3,
     ]
 };
 
