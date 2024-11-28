@@ -152,7 +152,7 @@ export default class BossSceneBase extends SceneBase {
         const activeWeaponType = this.player.backpack.getActiveWeapon();
         if (activeWeaponType != undefined) {
             this.boss.attackBoss(activeWeaponType);
-            //Plays a random movement audio clip
+            //Plays a random attack audio clip
             const weaponAudioSamples = [Assets.Audio.Weapon1, Assets.Audio.Weapon2, Assets.Audio.Weapon3];
             const randomSoundIndex = Math.floor(Math.random() * weaponAudioSamples.length);
             this.sound.get(weaponAudioSamples[randomSoundIndex]).play();
@@ -179,7 +179,7 @@ export default class BossSceneBase extends SceneBase {
             return;
 
         this.boss.weakSpots.forEach(spot => {
-            if (spot.getDamageType() == activeWeapon) {
+            if (!spot.isDestroyed && !spot.isActive && spot.getDamageType() == activeWeapon) {
                 const slot = infoCardsOfActiveWeaponDamageType.find(element => element.getItem()?.damageType == activeWeapon);
 
                 if (slot != undefined) {
