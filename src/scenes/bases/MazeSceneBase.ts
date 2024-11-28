@@ -9,6 +9,7 @@ import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import { DamageType } from "../../enums/DamageType";
 import Boss from "../../components/Boss";
+import { TextButton } from "../../components/TextButton";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
@@ -97,7 +98,8 @@ export default class MazeSceneBase extends SceneBase {
     }
 
     protected spawnFullScreenButton(): void {
-        let fullScreenText = this.add.text(20, 20, "Fullscreen", { color: this.scale.isFullscreen ? "#00ff00" : "#ff0000", fontSize: 52 });
+        let fullScreenText = new TextButton(this, 20, 20, "Fullscreen", { color: this.scale.isFullscreen ? "#00ff00" : "#ff0000", fontSize: 52 });
+
         fullScreenText.setInteractive();
         fullScreenText.addListener("pointerup", () => {
             if (this.scale.isFullscreen) {
@@ -107,8 +109,17 @@ export default class MazeSceneBase extends SceneBase {
             }
         });
 
-        this.scale.addListener("enterfullscreen", () => fullScreenText.setColor("#00ff00"));
-        this.scale.addListener("leavefullscreen", () => fullScreenText.setColor("#ff0000"));
+
+        const setColorOnEnter = () => fullScreenText.setColor("#00ff00");
+        const setColorOnLeave = () => fullScreenText.setColor("#00ff00");
+        
+        this.scale.addListener("enterfullscreen", setColorOnEnter);
+        this.scale.addListener("leavefullscreen", setColorOnLeave);
+
+        this.events.once('shutdown', () => {
+            this.scale.removeListener("enterfullscreen", setColorOnEnter);
+            this.scale.removeListener("leavefullscreen", setColorOnLeave);
+        }, this);
     }
 
     protected spawnSquares() {
