@@ -1,8 +1,4 @@
-import Boss from "../components/Boss";
 import { Assets, ColorPalette, SceneNames } from "../enums/Constants"
-import { DamageType } from "../enums/DamageType";
-import { ItemType } from "../enums/ItemType";
-import SceneData from "../utils/SceneData";
 import SceneBase from "./bases/SceneBase"
 
 export default class MainMenu extends SceneBase {
