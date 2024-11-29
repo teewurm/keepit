@@ -47,6 +47,7 @@ export class Preloader extends SceneBase {
         this.load.aseprite(Assets.Sprite.Weapons, Assets.SpriteFileNames.Weapons, Assets.JsonFileNames.Weapons);
         this.load.aseprite(Assets.Sprite.InfoCards, Assets.SpriteFileNames.InfoCards, Assets.JsonFileNames.InfoCards);
         this.load.aseprite(Assets.Sprite.Boss, Assets.SpriteFileNames.Boss, Assets.JsonFileNames.Boss);
+        this.load.aseprite(Assets.Sprite.BossAttack, Assets.SpriteFileNames.BossAttack, Assets.JsonFileNames.BossAttack);
 
         this.load.image(Assets.Sprite.Path1, Assets.SpriteFileNames.Path1);
         this.load.image(Assets.Sprite.Wall1, Assets.SpriteFileNames.Wall1);
@@ -83,6 +84,7 @@ export class Preloader extends SceneBase {
         this.anims.createFromAseprite(Assets.Sprite.Weapons);
         this.anims.createFromAseprite(Assets.Sprite.InfoCards);
         this.anims.createFromAseprite(Assets.Sprite.Boss);
+        this.anims.createFromAseprite(Assets.Sprite.BossAttack);
         //#endregions
 
         this.scene.transition({

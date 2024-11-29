@@ -1,8 +1,8 @@
 import Backpack from "../../components/Backpack";
 import Boss from "../../components/Boss";
+import BossAttack from "../../components/BossAttack";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
-import RedArrow from "../../components/RedArrow";
 import { TextButton } from "../../components/TextButton";
 import Weakspot from "../../components/Weakspot";
 import { BossType } from "../../enums/BossType";
@@ -30,7 +30,7 @@ export default class BossSceneBase extends SceneBase {
 
     protected isPlayerTurn = false;
 
-    protected redArrow: RedArrow;
+    protected bossAttack: BossAttack;
 
     constructor(name: string) {
         super(name ? name : SceneNames.BossBase);
@@ -50,8 +50,8 @@ export default class BossSceneBase extends SceneBase {
         this.createBaseField();
         this.createLifeBarAndStopwatch();
         this.spawnAttackButton();
+        this.spawnBossAttack();
         this.addAttackListener();
-        this.spawnRedArrow();
 
         if (newData.currentLife != undefined)
             this.playerLifeBar.setCurrentLife(newData.currentLife);
@@ -90,17 +90,16 @@ export default class BossSceneBase extends SceneBase {
         this.mainContainer.add([backpack, this.player]);
     }
 
+    protected spawnBossAttack() {
+        this.bossAttack = new BossAttack(this, this.player.x, this.player.y, this.fieldWidth / 4, this.fieldHeight / 4, this.boss.getBossType());
+
+        this.mainContainer.add(this.bossAttack);
+    }
+
     protected createBoss() {
         this.boss = new Boss(this, 0, this.fieldHeight / -4, this.fieldWidth * 0.8, this.fieldHeight * 0.4, this.bossType);
 
-        this.mainContainer.add(this.boss);
-    }
-
-    protected spawnRedArrow() {
-        const arrowWidth = this.fieldWidth * 0.2;
-        this.redArrow = new RedArrow(this, this.fieldWidth / -2 + arrowWidth / 2, 0, arrowWidth, this.fieldHeight * 0.05);
-
-        this.mainContainer.add(this.redArrow);
+        this.mainContainer.add([this.boss]);
     }
 
     protected createLifeBarAndStopwatch() {
@@ -140,10 +139,7 @@ export default class BossSceneBase extends SceneBase {
             }
 
             if (!this.isPlayerTurn) {
-                this.redArrow.setAngle(-30)
                 this.attackPlayer();
-            } else {
-                this.redArrow.setAngle(30)
             }
         });
     }
@@ -151,7 +147,7 @@ export default class BossSceneBase extends SceneBase {
     protected attackBoss() {
         if (this.isPlayerTurn == false)
             return;
-        
+
         const activeWeaponType = this.player.backpack.getActiveWeapon();
         if (activeWeaponType != undefined) {
             this.boss.attackBoss(activeWeaponType);
@@ -165,10 +161,11 @@ export default class BossSceneBase extends SceneBase {
     }
 
     protected attackPlayer() {
-        this.time.delayedCall(GameplaySettings.BossAttackDelayMillis, () => {
-            this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
-            this.sound.get(Assets.Audio.MonsterAttack).play();
-            this.setIsPlayerTurn(true);
+        this.time.delayedCall(GameplaySettings.BossAttackDelay, () => {
+            this.bossAttack.attack(() => {
+                this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
+                this.sound.get(Assets.Audio.MonsterAttack).play();
+            }, this.setIsPlayerTurn.bind(this, true));
         });
     }
 

@@ -22,6 +22,10 @@ export default class Boss extends CustomContainerBase {
         this.createBoss();
     }
 
+    getBossType(){
+        return this.bossType;
+    }
+
     static generateRandomWeaknesses(count: number) {
         const allTypes = Object.keys(DamageType)
         const maxTypeCount = allTypes.length;

@@ -19,7 +19,8 @@ export enum GameplaySettings {
     WeaknessMultiplier = 4,
     BossWeaknessCount = 2,
     BossDamage = 10,
-    BossAttackDelayMillis = 800,
+    BossAttackDelay = 250,
+    BossAttackDuration = 650,
     QuestionMarkMovementDuration = 500,
     QuestionMarkStayDuration = 350,
     DelayAfterPlayerMove = 200
@@ -107,6 +108,7 @@ export namespace Assets {
         Boss = "boss/BaseBoss.png",
         QuestionBackPack = "backpack/InfoBackPack.png",
         WeaponBackPack = "backpack/WeaponBackPack.png",
+        BossAttack = "bossattack/Bossattack.png",
     }
 
     export enum Sprite {
@@ -119,13 +121,15 @@ export namespace Assets {
         Boss = "Boss",
         QuestionBackPack = "QuestionBackpack",
         WeaponBackPack = "WeaponBackPack",
+        BossAttack = "Bossattack",
     }
 
     export enum JsonFileNames {
         MainCharacter = "player/MainCharacter.json",
         Weapons = "weapons/BaseWeapon.json",
         InfoCards = "infoCards/BaseInfoCard.json",
-        Boss = "boss/BaseBoss.json"
+        Boss = "boss/BaseBoss.json",
+        BossAttack = "bossattack/Bossattack.json",
     }
 
     export enum Animation {
