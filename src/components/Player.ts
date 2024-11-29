@@ -50,7 +50,7 @@ export default class Player extends CustomContainerBase {
         const player = this.scene.add.sprite(0, 0, Assets.Sprite.MainCharacter);
         player.play({ key: Assets.Animation.MainCharacterIdle, repeat: -1 });
 
-        player.setDisplaySize(this.targetWidth , this.targetHeight);
+        player.setDisplaySize(this.targetWidth, this.targetHeight);
 
         this.add(player);
     }
@@ -87,6 +87,7 @@ export default class Player extends CustomContainerBase {
             this.setFogDensityForCurrentLocation();
 
             if (reachedSquare.isPortal()) {
+                this.scene.sound.get(Assets.Audio.Teleport1).play();
                 this.scene.loadNextScene(reachedSquare.getPortalToName()!);
             }
 

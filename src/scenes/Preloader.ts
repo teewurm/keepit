@@ -33,6 +33,7 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Move2, Assets.AudioFileNames.Move2);
         this.load.audio(Assets.Audio.Move3, Assets.AudioFileNames.Move3);
         this.load.audio(Assets.Audio.Move4, Assets.AudioFileNames.Move4);
+        this.load.audio(Assets.Audio.Teleport1, Assets.AudioFileNames.Teleport1);
         this.load.audio(Assets.Audio.Collect1, Assets.AudioFileNames.Collect1);
         this.load.audio(Assets.Audio.Bird, Assets.AudioFileNames.Bird);
         this.load.audio(Assets.Audio.Weapon1, Assets.AudioFileNames.Weapon1);
@@ -62,6 +63,7 @@ export class Preloader extends SceneBase {
         Soundmanager.addSound(this.sound.add(Assets.Audio.Move2), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Move3), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Move4), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Teleport1), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Bird), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Collect1), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon1), SoundGroupKey.SFX);
