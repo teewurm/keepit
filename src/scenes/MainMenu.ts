@@ -59,6 +59,9 @@ export default class MainMenu extends SceneBase {
         const level3Btn = this.createTextBtn("Level 3", SceneNames.Level3Maze1);
         const btnContainer = this.createBtnContainer(btnContainerMaxHeight, [level1Btn, level2Btn, level3Btn]);
 
-        this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer]);
+        const creditText = this.add.text(-this.center_width + 20, this.center_height - 20, "Music by Steven Melin", { fontSize: 36, fontStyle: "bold", color: "#000000" })
+        creditText.setOrigin(0, 1)
+
+        this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer, creditText]);
     }
 }

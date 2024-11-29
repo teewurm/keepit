@@ -6,7 +6,7 @@ import RedArrow from "../../components/RedArrow";
 import { TextButton } from "../../components/TextButton";
 import Weakspot from "../../components/Weakspot";
 import { BossType } from "../../enums/BossType";
-import { AnimationEase, Assets, ColorPalette, GameLayout, GameplaySettings, PlayerDefaultData, SceneNames } from "../../enums/Constants";
+import { Assets, ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
 import ItemSlot from "../../utils/ItemSlot";
 import SceneData from "../../utils/SceneData";
