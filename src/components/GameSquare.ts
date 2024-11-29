@@ -46,14 +46,20 @@ export default class GameSquare extends CustomContainerBase {
         }
 
 
-        this.fogObject = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight, ColorPalette.FOG, this.fogDensity);
-        this.add(this.fogObject);
+        this.fogObject = this.scene.add.rectangle(this.x, this.y, this.targetWidth, this.targetHeight, ColorPalette.FOG, this.fogDensity);
+
+        // this.add(this.fogObject);
 
         this.fogObject.setDepth(30);
 
         if (DEBUG) {
             this.add(this.scene.add.rectangle(0, 0, 10, 10, ColorPalette.DEBUG))
         }
+    }
+
+    setFogToParentContainer() {
+        this.parentContainer.add(this.fogObject)
+        this.parentContainer.bringToTop(this.fogObject)
     }
 
     setFogDensityToHalf() {

@@ -62,7 +62,6 @@ export default class MazeSceneBase extends SceneBase {
 
         this.spawnFullScreenButton();
         this.spawnSquares();
-        this.createGrid();
         this.spawnPlayerWithBackpack();
         this.addItems();
         this.setPortals();
@@ -129,7 +128,7 @@ export default class MazeSceneBase extends SceneBase {
 
         let x = 0;
         let y = getWithOffset(this.squareStartingMatrix.length);
-        const allSquareObjects: Phaser.GameObjects.GameObject[] = [];
+        const allSquareObjects: GameSquare[] = [];
 
         this.squareStartingMatrix.forEach((row) => {
             let newRow: GameSquare[] = [];
@@ -138,7 +137,7 @@ export default class MazeSceneBase extends SceneBase {
 
             row.forEach((squareType) => {
                 const newGameSquare = new GameSquare(this, x, y, GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, squareType);
-
+                
                 allSquareObjects.push(newGameSquare);
 
                 newRow.push(newGameSquare);
@@ -150,6 +149,8 @@ export default class MazeSceneBase extends SceneBase {
         });
 
         this.mainContainer = this.add.container(this.center_width, this.center_height, allSquareObjects);
+        this.createGrid();
+        allSquareObjects.forEach(cont => cont.setFogToParentContainer());
     }
 
     protected createGrid() {
