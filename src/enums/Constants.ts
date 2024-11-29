@@ -104,7 +104,9 @@ export namespace Assets {
         Wall1 = "maze/Wall1.png",
         Weapons = "weapons/BaseWeapon.png",
         InfoCards = "infoCards/BaseInfoCard.png",
-        Boss = "boss/BaseBoss.png"
+        Boss = "boss/BaseBoss.png",
+        QuestionBackPack = "backpack/InfoBackPack.png",
+        WeaponBackPack = "backpack/WeaponBackPack.png",
     }
 
     export enum Sprite {
@@ -114,7 +116,9 @@ export namespace Assets {
         Wall1 = "Wall1",
         Weapons = "Weapons",
         InfoCards = "InfoCards",
-        Boss = "Boss"
+        Boss = "Boss",
+        QuestionBackPack = "QuestionBackpack",
+        WeaponBackPack = "WeaponBackPack",
     }
 
     export enum JsonFileNames {

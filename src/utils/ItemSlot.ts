@@ -49,11 +49,11 @@ export default class ItemSlot {
         this.item = undefined;
     }
 
-    getSprite(){
+    getSprite() {
         return this.sprite;
     }
 
-    setItem(item: ItemConfig) {
+    setItem(item: ItemConfig, transform?: { width: number, height: number }) {
         this.item = item;
         const scene = this.container.scene;
 
@@ -64,6 +64,10 @@ export default class ItemSlot {
 
         this.sprite = scene.add.sprite(0, 0, item.type == ItemType.WEAPON ? Assets.Sprite.InfoCards : Assets.Sprite.InfoCards);
         this.sprite.play({ key: item.damageType + suffix });
+
+        if (transform != undefined) {
+            this.sprite.setDisplaySize(transform.width, transform.height);
+        }
 
         this.sprite.setInteractive();
         this.sprite.on("pointerup", () => { this.onClick.forEach(func => func(this)) });

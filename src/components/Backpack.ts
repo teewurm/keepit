@@ -1,4 +1,4 @@
-import { ColorPalette, ItemConstants } from "../enums/Constants";
+import { Assets, ColorPalette, ItemConstants } from "../enums/Constants";
 import { ItemType } from "../enums/ItemType";
 import SceneBase from "../scenes/bases/SceneBase";
 import ItemSlot, { ItemConfig } from "../utils/ItemSlot";
@@ -34,12 +34,21 @@ export default class Backpack extends CustomContainerBase {
 
             for (let y = 0; y < 6; y++) {
                 const itemContainer = this.scene.add.container(nextX, nextY);
-                const newRect = this.scene.add.rectangle(0, 0, width, height, ColorPalette.PORTAL);
-                newRect.setStrokeStyle(2, 0x000000);
+                const outline = this.scene.add.rectangle(0, 0, width, height);
+                outline.setStrokeStyle(10, 0x000000);
+
+                let background: Phaser.GameObjects.Sprite;
+                if (i == 1) {
+                    background = this.scene.add.sprite(0, 0, Assets.Sprite.QuestionBackPack);
+                } else {
+                    background = this.scene.add.sprite(0, 0, Assets.Sprite.WeaponBackPack);
+                }
+
+                background.setDisplaySize(width, height);
 
                 const highlightRec = this.scene.add.rectangle(0, 0, width, height, ColorPalette.HIGHLIGHT)
 
-                itemContainer.add([newRect, highlightRec]);
+                itemContainer.add([outline, background, highlightRec]);
 
                 if (i == 1) {
                     this.infoCardSlots.push(new ItemSlot(itemContainer, undefined, highlightRec));
@@ -83,7 +92,7 @@ export default class Backpack extends CustomContainerBase {
         return allItems;
     }
 
-    getCardSlots(){
+    getCardSlots() {
         return this.infoCardSlots;
     }
 
@@ -130,7 +139,7 @@ export default class Backpack extends CustomContainerBase {
             if (!list[i].isEmpty())
                 continue;
 
-            list[i].setItem(item);
+            list[i].setItem(item, { width: this.targetWidth / 2 - 5, height: this.targetHeight / 6 - 5 });
             return true;
         }
 
