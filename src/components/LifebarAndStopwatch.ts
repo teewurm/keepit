@@ -24,6 +24,10 @@ export default class Lifebar extends CustomContainerBase {
         this.updateLifeBar();
     }
 
+    static resetData(){
+        Lifebar.lastTimeWatchTookLife = 0;
+    }
+
     getCurrentLife() {
         return this.currentLife;
     }
@@ -97,7 +101,7 @@ export class GameStopWatch extends CustomContainerBase {
 
     protected static timeIsRunning = false;
     protected static startDateInMillis: number;
-    static currentTimeInMillis: number = 0;
+    protected static currentTimeInMillis: number = 0;
 
     readonly onTimeUpdated: ((currentTime: number) => void)[] = [];
 
@@ -107,6 +111,12 @@ export class GameStopWatch extends CustomContainerBase {
         this.createTimer(fontSize);
 
         this.timerText.setText(this.formatMilliseconds(GameStopWatch.currentTimeInMillis));
+    }
+
+    static resetData() {
+        GameStopWatch.currentTimeInMillis = 0;
+        GameStopWatch.timeIsRunning = false;
+        GameStopWatch.startDateInMillis = 0;
     }
 
     protected createTimer(fontSize: number) {

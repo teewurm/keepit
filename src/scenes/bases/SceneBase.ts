@@ -106,11 +106,14 @@ export default abstract class SceneBase extends Scene {
 
         if (sceneToLoad != undefined) {
             newBtn.on("pointerup", () => {
-                GameStopWatch.currentTimeInMillis = 0;
-                Lifebar.lastTimeWatchTookLife = 0;
+                GameStopWatch.resetData();
+
+                Lifebar.resetData();
+
                 const data: SceneData = new SceneData();
                 data.firstSceneOfLevel = true;
                 data.currentLife = GameplaySettings.MaxLife;
+
                 this.scene.start(sceneToLoad, data)
             });
         }
@@ -144,7 +147,6 @@ export default abstract class SceneBase extends Scene {
         }
 
         this.scene.get(nextSceneName).scene.bringToTop();
-        console.log(nextSceneName)
     }
 
     protected setSceneDataBeforeTransition(_sceneData: SceneData): void { }
