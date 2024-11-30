@@ -1,9 +1,5 @@
-import Boss from "../components/Boss";
 import { TextButton } from "../components/TextButton";
-import { Assets, ColorPalette, SceneNames } from "../enums/Constants"
-import { DamageType } from "../enums/DamageType";
-import { ItemType } from "../enums/ItemType";
-import SceneData from "../utils/SceneData";
+import { SceneNames } from "../enums/Constants"
 import Soundmanager, { SoundGroupKey } from "../utils/Soundmanager";
 import SceneBase from "./bases/SceneBase"
 

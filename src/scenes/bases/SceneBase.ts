@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 import SceneData from "../../utils/SceneData";
-import { Assets, ColorPalette, GameplaySettings } from "../../enums/Constants";
+import { Assets, GameplaySettings } from "../../enums/Constants";
 import { TextButton } from "../../components/TextButton";
 import Slider from "../../components/Slider";
 import Soundmanager, { SoundGroupKey } from "../../utils/Soundmanager";
