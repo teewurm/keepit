@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 import SceneData from "../../utils/SceneData";
-import { ColorPalette, GameplaySettings } from "../../enums/Constants";
+import { Assets, ColorPalette, GameplaySettings } from "../../enums/Constants";
 import { TextButton } from "../../components/TextButton";
 import Slider from "../../components/Slider";
 import Soundmanager, { SoundGroupKey } from "../../utils/Soundmanager";
@@ -60,12 +60,10 @@ export default abstract class SceneBase extends Scene {
     }
 
     protected createSoundMenu() {
-        const menuWidth = this.width / 2
+        const menuWidth = this.width * 0.4
         const menuHeight = this.height * 0.8
 
-        const menuBackground = this.add.rectangle(0, 0, menuWidth, menuHeight, ColorPalette.PORTAL);
-        menuBackground.setStrokeStyle(8, 0x000000);
-        menuBackground.setInteractive();
+        const menuBackground = this.createDialogBackground(menuWidth, menuHeight);
 
         const headline = this.add.text(0, menuHeight / -2 + 20, "Sounds", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);
@@ -85,6 +83,17 @@ export default abstract class SceneBase extends Scene {
 
         menuContainer.setDepth(100);
         return menuContainer;
+    }
+
+    protected createDialogBackground(menuWidth: number, menuHeight: number) {
+        const menuBackground = this.add.sprite(0, 0, Assets.Sprite.MenuBackground);
+        menuBackground.setDisplaySize(menuWidth, menuHeight);
+
+        const outline = this.add.rectangle(0, 0, menuWidth, menuHeight);
+        outline.setStrokeStyle(8, 0x000000);
+        outline.setInteractive();
+
+        return this.add.container(0, 0, [menuBackground, outline]);
     }
 
     protected createBtnContainer(height: number, btns: Phaser.GameObjects.GameObject[]): Phaser.GameObjects.Container {
@@ -138,7 +147,7 @@ export default abstract class SceneBase extends Scene {
 
         const setColorOnEnter = () => fullScreenText.setDefaultColor("#00ff00");
         const setColorOnLeave = () => fullScreenText.setDefaultColor("#ff0000");
-        
+
         this.scale.addListener("enterfullscreen", setColorOnEnter);
         this.scale.addListener("leavefullscreen", setColorOnLeave);
 

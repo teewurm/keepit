@@ -17,40 +17,12 @@ export default class MainMenu extends SceneBase {
     create() {
         super.create();
 
-        //todo remove
-        // Boss.generateRandomWeaknesses(3);
-        // Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
-        // console.log(Boss.currentWeaknesses)
-        // const testData = new SceneData();
-        // testData.backpackItems = [
-        //     { type: ItemType.WEAPON, damageType: DamageType.Fire },
-        //     { type: ItemType.WEAPON, damageType: DamageType.Water },
-        //     { type: ItemType.WEAPON, damageType: DamageType.Void },
-        //     { type: ItemType.WEAPON, damageType: DamageType.Electricity },
-        //     { type: ItemType.WEAPON, damageType: DamageType.Poison },
-        //     { type: ItemType.WEAPON, damageType: DamageType.Yellow },
-        //     { type: ItemType.INFO_CARD, damageType: DamageType.Fire },
-        //     { type: ItemType.INFO_CARD, damageType: DamageType.Water },
-        //     { type: ItemType.INFO_CARD, damageType: DamageType.Void },
-        //     { type: ItemType.INFO_CARD, damageType: DamageType.Electricity },
-        //     { type: ItemType.INFO_CARD, damageType: DamageType.Poison },
-        //     { type: ItemType.INFO_CARD, damageType: DamageType.Yellow },
-        // ]
-
-
-
-        // Soundmanager.loopAudioClips(SoundGroupKey.Music);
-        // this.scene.start(SceneNames.Level2Boss, testData);        
-
-        // return;
-
         Soundmanager.loopAudioClips(SoundGroupKey.Music);
 
         const menuWidth = this.width / 3
         const menuHeight = this.height * 0.85
 
-        const menuBackground = this.add.rectangle(0, 0, menuWidth, menuHeight, ColorPalette.PORTAL);
-        menuBackground.setStrokeStyle(8, 0x000000);
+        const menuBackground = this.createDialogBackground(menuWidth, menuHeight);
 
         const headline = this.add.text(0, menuHeight / -2 + 20, "Secret Weakspot", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);
@@ -79,9 +51,7 @@ export default class MainMenu extends SceneBase {
         const menuWidth = this.width / 2
         const menuHeight = this.height * 0.8
 
-        const menuBackground = this.add.rectangle(0, 0, menuWidth, menuHeight, ColorPalette.PORTAL);
-        menuBackground.setStrokeStyle(8, 0x000000);
-        menuBackground.setInteractive();
+        const menuBackground = this.createDialogBackground(menuWidth, menuHeight);
 
         const headline = this.add.text(0, menuHeight / -2 + 20, "Info", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);

@@ -61,6 +61,7 @@ export class Preloader extends SceneBase {
         this.load.image(Assets.Sprite.Wall1, Assets.SpriteFileNames.Wall1);
         this.load.image(Assets.Sprite.QuestionBackPack, Assets.SpriteFileNames.QuestionBackPack);
         this.load.image(Assets.Sprite.WeaponBackPack, Assets.SpriteFileNames.WeaponBackPack);
+        this.load.image(Assets.Sprite.MenuBackground, Assets.SpriteFileNames.MenuBackground);
     }
 
     create() {
