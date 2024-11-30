@@ -9,8 +9,8 @@ export default class BaseAttack extends CustomContainerBase {
 
     protected attackSprite: Phaser.GameObjects.Sprite;
 
-    protected spriteStartPos: { x: number, y: number };
-    protected spriteEndPos: { x: number, y: number };
+    protected spriteStartPos: Phaser.Types.Math.Vector2Like;
+    protected spriteEndPos: Phaser.Types.Math.Vector2Like;
 
     protected isAttacking = false;
 
@@ -35,16 +35,25 @@ export default class BaseAttack extends CustomContainerBase {
         this.scene.add.existing(this);
     }
 
-    protected createShapes() {
-        this.attackSprite = this.scene.add.sprite(0, 0, this.spriteName);
-        this.attackSprite.play({ key: this.animationKey });
-        this.attackSprite.setDisplaySize(this.targetWidth, this.targetHeight);
+    setStartPos(start: { x: number, y: number }) {
+        this.spriteStartPos = start;
 
-        this.attackSprite.setVisible(false);
-        this.add(this.attackSprite);
     }
 
-    attack(onCenterHit?: () => void, onComplete?: () => void) {
+    setEndPos(end: { x: number, y: number }) {
+        this.spriteEndPos = end;
+    }
+
+    setAnimationKey(newKey: string) {
+        this.animationKey = newKey;
+        this.attackSprite.play({ key: this.animationKey });
+    }
+
+    getSprite() {
+        return this.attackSprite;
+    }
+
+    attack(onCenterHit?: () => void, onComplete?: () => void, spriteFacesDirection = false) {
         if (this.isAttacking)
             return;
 
@@ -53,6 +62,11 @@ export default class BaseAttack extends CustomContainerBase {
         this.attackSprite.setVisible(true);
 
         this.attackSprite.setPosition(this.spriteStartPos.x, this.spriteStartPos.y);
+
+        if (spriteFacesDirection) {
+            const newAngle = Phaser.Math.Angle.BetweenPoints(this.attackSprite, this.spriteEndPos)
+            this.attackSprite.setRotation(newAngle)
+        }
 
         const config: Phaser.Types.Tweens.TweenBuilderConfig = {
             targets: this.attackSprite,
@@ -80,5 +94,14 @@ export default class BaseAttack extends CustomContainerBase {
         }
 
         this.scene.tweens.add(config);
+    }
+
+    protected createShapes() {
+        this.attackSprite = this.scene.add.sprite(0, 0, this.spriteName);
+        this.attackSprite.play({ key: this.animationKey });
+        this.attackSprite.setDisplaySize(this.targetWidth, this.targetHeight);
+
+        this.attackSprite.setVisible(false);
+        this.add(this.attackSprite);
     }
 }

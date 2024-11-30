@@ -54,13 +54,17 @@ export default class Boss extends CustomContainerBase {
     }
 
     attackBoss(damageType: DamageType) {
-        const activeSpotWithType = this.weakSpots.find(spot => spot.isActive && !spot.isDestroyed && spot.getDamageType() == damageType);
+        const activeSpotWithType = this.getFirstWeakspot(damageType);
 
         const damageFactor = activeSpotWithType != undefined ? GameplaySettings.WeaknessMultiplier : 1;
 
         this.lifeBar.reduceLife(GameplaySettings.WeaponDamage * damageFactor);
 
         activeSpotWithType?.destroyWeakspot();
+    }
+
+    getFirstWeakspot(damageType: DamageType) {
+        return this.weakSpots.find(spot => spot.isActive && !spot.isDestroyed && spot.getDamageType() == damageType);
     }
 
     protected createBoss() {

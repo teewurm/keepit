@@ -22,6 +22,7 @@ export enum GameplaySettings {
     BossDamage = 10,
     BossAttackDelay = 250,
     BossAttackDuration = 250,
+    FireballAttackDuration = 250,
     QuestionMarkMovementDuration = 500,
     QuestionMarkStayDuration = 350,
     DelayAfterPlayerMove = 200
@@ -109,6 +110,7 @@ export namespace Assets {
         QuestionBackPack = "backpack/InfoBackPack.png",
         WeaponBackPack = "backpack/WeaponBackPack.png",
         BossAttack = "bossattack/Bossattack.png",
+        Fireball = "fireballs/Fireball.png",
     }
 
     export enum Sprite {
@@ -122,6 +124,7 @@ export namespace Assets {
         QuestionBackPack = "QuestionBackpack",
         WeaponBackPack = "WeaponBackPack",
         BossAttack = "Bossattack",
+        Fireball = "Fireball",
     }
 
     export enum JsonFileNames {
@@ -130,6 +133,7 @@ export namespace Assets {
         InfoCards = "infoCards/BaseInfoCard.json",
         Boss = "boss/BaseBoss.json",
         BossAttack = "bossattack/Bossattack.json",
+        Fireball = "fireballs/Fireball.json",
     }
 
     export enum Animation {

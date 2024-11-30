@@ -1,6 +1,7 @@
 import Backpack from "../../components/Backpack";
 import Boss from "../../components/Boss";
 import BossAttack from "../../components/BossAttack";
+import FireballAttack from "../../components/FireballAttack";
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import Player from "../../components/Player";
 import { TextButton } from "../../components/TextButton";
@@ -8,6 +9,7 @@ import Weakspot from "../../components/Weakspot";
 import { BossType } from "../../enums/BossType";
 import { Assets, ColorPalette, GameLayout, GameplaySettings, SceneNames } from "../../enums/Constants";
 import { ItemType } from "../../enums/ItemType";
+import AnimatoinHelper from "../../utils/AnimationHelper";
 import ItemSlot from "../../utils/ItemSlot";
 import SceneData from "../../utils/SceneData";
 import SceneBase from "./SceneBase";
@@ -31,6 +33,7 @@ export default class BossSceneBase extends SceneBase {
     protected isPlayerTurn = false;
 
     protected bossAttack: BossAttack;
+    protected fireballAttack: FireballAttack;
 
     constructor(name: string) {
         super(name ? name : SceneNames.BossBase);
@@ -50,7 +53,7 @@ export default class BossSceneBase extends SceneBase {
         this.createBaseField();
         this.createLifeBarAndStopwatch();
         this.spawnAttackButton();
-        this.spawnBossAttack();
+        this.spawnAttackObjects();
         this.addAttackListener();
 
         if (newData.currentLife != undefined)
@@ -90,10 +93,12 @@ export default class BossSceneBase extends SceneBase {
         this.mainContainer.add([backpack, this.player]);
     }
 
-    protected spawnBossAttack() {
+    protected spawnAttackObjects() {
         this.bossAttack = new BossAttack(this, this.player.x, this.player.y, this.fieldWidth / 4, this.fieldHeight / 4, this.boss.getBossType());
+        this.fireballAttack = new FireballAttack(this, 0, 0, this.fieldWidth / 7, this.fieldHeight / 7,);
+        this.fireballAttack.setStartPos({ x: this.player.x, y: this.player.y })
 
-        this.mainContainer.add(this.bossAttack);
+        this.mainContainer.add([this.bossAttack, this.fireballAttack]);
     }
 
     protected createBoss() {
@@ -153,11 +158,24 @@ export default class BossSceneBase extends SceneBase {
 
         const activeWeaponType = this.player.backpack.getActiveWeapon();
         if (activeWeaponType != undefined) {
-            this.boss.attackBoss(activeWeaponType);
+            const weakSpotToDestroy = this.boss.getFirstWeakspot(activeWeaponType);
+
+            if (weakSpotToDestroy) {
+                const newToPos = AnimatoinHelper.getLocalTransformPoint(weakSpotToDestroy, this.fireballAttack.getSprite());
+                this.fireballAttack.setEndPos(newToPos);
+            } else {
+                this.fireballAttack.setEndPos({ x: this.boss.x, y: this.boss.y });
+            }
+
+            this.fireballAttack.setDamageType(activeWeaponType);
+            this.fireballAttack.attack(undefined, () => this.boss.attackBoss(activeWeaponType), true);
+
             //Plays a random attack audio clip
             const weaponAudioSamples = [Assets.Audio.Weapon1, Assets.Audio.Weapon2, Assets.Audio.Weapon3];
             const randomSoundIndex = Math.floor(Math.random() * weaponAudioSamples.length);
             this.sound.get(weaponAudioSamples[randomSoundIndex]).play();
+
+
         }
 
         this.setIsPlayerTurn(false);
@@ -212,39 +230,25 @@ export default class BossSceneBase extends SceneBase {
         if (spriteToMove == undefined)
             return;
 
-        const targetWorldMatrix = spot.getWorldTransformMatrix();
-        const targetWorldX = targetWorldMatrix.tx;
-        const targetWorldY = targetWorldMatrix.ty;
+        const localPosition = AnimatoinHelper.getLocalTransformPoint(spot, spriteToMove);
 
-        const parentContainer = spriteToMove.parentContainer;
+        const config: Phaser.Types.Tweens.TweenBuilderConfig = {
+            targets: spriteToMove,
+            ease: "Expo.In",
+            duration: GameplaySettings.QuestionMarkMovementDuration,
+            x: localPosition.x,
+            y: localPosition.y,
+        };
 
-        if (parentContainer) {
-            const parentWorldMatrix = new Phaser.GameObjects.Components.TransformMatrix();
-            parentContainer.getWorldTransformMatrix(parentWorldMatrix);
-
-            const invMatrix = parentWorldMatrix.invert();
-            const localPosition = invMatrix.transformPoint(targetWorldX, targetWorldY);
-
-            const config: Phaser.Types.Tweens.TweenBuilderConfig = {
-                targets: spriteToMove,
-                ease: "Expo.In",
-                duration: GameplaySettings.QuestionMarkMovementDuration,
-                x: localPosition.x,
-                y: localPosition.y,
-            };
-
-            config.onComplete = () => {
-                this.time.delayedCall(GameplaySettings.QuestionMarkStayDuration, () => {
-                    spot.removeCover();
-                    slot.destroyItem();
-                    this.time.delayedCall(GameplaySettings.DelayAfterPlayerMove, callback.bind(this))
-                });
-            }
-
-            this.tweens.add(config);
+        config.onComplete = () => {
+            this.time.delayedCall(GameplaySettings.QuestionMarkStayDuration, () => {
+                spot.removeCover();
+                slot.destroyItem();
+                this.time.delayedCall(GameplaySettings.DelayAfterPlayerMove, callback.bind(this))
+            });
         }
 
-
+        this.tweens.add(config);
     }
 
     update(): void {
