@@ -1,3 +1,5 @@
+import { Assets } from "../enums/Constants";
+
 export class TextButton extends Phaser.GameObjects.Text {
 
     protected defaultFillColor: string;
@@ -8,6 +10,7 @@ export class TextButton extends Phaser.GameObjects.Text {
         this.defaultFillColor = style.color ? style.color.toString() : "#000000";
 
         this.setInteractive({ useHandCursor: true })
+            .on("pointerup", () => this.scene.sound.get(Assets.Audio.BtnClick).play())
             .on('pointerover', () => this.setStyle({ fill: '#e5b01d' }))
             .on('pointerout', () => this.setStyle({ fill: this.defaultFillColor }));
 
