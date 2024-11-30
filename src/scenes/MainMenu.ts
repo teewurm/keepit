@@ -4,6 +4,7 @@ import { Assets, ColorPalette, SceneNames } from "../enums/Constants"
 import { DamageType } from "../enums/DamageType";
 import { ItemType } from "../enums/ItemType";
 import SceneData from "../utils/SceneData";
+import Soundmanager, { SoundGroupKey } from "../utils/Soundmanager";
 import SceneBase from "./bases/SceneBase"
 
 export default class MainMenu extends SceneBase {
@@ -17,7 +18,6 @@ export default class MainMenu extends SceneBase {
         super.create();
 
         //todo remove
-        this.sound.get(Assets.Audio.PianoMusic).play();
         Boss.generateRandomWeaknesses(3);
         Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
         console.log(Boss.currentWeaknesses)
@@ -37,15 +37,15 @@ export default class MainMenu extends SceneBase {
             { type: ItemType.INFO_CARD, damageType: DamageType.Yellow },
         ]
 
-        this.scene.start(SceneNames.Level2Boss, testData);
+
+        
+        Soundmanager.loopAudioClips(SoundGroupKey.Music);
+        this.scene.start(SceneNames.Level2Boss, testData);        
 
         return;
 
-        const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
-        if (!backgroundMusic.isPlaying) {
-            backgroundMusic.play();
-        }
-
+        Soundmanager.loopAudioClips(SoundGroupKey.Music);
+        
         const menuWidth = this.width / 3
         const menuHeight = this.height * 0.85
 

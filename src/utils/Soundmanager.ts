@@ -30,12 +30,59 @@ export default class Soundmanager {
 
         return group.volume;
     }
+
+    static loopAudioClips(groupKey: SoundGroupKey, random = true) {
+        const group = Soundmanager.groups.find(element => element.key == groupKey);
+
+        if (!group || group.sounds.length == 0 || group.isLooping)
+            return;
+
+        group.sounds.forEach((sound) => {
+            if (sound.isPlaying || sound.isPaused)
+                sound.stop();
+        });
+
+        let sounds: (Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound)[];
+
+        if (random)
+            sounds = this.shuffleArray(group.sounds);
+        else
+            sounds = group.sounds;
+
+        let currentIndex = 0;
+        const playNextAudio = () => {
+            if (!group.isLooping)
+                return;
+
+            const currentAudio = sounds[currentIndex];
+
+            currentAudio.play();
+
+            currentAudio.once('complete', () => {
+                currentIndex = (currentIndex + 1) % sounds.length;
+
+                playNextAudio();
+            });
+        }
+
+        group.isLooping = true;
+        playNextAudio();
+    }
+
+    protected static shuffleArray<T>(array: T[]): T[] {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 }
 
 class SoundGroup {
     key: SoundGroupKey;
     volume: number;
     sounds: (Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound)[] = [];
+    isLooping: boolean = false;
 
     constructor(key: SoundGroupKey, volume: number, sounds: (Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound)[]) {
         this.key = key;

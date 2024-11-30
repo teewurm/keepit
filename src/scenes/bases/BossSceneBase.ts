@@ -170,12 +170,7 @@ export default class BossSceneBase extends SceneBase {
             this.fireballAttack.setDamageType(activeWeaponType);
             this.fireballAttack.attack(undefined, () => this.boss.attackBoss(activeWeaponType), true, "Power2");
 
-            //Plays a random attack audio clip
-            const weaponAudioSamples = [Assets.Audio.Weapon1, Assets.Audio.Weapon2, Assets.Audio.Weapon3];
-            const randomSoundIndex = Math.floor(Math.random() * weaponAudioSamples.length);
-            this.sound.get(weaponAudioSamples[randomSoundIndex]).play();
-
-
+            this.playRandomAudio([Assets.Audio.Weapon1, Assets.Audio.Weapon2, Assets.Audio.Weapon3]);
         }
 
         this.setIsPlayerTurn(false);
@@ -185,9 +180,14 @@ export default class BossSceneBase extends SceneBase {
         this.time.delayedCall(GameplaySettings.BossAttackDelay, () => {
             this.bossAttack.attack(() => {
                 this.playerLifeBar.reduceLife(GameplaySettings.BossDamage);
-                this.sound.get(Assets.Audio.MonsterAttack).play();
+                this.playRandomAudio([Assets.Audio.MonsterAttack, Assets.Audio.MonsterAttack2]);
             }, this.setIsPlayerTurn.bind(this, true));
         });
+    }
+
+    protected playRandomAudio(audioArray: string[]) {
+        const randomSoundIndex = Math.floor(Math.random() * audioArray.length);
+        this.sound.get(audioArray[randomSoundIndex]).play();
     }
 
     protected checkWeakspot(callback: () => void) {

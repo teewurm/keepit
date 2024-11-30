@@ -141,7 +141,9 @@ export namespace Assets {
     }
 
     export enum AudioFileNames {
-        PianoMusic = "licensed/MazeMusic1.wav",
+        MazeMusic1 = "licensed/MazeMusic1.wav",
+        MazeMusic2 = "licensed/MazeMusic2.wav",
+        MazeMusic3 = "licensed/MazeMusic3.wav",
         Move1 = "Move1.wav",
         Move2 = "Move2.wav",
         Move3 = "Move3.wav",
@@ -153,12 +155,15 @@ export namespace Assets {
         Weapon2 = "weapon/Weapon2.wav",
         Weapon3 = "weapon/Weapon3.wav",
         MonsterAttack = "weapon/MonsterAttack.wav",
+        MonsterAttack2 = "weapon/MonsterAttack2.wav",
         WeaponSwap = "WeaponSwap.wav",
         Zap = "Zap.wav",
     }
 
     export enum Audio {
-        PianoMusic = "MazeMusic1",
+        MazeMusic1 = "MazeMusic1",
+        MazeMusic2 = "MazeMusic2",
+        MazeMusic3 = "MazeMusic3",
         Move1 = "Move1",
         Move2 = "Move2",
         Move3 = "Move3",
@@ -170,6 +175,7 @@ export namespace Assets {
         Weapon2 = "Weapon2",
         Weapon3 = "Weapon3",
         MonsterAttack = "MonsterAttack",
+        MonsterAttack2 = "MonsterAttack2",
         WeaponSwap = "WeaponSwap",
         Zap = "Zap",
     }

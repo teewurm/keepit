@@ -28,7 +28,9 @@ export class Preloader extends SceneBase {
     preload() {
         this.load.setPath(Assets.AudioDirectory);
 
-        this.load.audio(Assets.Audio.PianoMusic, Assets.AudioFileNames.PianoMusic);
+        this.load.audio(Assets.Audio.MazeMusic1, Assets.AudioFileNames.MazeMusic1);
+        this.load.audio(Assets.Audio.MazeMusic2, Assets.AudioFileNames.MazeMusic2);
+        this.load.audio(Assets.Audio.MazeMusic3, Assets.AudioFileNames.MazeMusic3);
         this.load.audio(Assets.Audio.Move1, Assets.AudioFileNames.Move1);
         this.load.audio(Assets.Audio.Move2, Assets.AudioFileNames.Move2);
         this.load.audio(Assets.Audio.Move3, Assets.AudioFileNames.Move3);
@@ -40,6 +42,7 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Weapon2, Assets.AudioFileNames.Weapon2);
         this.load.audio(Assets.Audio.Weapon3, Assets.AudioFileNames.Weapon3);
         this.load.audio(Assets.Audio.MonsterAttack, Assets.AudioFileNames.MonsterAttack);
+        this.load.audio(Assets.Audio.MonsterAttack2, Assets.AudioFileNames.MonsterAttack2);
         this.load.audio(Assets.Audio.WeaponSwap, Assets.AudioFileNames.WeaponSwap);
         this.load.audio(Assets.Audio.Zap, Assets.AudioFileNames.Zap);
 
@@ -63,7 +66,9 @@ export class Preloader extends SceneBase {
         this.sound.pauseOnBlur = false;
         this.sound.volume = AudioConfig.defaulMain;
 
-        Soundmanager.addSound(this.sound.add(Assets.Audio.PianoMusic, { loop: true }), SoundGroupKey.Music);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.MazeMusic1), SoundGroupKey.Music);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.MazeMusic2), SoundGroupKey.Music);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.MazeMusic3), SoundGroupKey.Music);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Move1), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Move2), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Move3), SoundGroupKey.SFX);
@@ -75,6 +80,7 @@ export class Preloader extends SceneBase {
         Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon2), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon3), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.MonsterAttack), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.MonsterAttack2), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.WeaponSwap), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.Zap), SoundGroupKey.SFX);
 
