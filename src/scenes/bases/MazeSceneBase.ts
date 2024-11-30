@@ -45,32 +45,8 @@ export default class MazeSceneBase extends SceneBase {
 
     create(newData: SceneData) {
         super.create();
-        
-        const createBackground = () => {
-            const width = this.cameras.main.width;
-            const height = this.cameras.main.height;
 
-            // Create a CanvasTexture
-            const gradientTexture = this.textures.createCanvas('gradientBackground', width, height);
-            const context = gradientTexture!.context;
-
-            // Create a linear gradient
-            const gradient = context.createLinearGradient(0, 0, 0, height); // Vertical gradient
-            gradient.addColorStop(0, '#232526');
-            gradient.addColorStop(1, '#414345');
-
-            // Apply gradient to the canvas
-            context.fillStyle = gradient;
-            context.fillRect(0, 0, width, height);
-
-            // Refresh the texture
-            gradientTexture!.refresh();
-
-            // Add the gradient as an image
-            this.add.image(0, 0, 'gradientBackground').setOrigin(0);
-        }
-
-        createBackground();
+        this.add.sprite(0, 0, Assets.Sprite.GradientBackground).setOrigin(0);
 
         if (newData.firstSceneOfLevel) {
             Boss.generateRandomWeaknesses(GameplaySettings.BossWeaknessCount);

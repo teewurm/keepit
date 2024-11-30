@@ -112,6 +112,7 @@ export namespace Assets {
     }
 
     export enum Sprite {
+        GradientBackground = "GradientBackground",
         MainCharacter = "MainCharacter",
         Path1 = "Path1",
         Wall1 = "Wall1",

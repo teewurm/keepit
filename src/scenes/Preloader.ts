@@ -86,6 +86,8 @@ export class Preloader extends SceneBase {
         this.anims.createFromAseprite(Assets.Sprite.BossAttack);
         //#endregions
 
+        this.createGradientBackground();
+
         this.scene.transition({
             target: SceneNames.MainMenu,
             duration: 500,
@@ -94,5 +96,22 @@ export class Preloader extends SceneBase {
                 this.cameras.main.setAlpha(1 - progress);
             }
         });
+    }
+
+    protected createGradientBackground() {
+        const width = this.cameras.main.width;
+        const height = this.cameras.main.height;
+        // Create a CanvasTexture
+        const gradientTexture = this.textures.createCanvas(Assets.Sprite.GradientBackground, width, height);
+        const context = gradientTexture!.context;
+        // Create a linear gradient
+        const gradient = context.createLinearGradient(0, 0, 0, height); // Vertical gradient
+        gradient.addColorStop(0, '#232526');
+        gradient.addColorStop(1, '#414345');
+        // Apply gradient to the canvas
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, width, height);
+        // Refresh the texture
+        gradientTexture!.refresh();
     }
 }
