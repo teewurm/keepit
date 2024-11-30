@@ -86,7 +86,7 @@ export default class MainMenu extends SceneBase {
         const headline = this.add.text(0, menuHeight / -2 + 20, "Info", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);
 
-        const infoText = this.add.text(0, 0, "Find your way to the diffrent mazes.\n\nCollect diffrent types of weapons.\n\nCollect question marks to reveal\nweaknesses of the upcoming boss.\n\nFind the boss portal and defeat it.\n\nBe fast :)",
+        const infoText = this.add.text(0, 0, "Move with WASD or arrow keys.\n\nFind your way to the diffrent mazes.\n\nCollect diffrent types of weapons.\n\nCollect question marks to reveal\nweaknesses of the upcoming boss.\n\nFind the boss portal and defeat it.\n\nBe fast :)",
             { fontSize: 38, fontStyle: "bold", color: "#000000", wordWrap: { width: menuWidth * 0.8 } })
         infoText.setOrigin(0.5, 0.5);
 
