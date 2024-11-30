@@ -10,6 +10,7 @@ export enum GameLayout {
 export enum GameplaySettings {
     FogdisappearDuration = 1000,
     FogHalfDensity = 0.5,
+    FogHalfDensityWall = 0.85,
     FogFullDensity = 1,
     FogNoDensity = 0,
     MaxLife = 100,

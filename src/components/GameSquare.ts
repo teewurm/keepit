@@ -10,7 +10,7 @@ export default class GameSquare extends CustomContainerBase {
 
     protected backgroundObject?: Phaser.GameObjects.GameObject;
     protected fogObject: Phaser.GameObjects.Rectangle;
-    protected fogDensity = GameplaySettings.FogFullDensity;
+    protected fogDensity: number = GameplaySettings.FogFullDensity;
 
     protected portalToName?: string;
 
@@ -48,8 +48,6 @@ export default class GameSquare extends CustomContainerBase {
 
         this.fogObject = this.scene.add.rectangle(this.x, this.y, this.targetWidth, this.targetHeight, ColorPalette.FOG, this.fogDensity);
 
-        // this.add(this.fogObject);
-
         this.fogObject.setDepth(30);
 
         if (DEBUG) {
@@ -64,14 +62,14 @@ export default class GameSquare extends CustomContainerBase {
 
     setFogDensityToHalf() {
         if (this.fogDensity == GameplaySettings.FogFullDensity) {
-            this.fogDensity = GameplaySettings.FogHalfDensity;
+            this.fogDensity = this.squareType == SquareType.WALL ? GameplaySettings.FogHalfDensityWall : GameplaySettings.FogHalfDensity;
             this.fogObject.setAlpha(this.fogDensity);
         }
 
         if (this.fogDensity > GameplaySettings.FogNoDensity) {
             if (this.squareType == SquareType.BOSS_PORTAL || this.squareType == SquareType.PORTAL) {
                 this.setFogDensityToZero();
-            } else if (this.squareType == SquareType.WALL) {
+            } else if (this.squareType == SquareType.WALL || this.squareType == SquareType.PATH) {
                 this.scene.time.delayedCall(GameplaySettings.FogdisappearDuration, this.setFogDensityToZero.bind(this));
             }
 
