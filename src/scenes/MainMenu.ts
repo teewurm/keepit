@@ -61,7 +61,7 @@ export default class MainMenu extends SceneBase {
 
         const creditTextMusic = this.add.text(-this.center_width + 20, this.center_height - 80, "Music by Steven Melin", { fontSize: 36, fontStyle: "bold", color: "#000000" })
         creditTextMusic.setOrigin(0, 1);
-        const creditTextSfx = this.add.text(-this.center_width + 20, this.center_height - 60, "SFX from pixabay.com | imphenzia | mmyself :)", { fontSize: 36, fontStyle: "bold", color: "#000000" })
+        const creditTextSfx = this.add.text(-this.center_width + 20, this.center_height - 60, "SFX from pixabay.com | imphenzia | myself :)", { fontSize: 36, fontStyle: "bold", color: "#000000" })
         creditTextMusic.setOrigin(0, 1);
 
         this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer, creditTextMusic, creditTextSfx]);
