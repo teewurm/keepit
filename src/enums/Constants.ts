@@ -19,6 +19,7 @@ export enum GameplaySettings {
     WeaponDamage = 10,
     WeaknessMultiplier = 4,
     BossWeaknessCount = 2,
+    BossMaxLife = 150,
     BossDamage = 10,
     BossAttackDelay = 250,
     BossAttackDuration = 250,
@@ -93,7 +94,7 @@ export const ColorSquareMap = new Map([
 export enum AudioConfig {
     defaulMain = 0.5,
     defaultVolumeSFX = 0.15,
-    defaultVolumeMusic = 0.3,
+    defaultVolumeMusic = 0.2,
 }
 
 export namespace Assets {
