@@ -92,7 +92,7 @@ export const ColorSquareMap = new Map([
 ]);
 
 export enum AudioConfig {
-    defaulMain = 0.5,
+    defaultMain = 0.5,
     defaultVolumeSFX = 0.15,
     defaultVolumeMusic = 0.2,
 }

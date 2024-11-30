@@ -65,7 +65,7 @@ export class Preloader extends SceneBase {
     create() {
         //#region sound config
         this.sound.pauseOnBlur = false;
-        this.sound.volume = AudioConfig.defaulMain;
+        this.sound.volume = AudioConfig.defaultMain;
 
         Soundmanager.addSound(this.sound.add(Assets.Audio.MazeMusic1), SoundGroupKey.Music);
         Soundmanager.addSound(this.sound.add(Assets.Audio.MazeMusic2), SoundGroupKey.Music);

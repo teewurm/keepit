@@ -136,8 +136,8 @@ export default abstract class SceneBase extends Scene {
         });
 
 
-        const setColorOnEnter = () => fullScreenText.setColor("#00ff00");
-        const setColorOnLeave = () => fullScreenText.setColor("#ff0000");
+        const setColorOnEnter = () => fullScreenText.setDefaultColor("#00ff00");
+        const setColorOnLeave = () => fullScreenText.setDefaultColor("#ff0000");
         
         this.scale.addListener("enterfullscreen", setColorOnEnter);
         this.scale.addListener("leavefullscreen", setColorOnLeave);
