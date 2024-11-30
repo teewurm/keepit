@@ -60,7 +60,7 @@ export default class MazeSceneBase extends SceneBase {
 
         this.addInputMapping();
 
-        this.randomBirdSound(true);
+        this.randomBirdSound(newData.firstSceneOfLevel);
 
         this.events.on("resume", (_scene: Phaser.Scene, data: SceneData) => this.setDataAfterTransition(data));
 
