@@ -54,7 +54,9 @@ export default abstract class SceneBase extends Scene {
         openMenuBtn.setDepth(50);
         openMenuBtn.setStroke("#FFFFFF", 4);
 
-        openMenuBtn.on("pointerup", () => menuContainer.setVisible(!menuContainer.visible))
+        openMenuBtn.on("pointerup", () => menuContainer.setVisible(!menuContainer.visible));
+
+        this.spawnFullScreenButton();
     }
 
     protected createSoundMenu() {
@@ -119,6 +121,33 @@ export default abstract class SceneBase extends Scene {
         }
 
         return newBtn;
+    }
+
+    protected spawnFullScreenButton(): void {
+        let fullScreenText = new TextButton(this, 20, 20, "Fullscreen", { color: this.scale.isFullscreen ? "#00ff00" : "#ff0000", fontSize: 52 });
+
+        fullScreenText.setInteractive();
+        fullScreenText.addListener("pointerup", () => {
+            if (this.scale.isFullscreen) {
+                this.scale.stopFullscreen();
+            } else {
+                this.scale.startFullscreen();
+            }
+        });
+
+
+        const setColorOnEnter = () => fullScreenText.setColor("#00ff00");
+        const setColorOnLeave = () => fullScreenText.setColor("#ff0000");
+        
+        this.scale.addListener("enterfullscreen", setColorOnEnter);
+        this.scale.addListener("leavefullscreen", setColorOnLeave);
+
+        this.events.once('shutdown', () => {
+            this.scale.removeListener("enterfullscreen", setColorOnEnter);
+            this.scale.removeListener("leavefullscreen", setColorOnLeave);
+        }, this);
+
+        fullScreenText.setDepth(100)
     }
 
     protected createSoundSlider(width: number, titel: string, soundKey?: SoundGroupKey) {

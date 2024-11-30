@@ -59,8 +59,7 @@ export default class MazeSceneBase extends SceneBase {
         if (newData.firstSceneOfLevel) {
             Boss.generateRandomWeaknesses(GameplaySettings.BossWeaknessCount);
         }
-
-        this.spawnFullScreenButton();
+        
         this.spawnSquares();
         this.spawnPlayerWithBackpack();
         this.addItems();
@@ -94,31 +93,6 @@ export default class MazeSceneBase extends SceneBase {
 
             this.time.delayedCall(delay, () => { this.sound.get(Assets.Audio.Bird).play(); this.randomBirdSound(); });
         }
-    }
-
-    protected spawnFullScreenButton(): void {
-        let fullScreenText = new TextButton(this, 20, 20, "Fullscreen", { color: this.scale.isFullscreen ? "#00ff00" : "#ff0000", fontSize: 52 });
-
-        fullScreenText.setInteractive();
-        fullScreenText.addListener("pointerup", () => {
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            } else {
-                this.scale.startFullscreen();
-            }
-        });
-
-
-        const setColorOnEnter = () => fullScreenText.setColor("#00ff00");
-        const setColorOnLeave = () => fullScreenText.setColor("#00ff00");
-        
-        this.scale.addListener("enterfullscreen", setColorOnEnter);
-        this.scale.addListener("leavefullscreen", setColorOnLeave);
-
-        this.events.once('shutdown', () => {
-            this.scale.removeListener("enterfullscreen", setColorOnEnter);
-            this.scale.removeListener("leavefullscreen", setColorOnLeave);
-        }, this);
     }
 
     protected spawnSquares() {
