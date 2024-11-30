@@ -21,7 +21,7 @@ export enum GameplaySettings {
     BossWeaknessCount = 2,
     BossDamage = 10,
     BossAttackDelay = 250,
-    BossAttackDuration = 650,
+    BossAttackDuration = 250,
     QuestionMarkMovementDuration = 500,
     QuestionMarkStayDuration = 350,
     DelayAfterPlayerMove = 200
