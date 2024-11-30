@@ -53,7 +53,7 @@ export default class BaseAttack extends CustomContainerBase {
         return this.attackSprite;
     }
 
-    attack(onCenterHit?: () => void, onComplete?: () => void, spriteFacesDirection = false) {
+    attack(onCenterHit?: () => void, onComplete?: () => void, spriteFacesDirection = false, easeType: string = "Expo.In") {
         if (this.isAttacking)
             return;
 
@@ -70,7 +70,7 @@ export default class BaseAttack extends CustomContainerBase {
 
         const config: Phaser.Types.Tweens.TweenBuilderConfig = {
             targets: this.attackSprite,
-            ease: "Expo.In",
+            ease: easeType,
             duration: this.attackSpeed,
             x: this.spriteEndPos.x,
             y: this.spriteEndPos.y

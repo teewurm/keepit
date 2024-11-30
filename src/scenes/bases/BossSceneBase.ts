@@ -168,7 +168,7 @@ export default class BossSceneBase extends SceneBase {
             }
 
             this.fireballAttack.setDamageType(activeWeaponType);
-            this.fireballAttack.attack(undefined, () => this.boss.attackBoss(activeWeaponType), true);
+            this.fireballAttack.attack(undefined, () => this.boss.attackBoss(activeWeaponType), true, "Power2");
 
             //Plays a random attack audio clip
             const weaponAudioSamples = [Assets.Audio.Weapon1, Assets.Audio.Weapon2, Assets.Audio.Weapon3];
