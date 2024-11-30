@@ -9,7 +9,6 @@ import SceneData, { ItemWithIndex, PortalWithIndex } from "../../utils/SceneData
 import Lifebar, { GameStopWatch } from "../../components/LifebarAndStopwatch";
 import { DamageType } from "../../enums/DamageType";
 import Boss from "../../components/Boss";
-import { TextButton } from "../../components/TextButton";
 
 export default class MazeSceneBase extends SceneBase {
     protected readonly squareStartingMatrix = [
@@ -59,7 +58,7 @@ export default class MazeSceneBase extends SceneBase {
         if (newData.firstSceneOfLevel) {
             Boss.generateRandomWeaknesses(GameplaySettings.BossWeaknessCount);
         }
-        
+
         this.spawnSquares();
         this.spawnPlayerWithBackpack();
         this.addItems();

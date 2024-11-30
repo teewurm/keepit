@@ -68,8 +68,9 @@ export default class ItemSlot {
         if (transform != undefined) {
             this.sprite.setDisplaySize(transform.width, transform.height);
         }
+        if (item.isInteractable)
+            this.sprite.setInteractive({ useHandCursor: true });
 
-        this.sprite.setInteractive();
         this.sprite.on("pointerup", () => { this.onClick.forEach(func => func(this)) });
 
         this.container.add(this.sprite);
@@ -83,4 +84,5 @@ export default class ItemSlot {
 export class ItemConfig {
     type: ItemType
     damageType?: DamageType
+    isInteractable?: boolean = false
 }

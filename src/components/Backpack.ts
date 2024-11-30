@@ -102,6 +102,9 @@ export default class Backpack extends CustomContainerBase {
 
         this.destroyAllItmes();
         itemsToSet.forEach(itemConfig => {
+            if (itemConfig.type == ItemType.WEAPON)
+                itemConfig.isInteractable = true;
+
             this.addItem(itemConfig);
         });
     }
