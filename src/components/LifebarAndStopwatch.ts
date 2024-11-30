@@ -1,4 +1,4 @@
-import { ColorPalette, GameplaySettings } from "../enums/Constants";
+import { Assets, ColorPalette, GameplaySettings } from "../enums/Constants";
 import SceneBase from "../scenes/bases/SceneBase";
 import CustomContainerBase from "./bases/CustomContainerBase";
 
@@ -24,7 +24,7 @@ export default class Lifebar extends CustomContainerBase {
         this.updateLifeBar();
     }
 
-    static resetData(){
+    static resetData() {
         Lifebar.lastTimeWatchTookLife = 0;
     }
 
@@ -85,6 +85,7 @@ export default class Lifebar extends CustomContainerBase {
         if (timesDamageToTake > 0) {
             const damageToTake = timesDamageToTake * GameplaySettings.MazeDamage;
 
+            this.scene.sound.get(Assets.Audio.SoulSteal).play();
             this.reduceLife(damageToTake);
 
             Lifebar.lastTimeWatchTookLife = currentTime;
