@@ -131,6 +131,7 @@ export default class Backpack extends CustomContainerBase {
         slot.select();
         this.activeWeaponSlot = slot;
 
+        this.scene.sound.get(Assets.Audio.WeaponSwap).play();
         this.onWeaponSwap.forEach(func => func());
     }
 
