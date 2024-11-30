@@ -22,7 +22,7 @@ export default class Boss extends CustomContainerBase {
         this.createBoss();
     }
 
-    getBossType(){
+    getBossType() {
         return this.bossType;
     }
 
@@ -64,7 +64,8 @@ export default class Boss extends CustomContainerBase {
     }
 
     protected createBoss() {
-        this.lifeBar = new Lifebar(this.scene, 0, -this.targetHeight / 2, this.targetWidth * 0.8, this.targetHeight * 0.1, 100)
+        const lifeBarHeight = this.targetHeight * 0.1;
+        this.lifeBar = new Lifebar(this.scene, 0, -this.targetHeight / 2 - lifeBarHeight / 2, this.targetWidth * 0.8, lifeBarHeight, 100)
 
         const sprite = this.scene.add.sprite(0, 0, Assets.Sprite.Boss);
 
