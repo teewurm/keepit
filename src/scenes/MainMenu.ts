@@ -17,6 +17,7 @@ export default class MainMenu extends SceneBase {
         super.create();
 
         //todo remove
+        this.sound.get(Assets.Audio.PianoMusic).play();
         Boss.generateRandomWeaknesses(3);
         Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
         console.log(Boss.currentWeaknesses)

@@ -154,6 +154,7 @@ export namespace Assets {
         Weapon3 = "weapon/Weapon3.wav",
         MonsterAttack = "weapon/MonsterAttack.wav",
         WeaponSwap = "WeaponSwap.wav",
+        Zap = "Zap.wav",
     }
 
     export enum Audio {
@@ -170,5 +171,6 @@ export namespace Assets {
         Weapon3 = "Weapon3",
         MonsterAttack = "MonsterAttack",
         WeaponSwap = "WeaponSwap",
+        Zap = "Zap",
     }
 }

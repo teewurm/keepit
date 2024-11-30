@@ -41,6 +41,7 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Weapon3, Assets.AudioFileNames.Weapon3);
         this.load.audio(Assets.Audio.MonsterAttack, Assets.AudioFileNames.MonsterAttack);
         this.load.audio(Assets.Audio.WeaponSwap, Assets.AudioFileNames.WeaponSwap);
+        this.load.audio(Assets.Audio.Zap, Assets.AudioFileNames.Zap);
 
         this.load.setPath(Assets.SpriteDirectory);
 
@@ -75,6 +76,7 @@ export class Preloader extends SceneBase {
         Soundmanager.addSound(this.sound.add(Assets.Audio.Weapon3), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.MonsterAttack), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.WeaponSwap), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Zap), SoundGroupKey.SFX);
 
         Soundmanager.adjustVolume(SoundGroupKey.SFX, AudioConfig.defaultVolumeSFX);
         Soundmanager.adjustVolume(SoundGroupKey.Music, AudioConfig.defaultVolumeMusic);

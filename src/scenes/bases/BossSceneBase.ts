@@ -249,6 +249,8 @@ export default class BossSceneBase extends SceneBase {
         }
 
         this.tweens.add(config);
+
+        this.time.delayedCall(250, () => this.sound.get(Assets.Audio.Zap).play())
     }
 
     update(): void {
