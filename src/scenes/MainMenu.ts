@@ -16,28 +16,28 @@ export default class MainMenu extends SceneBase {
         super.create();
 
         //todo remove
-        Boss.generateRandomWeaknesses(3);
-        Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
-        console.log(Boss.currentWeaknesses)
-        const testData = new SceneData();
-        testData.backpackItems = [
-            { type: ItemType.WEAPON, damageType: DamageType.Fire },
-            { type: ItemType.WEAPON, damageType: DamageType.Water },
-            { type: ItemType.WEAPON, damageType: DamageType.Void },
-            { type: ItemType.WEAPON, damageType: DamageType.Electricity },
-            { type: ItemType.WEAPON, damageType: DamageType.Poison },
-            { type: ItemType.WEAPON, damageType: DamageType.Yellow },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Fire },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Water },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Void },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Electricity },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Poison },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Yellow },
-        ]
+        // Boss.generateRandomWeaknesses(3);
+        // Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
+        // console.log(Boss.currentWeaknesses)
+        // const testData = new SceneData();
+        // testData.backpackItems = [
+        //     { type: ItemType.WEAPON, damageType: DamageType.Fire },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Water },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Void },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Electricity },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Poison },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Yellow },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Fire },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Water },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Void },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Electricity },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Poison },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Yellow },
+        // ]
 
-        this.scene.start(SceneNames.Level1Boss, testData);
+        // this.scene.start(SceneNames.Level2Boss, testData);
 
-        return;
+        // return;
 
         const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
         if (!backgroundMusic.isPlaying) {
@@ -59,9 +59,11 @@ export default class MainMenu extends SceneBase {
         const level3Btn = this.createTextBtn("Level 3", SceneNames.Level3Maze1);
         const btnContainer = this.createBtnContainer(btnContainerMaxHeight, [level1Btn, level2Btn, level3Btn]);
 
-        const creditText = this.add.text(-this.center_width + 20, this.center_height - 20, "Music by Steven Melin", { fontSize: 36, fontStyle: "bold", color: "#000000" })
-        creditText.setOrigin(0, 1)
+        const creditTextMusic = this.add.text(-this.center_width + 20, this.center_height - 80, "Music by Steven Melin", { fontSize: 36, fontStyle: "bold", color: "#000000" })
+        creditTextMusic.setOrigin(0, 1);
+        const creditTextSfx = this.add.text(-this.center_width + 20, this.center_height - 60, "SFX from pixabay.com | imphenzia | mmyself :)", { fontSize: 36, fontStyle: "bold", color: "#000000" })
+        creditTextMusic.setOrigin(0, 1);
 
-        this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer, creditText]);
+        this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer, creditTextMusic, creditTextSfx]);
     }
 }
