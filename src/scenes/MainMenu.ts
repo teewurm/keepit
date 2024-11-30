@@ -17,28 +17,28 @@ export default class MainMenu extends SceneBase {
         super.create();
 
         //todo remove
-        Boss.generateRandomWeaknesses(3);
-        Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
-        console.log(Boss.currentWeaknesses)
-        const testData = new SceneData();
-        testData.backpackItems = [
-            { type: ItemType.WEAPON, damageType: DamageType.Fire },
-            { type: ItemType.WEAPON, damageType: DamageType.Water },
-            { type: ItemType.WEAPON, damageType: DamageType.Void },
-            { type: ItemType.WEAPON, damageType: DamageType.Electricity },
-            { type: ItemType.WEAPON, damageType: DamageType.Poison },
-            { type: ItemType.WEAPON, damageType: DamageType.Yellow },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Fire },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Water },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Void },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Electricity },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Poison },
-            { type: ItemType.INFO_CARD, damageType: DamageType.Yellow },
-        ]
+        // Boss.generateRandomWeaknesses(3);
+        // Boss.currentWeaknesses = [DamageType.Void, DamageType.Electricity, DamageType.Poison]
+        // console.log(Boss.currentWeaknesses)
+        // const testData = new SceneData();
+        // testData.backpackItems = [
+        //     { type: ItemType.WEAPON, damageType: DamageType.Fire },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Water },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Void },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Electricity },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Poison },
+        //     { type: ItemType.WEAPON, damageType: DamageType.Yellow },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Fire },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Water },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Void },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Electricity },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Poison },
+        //     { type: ItemType.INFO_CARD, damageType: DamageType.Yellow },
+        // ]
 
-        this.scene.start(SceneNames.Level2Boss, testData);
+        // this.scene.start(SceneNames.Level2Boss, testData);
 
-        return;
+        // return;
 
         const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
         if (!backgroundMusic.isPlaying) {

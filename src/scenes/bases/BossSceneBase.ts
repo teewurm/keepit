@@ -104,12 +104,15 @@ export default class BossSceneBase extends SceneBase {
 
     protected createLifeBarAndStopwatch() {
         const lifebarWidth = 400;
-        this.playerLifeBar = new Lifebar(this, lifebarWidth / 2 - this.fieldWidth / 2, 0, lifebarWidth, 40, 100);
+        const lifebarHeight = 100;
+        this.playerLifeBar = new Lifebar(this, 0, this.fieldHeight / 2 - lifebarHeight / 2, lifebarWidth, 40, lifebarHeight);
 
         this.gameTimer = new GameStopWatch(this, 0, 0, 42);
 
         this.add.container(this.center_width, + GameLayout.SquareEdgeLength / -2 + this.center_height + this.fieldHeight / -2,
-            [this.playerLifeBar, this.gameTimer]);
+            [this.gameTimer]);
+
+        this.mainContainer.add(this.playerLifeBar);
     }
 
     protected spawnAttackButton() {

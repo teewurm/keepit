@@ -45,15 +45,32 @@ export default class MazeSceneBase extends SceneBase {
 
     create(newData: SceneData) {
         super.create();
+        
+        const createBackground = () => {
+            const width = this.cameras.main.width;
+            const height = this.cameras.main.height;
 
-        const background = this.add.sprite(this.center_width, this.center_height, Assets.Sprite.DefaultBackground);
-        background.setScale(this.width / background.width, this.height / background.height);
+            // Create a CanvasTexture
+            const gradientTexture = this.textures.createCanvas('gradientBackground', width, height);
+            const context = gradientTexture!.context;
 
-        const backgroundMusic = this.sound.get(Assets.Audio.PianoMusic);
-        if (!backgroundMusic.isPlaying) {
-            backgroundMusic.play();
+            // Create a linear gradient
+            const gradient = context.createLinearGradient(0, 0, 0, height); // Vertical gradient
+            gradient.addColorStop(0, '#232526');
+            gradient.addColorStop(1, '#414345');
+
+            // Apply gradient to the canvas
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, width, height);
+
+            // Refresh the texture
+            gradientTexture!.refresh();
+
+            // Add the gradient as an image
+            this.add.image(0, 0, 'gradientBackground').setOrigin(0);
         }
 
+        createBackground();
 
         if (newData.firstSceneOfLevel) {
             Boss.generateRandomWeaknesses(GameplaySettings.BossWeaknessCount);
@@ -110,7 +127,7 @@ export default class MazeSceneBase extends SceneBase {
 
             row.forEach((squareType) => {
                 const newGameSquare = new GameSquare(this, x, y, GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, squareType);
-                
+
                 allSquareObjects.push(newGameSquare);
 
                 newRow.push(newGameSquare);
@@ -124,6 +141,13 @@ export default class MazeSceneBase extends SceneBase {
         this.mainContainer = this.add.container(this.center_width, this.center_height, allSquareObjects);
         this.createGrid();
         allSquareObjects.forEach(cont => cont.setFogToParentContainer());
+
+        const fieldWidth = this.squareMatrix[0].length * GameLayout.SquareEdgeLength
+        const fieldHeight = this.squareMatrix.length * GameLayout.SquareEdgeLength;
+        const outline = this.add.rectangle(0, 0, fieldWidth, fieldHeight)
+            .setStrokeStyle(5, 0x000000);
+
+        this.mainContainer.add(outline);
     }
 
     protected createGrid() {
@@ -133,8 +157,7 @@ export default class MazeSceneBase extends SceneBase {
         const grid = this.add.grid(0, 0, fieldWidth, fieldHeight,
             GameLayout.SquareEdgeLength, GameLayout.SquareEdgeLength, undefined, undefined, 0x000000);
 
-        const outline = this.add.rectangle(0, 0, fieldWidth, fieldHeight).setStrokeStyle(1, 0x000000);
-        this.mainContainer.add([grid, outline]);
+        this.mainContainer.add([grid]);
     }
 
     protected spawnPlayerWithBackpack() {
@@ -164,7 +187,7 @@ export default class MazeSceneBase extends SceneBase {
 
     protected createLifeBarAndStopwatch() {
         const lifebarWidth = 400;
-        this.lifeBar = new Lifebar(this, lifebarWidth / 2 - (GameLayout.SquareEdgeLength * this.squareMatrix[0].length) / 2, 0, lifebarWidth, 40, GameplaySettings.MaxLife);
+        this.lifeBar = new Lifebar(this, 0, 0, lifebarWidth, 40, GameplaySettings.MaxLife);
 
         this.gameTimer = new GameStopWatch(this, 0, 0, 42);
 

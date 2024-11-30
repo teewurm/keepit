@@ -100,7 +100,6 @@ export namespace Assets {
     export const SpriteDirectory = "assets/sprites";
 
     export enum SpriteFileNames {
-        DefaultBackground = "Background.png",
         MainCharacter = "player/MainCharacter.png",
         Path1 = "maze/Path1.png",
         Wall1 = "maze/Wall1.png",
@@ -113,7 +112,6 @@ export namespace Assets {
     }
 
     export enum Sprite {
-        DefaultBackground = "DefaultBackground",
         MainCharacter = "MainCharacter",
         Path1 = "Path1",
         Wall1 = "Wall1",
