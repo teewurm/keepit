@@ -19,6 +19,8 @@ export default class GameOverScene extends SceneBase {
     }
 
     create(gameData: { won: boolean }): void {
+        this.add.sprite(0, 0, Assets.Sprite.GradientBackground).setOrigin(0);
+
         let btnText;
 
         if (gameData.won) {

@@ -116,6 +116,7 @@ export namespace Assets {
         Fireball = "fireballs/Fireball.png",
         MenuBackground = "MenuBackground.png",
         SkullIcon = "SkullIcon.png",
+        Bossportal = "Bossportal.png",
     }
 
     export enum Sprite {
@@ -133,6 +134,7 @@ export namespace Assets {
         Fireball = "Fireball",
         MenuBackground = "MenuBackground",
         SkullIcon = "SkullIcon",
+        Bossportal = "Bossportal",
     }
 
     export enum JsonFileNames {

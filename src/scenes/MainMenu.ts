@@ -63,7 +63,7 @@ export default class MainMenu extends SceneBase {
 
 
         if (MainMenu.firstTimeVisit) {
-            // this.createWelcomeDialog();
+            this.createWelcomeDialog();
             MainMenu.firstTimeVisit = false;
         }
 

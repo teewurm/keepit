@@ -26,14 +26,28 @@ export default class GameSquare extends CustomContainerBase {
         if (this.squareType != SquareType.EMPTY) {
             const outlineThickness = 2;
 
-            if (SquareType.PATH == this.squareType || this.squareType == SquareType.WALL) {
-                const myImage = this.scene.add.sprite(0, 0, SquareType.WALL == this.squareType ? Assets.Sprite.Wall1 : Assets.Sprite.Path1)
+            if (SquareType.PATH == this.squareType || this.squareType == SquareType.WALL || this.squareType == SquareType.BOSS_PORTAL) {
+                let textureToSet: string;
 
-                myImage.setDisplaySize(this.targetWidth, this.targetHeight);
+                switch (this.squareType) {
+                    case SquareType.PATH:
+                        textureToSet = Assets.Sprite.Path1;
+                        break;
+                    case SquareType.WALL:
+                        textureToSet = Assets.Sprite.Wall1;
+                        break;
+                    case SquareType.BOSS_PORTAL:
+                        textureToSet = Assets.Sprite.Bossportal;
+                        break;
+                }
+
+                const squareSprite = this.scene.add.sprite(0, 0, textureToSet)
+
+                squareSprite.setDisplaySize(this.targetWidth, this.targetHeight);
 
                 const outline = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness);
 
-                this.backgroundObject = this.scene.add.container(0, 0, [myImage, outline]);
+                this.backgroundObject = this.scene.add.container(0, 0, [squareSprite, outline]);
             } else {
                 this.backgroundObject = this.scene.add.rectangle(0, 0, this.targetWidth - outlineThickness, this.targetHeight - outlineThickness, ColorSquareMap.get(this.squareType));
             }
