@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite';
+import { rmSync } from 'fs';
+import path from 'path';
 
 const phasermsg = () => {
     return {
@@ -35,7 +37,7 @@ export default defineConfig({
                     DEBUG: false,
                     NO_FOG: false
                 },
-                drop_console: false,
+                drop_console: true,
                 drop_debugger: true,
             },
             mangle: true,
@@ -48,6 +50,19 @@ export default defineConfig({
         port: 8080
     },
     plugins: [
-        phasermsg()
+        phasermsg(),
+        {
+            name: 'drop-folder-plugin',
+            apply: 'build',
+            writeBundle() {
+                const folderToDrop = path.resolve(__dirname, '../dist/assets/sound/audio_placeholder');
+                try {
+                    rmSync(folderToDrop, { recursive: true, force: true });
+                    console.log(`Dropped folder: ${folderToDrop}`);
+                } catch (err) {
+                    console.warn(`Failed to drop folder: ${folderToDrop}`, err);
+                }
+            },
+        },
     ]
 });
