@@ -11,6 +11,8 @@ export default class Lifebar extends CustomContainerBase {
     protected redLifeBar: Phaser.GameObjects.Rectangle;
     static lastTimeWatchTookLife: number = 0;
 
+    static mazeDamage = GameplaySettings.MazeDamage;
+
     // :(
     readonly onDeath: (() => void)[] = [];
 
@@ -83,7 +85,7 @@ export default class Lifebar extends CustomContainerBase {
         const timesDamageToTake = Math.floor(timePassedSinceLastDamage / GameplaySettings.MazeDamageIntervalInMillis);
 
         if (timesDamageToTake > 0) {
-            const damageToTake = timesDamageToTake * GameplaySettings.MazeDamage;
+            const damageToTake = timesDamageToTake * Lifebar.mazeDamage;
 
             this.scene.sound.get(Assets.Audio.SoulSteal).play();
             this.reduceLife(damageToTake);
@@ -91,7 +93,7 @@ export default class Lifebar extends CustomContainerBase {
             Lifebar.lastTimeWatchTookLife = currentTime;
 
             if (this.currentLife == 0) {
-                this.stopWatch?.setTime(Math.ceil(GameplaySettings.MaxLife / GameplaySettings.MazeDamage) * GameplaySettings.MazeDamageIntervalInMillis);
+                this.stopWatch?.setTime(Math.ceil(GameplaySettings.MaxLife / Lifebar.mazeDamage) * GameplaySettings.MazeDamageIntervalInMillis);
             }
         }
     }
