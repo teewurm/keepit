@@ -6,6 +6,8 @@ import Backpack from "./Backpack";
 import SceneBase from "../scenes/bases/SceneBase";
 
 export default class Player extends CustomContainerBase {
+    static activePlayerSprite = Assets.Sprite.MainCharacter2;
+
     squareMatrix: GameSquare[][];
     currentIndex: IndexUtil;
     backpack: Backpack;
@@ -47,8 +49,10 @@ export default class Player extends CustomContainerBase {
     }
 
     protected createPlayer() {
-        const player = this.scene.add.sprite(0, 0, Assets.Sprite.MainCharacter);
-        player.play({ key: Assets.Animation.MainCharacterIdle, repeat: -1 });
+        const animationKey = Player.activePlayerSprite == Assets.Sprite.MainCharacter ? Assets.Animation.MainCharacterIdle : Assets.Animation.MainCharacterIdle2;
+
+        const player = this.scene.add.sprite(0, 0, Player.activePlayerSprite);
+        player.play({ key: animationKey, repeat: -1 });
 
         player.setDisplaySize(this.targetWidth, this.targetHeight);
 

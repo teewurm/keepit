@@ -103,6 +103,7 @@ export namespace Assets {
 
     export enum SpriteFileNames {
         MainCharacter = "player/MainCharacter.png",
+        MainCharacter2 = "player2/MainCharacter2.png",
         Path1 = "maze/Path1.png",
         Wall1 = "maze/Wall1.png",
         Weapons = "weapons/BaseWeapon.png",
@@ -119,6 +120,7 @@ export namespace Assets {
     export enum Sprite {
         GradientBackground = "GradientBackground",
         MainCharacter = "MainCharacter",
+        MainCharacter2 = "MainCharacter2",
         Path1 = "Path1",
         Wall1 = "Wall1",
         Weapons = "Weapons",
@@ -134,6 +136,7 @@ export namespace Assets {
 
     export enum JsonFileNames {
         MainCharacter = "player/MainCharacter.json",
+        MainCharacter2 = "player2/MainCharacter2.json",
         Weapons = "weapons/BaseWeapon.json",
         InfoCards = "infoCards/BaseInfoCard.json",
         Boss = "boss/BaseBoss.json",
@@ -142,7 +145,8 @@ export namespace Assets {
     }
 
     export enum Animation {
-        MainCharacterIdle = "Idle"
+        MainCharacterIdle = "Idle",
+        MainCharacterIdle2 = "Idle_2"
     }
 
     export enum AudioFileNames {
