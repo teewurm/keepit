@@ -45,6 +45,7 @@ export default class MazeSceneBase extends SceneBase {
 
     create(newData: SceneData) {
         super.create();
+        this.resetIcon.setVisible(true);
 
         this.add.sprite(0, 0, Assets.Sprite.GradientBackground).setOrigin(0);
 

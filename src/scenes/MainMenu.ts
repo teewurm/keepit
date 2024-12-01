@@ -84,8 +84,8 @@ export default class MainMenu extends SceneBase {
         const headline = this.add.text(0, menuHeight / -2 + 20, "Hi everyone :)", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);
 
-        const infoText = this.add.text(0, 0, "Welcome to Secret Weak Spot",
-            { fontSize: 38, fontStyle: "bold", color: "#000000", wordWrap: { width: menuWidth * 0.8 } })
+        const infoText = this.add.text(0, 0, "Welcome to\nSecret Weak Spot",
+            { fontSize: 38, fontStyle: "bold", color: "#000000", wordWrap: { width: menuWidth * 0.8 }, align: 'center' })
         infoText.setOrigin(0.5, 0.5);
 
         const closeMenuBtn = this.createTextBtn("Let's go").setPosition(0, menuHeight / 4);

@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 import SceneData from "../../utils/SceneData";
-import { Assets, GameplaySettings } from "../../enums/Constants";
+import { Assets, GameplaySettings, SceneNames } from "../../enums/Constants";
 import { TextButton } from "../../components/TextButton";
 import Slider from "../../components/Slider";
 import Soundmanager, { SoundGroupKey } from "../../utils/Soundmanager";
@@ -12,6 +12,8 @@ export default abstract class SceneBase extends Scene {
     center_width: number;
     center_height: number;
     fpsText: Phaser.GameObjects.Text
+
+    protected resetIcon: Phaser.GameObjects.Sprite;
 
     constructor(name: string | Phaser.Types.Scenes.SettingsConfig | undefined) {
         super(name);
@@ -48,6 +50,8 @@ export default abstract class SceneBase extends Scene {
         const menuContainer = this.createSoundMenu();
         menuContainer.setVisible(false);
 
+        this.createResetIcon().setVisible(false);
+
         const openMenuBtn = new TextButton(this, this.width - 130, 20, "Soundmenu", { fontSize: 38, color: "#000000", fontStyle: "bold" });
         openMenuBtn.setOrigin(0.5, 0);
 
@@ -57,6 +61,17 @@ export default abstract class SceneBase extends Scene {
         openMenuBtn.on("pointerup", () => menuContainer.setVisible(!menuContainer.visible));
 
         this.spawnFullScreenButton();
+    }
+
+    protected createResetIcon() {
+        this.resetIcon = this.add.sprite(this.width - 280, 38, Assets.Sprite.SkullIcon);
+
+        this.resetIcon.setInteractive({ useHandCursor: true });
+        this.resetIcon.setDepth(50)
+
+        this.resetIcon.on("pointerup", () => { this.scene.start(SceneNames.GameOver, { won: false }) });
+
+        return this.resetIcon;
     }
 
     protected createSoundMenu() {
