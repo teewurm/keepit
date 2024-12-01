@@ -73,7 +73,7 @@ export default class Boss extends CustomContainerBase {
 
         const sprite = this.scene.add.sprite(0, 0, Assets.Sprite.Boss);
 
-        sprite.setDisplaySize(this.targetWidth + 100, this.targetHeight);
+        sprite.setDisplaySize(this.targetWidth, this.targetHeight);
 
         sprite.play(this.bossType + "_Boss")
 
@@ -96,10 +96,7 @@ export default class Boss extends CustomContainerBase {
             xCor += containerWidth / 2;
         }
 
-        const outline = this.scene.add.rectangle(0, 0, this.targetWidth, this.targetHeight);
-        outline.setStrokeStyle(3, 0x000000);
-
-        this.add([sprite, this.lifeBar, outline]);
+        this.add([sprite, this.lifeBar]);
         this.add(weakContainer);
     }
 }
