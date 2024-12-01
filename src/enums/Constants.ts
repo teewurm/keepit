@@ -163,6 +163,8 @@ export namespace Assets {
         Zap = "Zap.wav",
         SoulSteal = "SoulSteal.wav",
         BtnClick = "BtnClick.wav",
+        Deathsound = "Deathsound.wav",
+        Victorysound = "Victorysound.wav",
     }
 
     export enum Audio {
@@ -185,5 +187,7 @@ export namespace Assets {
         Zap = "Zap",
         SoulSteal = "SoulSteal",
         BtnClick = "BtnClick",
+        Deathsound = "Deathsound",
+        Victorysound = "Victorysound",
     }
 }

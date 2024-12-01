@@ -47,6 +47,8 @@ export class Preloader extends SceneBase {
         this.load.audio(Assets.Audio.Zap, Assets.AudioFileNames.Zap);
         this.load.audio(Assets.Audio.SoulSteal, Assets.AudioFileNames.SoulSteal);
         this.load.audio(Assets.Audio.BtnClick, Assets.AudioFileNames.BtnClick);
+        this.load.audio(Assets.Audio.Deathsound, Assets.AudioFileNames.Deathsound);
+        this.load.audio(Assets.Audio.Victorysound, Assets.AudioFileNames.Victorysound);
 
         this.load.setPath(Assets.SpriteDirectory);
 
@@ -88,6 +90,8 @@ export class Preloader extends SceneBase {
         Soundmanager.addSound(this.sound.add(Assets.Audio.Zap), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.SoulSteal), SoundGroupKey.SFX);
         Soundmanager.addSound(this.sound.add(Assets.Audio.BtnClick), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Deathsound), SoundGroupKey.SFX);
+        Soundmanager.addSound(this.sound.add(Assets.Audio.Victorysound), SoundGroupKey.SFX);
 
         Soundmanager.adjustVolume(SoundGroupKey.SFX, AudioConfig.defaultVolumeSFX);
         Soundmanager.adjustVolume(SoundGroupKey.Music, AudioConfig.defaultVolumeMusic);

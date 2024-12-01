@@ -1,5 +1,5 @@
 import { TextButton } from "../components/TextButton";
-import { SceneNames } from "../enums/Constants";
+import { Assets, SceneNames } from "../enums/Constants";
 import SceneBase from "./bases/SceneBase";
 
 export default class GameOverScene extends SceneBase {
@@ -19,7 +19,15 @@ export default class GameOverScene extends SceneBase {
     }
 
     create(gameData: { won: boolean }): void {
-        const btnText = gameData.won ? "Yeah you won" : "Dead :("
+        let btnText;
+
+        if (gameData.won) {
+            btnText = "Yeah you won";
+            this.sound.get(Assets.Audio.Victorysound).play();
+        } else {
+            btnText = "Dead :(";
+            this.sound.get(Assets.Audio.Deathsound).play();
+        }
 
         const gameOverBtn = new TextButton(this, this.center_width, this.center_height, btnText, {
             fontSize: 62,
