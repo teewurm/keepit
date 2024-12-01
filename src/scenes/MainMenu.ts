@@ -1,10 +1,12 @@
 import { TextButton } from "../components/TextButton";
-import { SceneNames } from "../enums/Constants"
+import { Assets, SceneNames } from "../enums/Constants"
 import Soundmanager, { SoundGroupKey } from "../utils/Soundmanager";
 import SceneBase from "./bases/SceneBase"
 
 export default class MainMenu extends SceneBase {
     protected menuContainer: Phaser.GameObjects.Container;
+
+    protected static firstTimeVisit = true;
 
     constructor() {
         super(SceneNames.MainMenu);
@@ -13,6 +15,8 @@ export default class MainMenu extends SceneBase {
     create() {
         super.create();
 
+        this.add.sprite(0, 0, Assets.Sprite.GradientBackground).setOrigin(0);
+
         Soundmanager.loopAudioClips(SoundGroupKey.Music);
 
         const menuWidth = this.width / 3
@@ -20,7 +24,7 @@ export default class MainMenu extends SceneBase {
 
         const menuBackground = this.createDialogBackground(menuWidth, menuHeight);
 
-        const headline = this.add.text(0, menuHeight / -2 + 20, "Secret Weakspot", { fontSize: 48, color: "#000000", fontStyle: "bold" });
+        const headline = this.add.text(0, menuHeight / -2 + 20, "Secret Weak Spot", { fontSize: 48, color: "#000000", fontStyle: "bold" });
         headline.setOrigin(0.5, 0);
 
         const btnContainerMaxHeight = menuHeight * 0.4;
@@ -39,6 +43,11 @@ export default class MainMenu extends SceneBase {
         const infoDialog = this.createInfoDialog();
         infoDialog.setVisible(false);
         infoBtn.on("pointerup", () => infoDialog.setVisible(true));
+
+        if (MainMenu.firstTimeVisit) {
+            this.createWelcomeDialog();
+            MainMenu.firstTimeVisit = false;
+        }
 
         this.menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, btnContainer, creditTextMusic, creditTextSfx]);
     }
@@ -64,5 +73,26 @@ export default class MainMenu extends SceneBase {
 
         menuContainer.setDepth(100);
         return menuContainer;
+    }
+
+    protected createWelcomeDialog() {
+        const menuWidth = this.width * 0.4
+        const menuHeight = this.height * 0.5
+
+        const menuBackground = this.createDialogBackground(menuWidth, menuHeight);
+
+        const headline = this.add.text(0, menuHeight / -2 + 20, "Hi everyone :)", { fontSize: 48, color: "#000000", fontStyle: "bold" });
+        headline.setOrigin(0.5, 0);
+
+        const infoText = this.add.text(0, 0, "Welcome to Secret Weak Spot",
+            { fontSize: 38, fontStyle: "bold", color: "#000000", wordWrap: { width: menuWidth * 0.8 } })
+        infoText.setOrigin(0.5, 0.5);
+
+        const closeMenuBtn = this.createTextBtn("Let's go").setPosition(0, menuHeight / 4);
+
+        const menuContainer = this.add.container(this.center_width, this.center_height, [menuBackground, headline, infoText, closeMenuBtn]);
+
+        closeMenuBtn.on("pointerup", () => menuContainer.setVisible(false));
+        menuContainer.setDepth(50);
     }
 }
